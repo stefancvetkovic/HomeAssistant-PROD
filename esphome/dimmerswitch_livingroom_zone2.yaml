@@ -1,0 +1,60 @@
+esphome:
+  name: dimmerswitch_livingroom_zone2
+  platform: ESP8266
+  board: nodemcuv2
+
+wifi:
+  ssid: "ThePingInTheNorth"
+  password: "lanister"
+  ap:
+    ssid: "PanicVIFI"
+    password: "dubai.2020"
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: "lanister"
+ota:
+  password: "lanister"
+
+sensor:
+#LIVINGROOM GREYWALL LEDSTRIP CONTROLS
+  - platform: rotary_encoder
+    name: "livingroom ledstrip greywall dimmer"
+    id: livingroom_greywall_stripled_all_dimmer
+    pin_a: D6
+    pin_b: D7
+    min_value: 0
+    max_value: 100
+    resolution: 2
+    filters:
+      - delta: 4.0
+#LIVINGROOM TERACE LEDSTRIP CONTROLS
+  - platform: rotary_encoder
+    name: "livingroom ledstrip terace dimmer"
+    id: livingroom_terace_wall_stripled_all_dimmer
+    pin_a: D4
+    pin_b: D5
+    min_value: 0
+    max_value: 100
+    resolution: 2
+    filters:
+      - delta: 4.0    
+      
+binary_sensor:
+#LIVINGROOM GREYWALL LEDSTRIP CONTROLS
+  - platform: gpio
+    id: livingroom_greywall_stripled_all_switcher
+    name: "livingroom ledstrip greywall switcher"
+    pin:
+      number: D1
+      inverted: true
+#LIVINGROOM TERACE LEDSTRIP CONTROLS
+  - platform: gpio
+    id: livingroom_terace_wall_stripled_all_switcher
+    name: "livingroom ledstrip terace switcher"
+    pin:
+      number: D2
+      inverted: true

@@ -1,0 +1,63 @@
+esphome:
+  name: dimmerswitch_bedroom_zone1
+  platform: ESP8266
+  board: esp12e
+
+wifi:
+  ssid: "ThePingInTheNorth"
+  password: "lanister"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "PanicVIFI"
+    password: "dubai.2020"
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: "lanister"
+ota:
+  password: "lanister"
+
+
+sensor:
+#BEDROOM WALL LEDSTRIP CONTROL
+  - platform: rotary_encoder
+    name: "Bedroom wall ledstrip dimmer"
+    id: bedroom_wall_stripled_all_dimmer
+    pin_a: GPIO2
+    pin_b: GPIO14
+    min_value: 0
+    max_value: 100
+    resolution: 2
+    filters:
+      - delta: 4.0
+#BEDROOM BED LEDSTRIP CONTROL
+  - platform: rotary_encoder
+    name: "Bedroom bed ledstrip dimmer"
+    id: bedroom_bed_stripled_all_dimmer
+    pin_a: GPIO12
+    pin_b: GPIO13
+    min_value: 0
+    max_value: 100
+    resolution: 2
+    filters:
+      - delta: 4.0
+binary_sensor:
+#BEDROOM WALL LEDSTRIP CONTROL
+  - platform: gpio
+    id: bedroom_wall_stripled_all_switcher
+    name: "Bedroom wall ledstrip switcher"
+    pin:
+      number: GPIO5
+      inverted: true
+
+#BEDROOM BED LEDSTRIP CONTROL
+  - platform: gpio
+    id: bedroom_bed_stripled_all_switcher
+    name: "Bedroom bed ledstrip switcher"
+    pin:
+      number: GPIO4
+      inverted: true

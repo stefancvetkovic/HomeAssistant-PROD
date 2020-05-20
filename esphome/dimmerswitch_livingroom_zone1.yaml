@@ -1,0 +1,61 @@
+esphome:
+  name: dimmerswitch_livingroom_zone1
+  platform: ESP8266
+  board: nodemcuv2
+
+wifi:
+  ssid: "ThePingInTheNorth"
+  password: "lanister"
+  ap:
+    ssid: "PanicVIFI"
+    password: "dubai.2020"
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: "lanister"
+ota:
+  password: "lanister"
+
+sensor:
+#LIVINGROOM ABOVETV LEDSTRIP DIMMER CONTROL
+  - platform: rotary_encoder
+    name: "Livingroom AboveTV ledstrip Dimmer"
+    id: livingroom_abovetv_stripled_all_dimmer
+    pin_a: D6
+    pin_b: D7
+    min_value: 0
+    max_value: 100
+    resolution: 2
+    filters:
+      - delta: 4.0
+    
+#LIVINGROOM BELOWTV LEDSTRIP DIMMER CONTROL    
+  - platform: rotary_encoder
+    name: "Livingroom BelowTV ledstrip Dimmer"
+    id: livingroom_belowtv_ledstrip_all_dimmer
+    pin_a: D4
+    pin_b: D5
+    min_value: 0
+    max_value: 100
+    resolution: 2
+    filters:
+      - delta: 4.0
+      
+binary_sensor:
+#LIVINGROOM ABOVETV LEDSTRIP SWITCH CONTROL
+  - platform: gpio
+    id: livingroom_abovetv_stripled_all_switcher
+    name: "Livingroom AboveTV ledstrip switcher"
+    pin:
+      number: D1
+      inverted: true
+#LIVINGROOM BELOWTV LEDSTRIP SWITCH CONTROL      
+  - platform: gpio
+    id: livingroom_belowtv_stripled_all_switcher
+    name: "Livingroom BelowTV ledstrip switcher"
+    pin:
+      number: D2
+      inverted: true
