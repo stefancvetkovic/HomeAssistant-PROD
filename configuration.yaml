@@ -1,16 +1,20 @@
 
 # Configure a default setup of Home Assistant (frontend, api, etc)
 default_config:
+system_health:
 
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 # http:
 #   base_url: example.duckdns.org:8123
 
+frontend:
+  themes: !include_dir_merge_named themes
+switch: !include switches.yaml
 # Text to speech
 tts:
   - platform: google_translate
 hacs:
-  token:  98b054e3e08e4a965f94356d145348e83ee3e7eb
+  token:  2d8229359b2b6ef76b5ffc62e1ae144b2643ac60
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml

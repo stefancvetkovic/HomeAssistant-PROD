@@ -1,0 +1,208 @@
+- platform: mqtt
+  name: "Bathroom Boiler"
+  command_topic: "cmnd/bathroomBoilerSonoff/power"
+  state_topic: "stat/bathroomBoilerSonoff/POWER"
+  availability_topic: "tele/bathroomBoilerSonoff/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: false
+- platform: mqtt
+  name: "Bathroom Light"
+  command_topic: "cmnd/bathroomMainLightSonoff/power"
+  state_topic: "stat/bathroomMainLightSonoff/POWER"
+  availability_topic: "tele/bathroomMainLightSonoff/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: false
+- platform: mqtt
+  name: "Bathroom Fan"
+  command_topic: "cmnd/bathroomFanSonoff/power"
+  state_topic: "stat/bathroomFanSonoff/POWER"
+  availability_topic: "tele/bathroomFanSonoff/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: false
+
+- platform: mqtt
+  name: "Office LED"
+  command_topic: "cmnd/officeLEDWallSonoff/power"
+  state_topic: "stat/officeLEDWallSonoff/POWER"
+  availability_topic: "tele/officeLEDWallSonoff/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: false
+
+- platform: mqtt
+  name: "Terace Heater"
+  command_topic: "cmnd/teraceHeaterSonoff/power"
+  state_topic: "stat/teraceHeaterSonoff/POWER"
+  availability_topic: "tele/teraceHeaterSonoff/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: false
+- platform: mqtt
+  name: "Terace Main Light"
+  command_topic: "cmnd/teraceMainLightSonoff/power"
+  state_topic: "stat/teraceMainLightSonoff/POWER"
+  availability_topic: "tele/teraceMainLightSonoff/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: false
+- platform: mqtt
+  name: "Terace Wall Light"
+  command_topic: "cmnd/teraceWallLightSonoff/power"
+  state_topic: "stat/teraceWallLightSonoff/POWER"
+  availability_topic: "tele/teraceWallLightSonoff/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: false
+
+- platform: mqtt
+  name: "Rack Main Light"
+  command_topic: "cmnd/rackLightSonoff/power"
+  state_topic: "stat/rackLightSonoff/POWER"
+  availability_topic: "tele/rackLightSonoff/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: false 
+- platform: mqtt
+  name: "Bedroom Coridor Main Light"
+  command_topic: "cmnd/coridorBedroomMainLightSonoff/power"
+  state_topic: "stat/coridorBedroomMainLightSonoff/POWER"
+  availability_topic: "tele/coridorBedroomMainLightSonoff/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: false
+- platform: mqtt
+  name: "Bedroom Coridor Wall Light"
+  command_topic: "cmnd/coridorBedroomWallLightSonoff/power"
+  state_topic: "stat/coridorBedroomWallLightSonoff/POWER"
+  availability_topic: "tele/coridorBedroomWallLightSonoff/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: false
+- platform: mqtt
+  name: "Living Room Coridor Main Light"
+  command_topic: "cmnd/coridorLivingRoomMainLightSonoff/power"
+  state_topic: "stat/coridorLivingRoomMainLightSonoff/POWER"
+  availability_topic: "tele/coridorLivingRoomMainLightSonoff/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: false
+- platform: mqtt
+  name: "Toilet Main Light"
+  command_topic: "cmnd/toiletLightSonoff/power"
+  state_topic: "stat/toiletLightSonoff/POWER"
+  availability_topic: "tele/toiletLightSonoff/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: false 
+
+#BEDROOM
+- platform: mqtt
+  name: "Bedroom Led Light Trafo"
+  command_topic: "cmnd/bedroomBedLightSonoff/power"
+  state_topic: "stat/bedroomBedLightSonoff/POWER"
+  availability_topic: "tele/bedroomBedLightSonoff/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: false 
+- platform: mqtt
+  name: "Bedroom Left Lamp"
+  command_topic: "cmnd/bedroomLeftLampSonoff/power"
+  state_topic: "stat/bedroomLeftLampSonoff/POWER"
+  availability_topic: "tele/bedroomLeftLampSonoff/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: false 
+- platform: mqtt
+  name: "Bedroom Right Lamp"
+  command_topic: "cmnd/bedroomRightLampSonoff/power"
+  state_topic: "stat/bedroomRightLampSonoff/POWER"
+  availability_topic: "tele/bedroomRightLampSonoff/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: false 
+
+- platform: mqtt
+  name: "Living Room Main Light"
+  command_topic: "cmnd/livingRoomMainLightSonoff/power"
+  state_topic: "stat/livingRoomMainLightSonoff/POWER"
+  availability_topic: "tele/livingRoomMainLightSonoff/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: false 
+- platform: mqtt
+  name: "Living Room Above TV Light Mini LED"
+  command_topic: "cmnd/lrTVAboveLightSonoff/power"
+  state_topic: "stat/lrTVAboveLightSonoff/POWER"
+  availability_topic: "tele/lrTVAboveLightSonoff/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: false 
+- platform: mqtt
+  name: "Living Room Above TV LED"
+  command_topic: "cmnd/livingRoomTVAboveLEDSonoff/power"
+  state_topic: "stat/livingRoomTVAboveLEDSonoff/POWER"
+  availability_topic: "tele/livingRoomTVAboveLEDSonoff/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: false 
+- platform: mqtt
+  name: "Living Room Below TV LED"
+  command_topic: "cmnd/livingRoomTVBelowLEDSonoff/power"
+  state_topic: "stat/livingRoomTVBelowLEDSonoff/POWER"
+  availability_topic: "tele/livingRoomTVBelowLEDSonoff/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: false 
+
+- platform: mqtt
+  name: "UPS No Power"
+  command_topic: "cmnd/powerDownUPSSonoff/power"
+  state_topic: "stat/powerDownUPSSonoff/POWER"
+  availability_topic: "tele/powerDownUPSSonoff/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: false 
+
