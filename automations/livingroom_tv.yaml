@@ -1,0 +1,11 @@
+- alias: 'Livingroom TV Set'
+  description: 'Sets inputs and otputs for livingroom TV'
+  trigger:
+    - platform: state
+      entity_id: input_select.livingroom_tv_source
+  action:
+    - service: script.turn_off
+      entity_id: script.livingroom_tv_set
+
+    - service: script.turn_on
+      entity_id: script.livingroom_tv_set

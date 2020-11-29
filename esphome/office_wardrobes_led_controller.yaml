@@ -1,0 +1,119 @@
+esphome:
+  name: office_wardrobe_led_controller
+  platform: ESP32
+  board: mhetesp32devkit
+wifi:
+  ssid: 'ThePingInTheNorth'
+  password: 'lanister'
+  manual_ip:
+    # Set this to the IP of the ESP
+    static_ip: 192.168.1.123
+    # Set this to the IP address of the router. Often ends with .1
+    gateway: 192.168.1.1
+    # The subnet of the network. 255.255.255.0 works for most home networks.
+    subnet: 255.255.255.0
+api:
+
+web_server:
+  port: 80
+
+# Enable logging
+logger:
+
+ota:
+
+dallas:
+  - pin: 32
+switch:
+  - platform: gpio
+    name: "q1_quinled_deca light"
+    pin: 2
+    inverted: True
+output:
+  - platform: ledc
+    pin: 25
+    frequency: 120000Hz
+    id: LED_gpio_25
+  - platform: ledc
+    pin: 26
+    frequency: 120000Hz
+    id: LED_gpio_26
+  - platform: ledc
+    pin: 27
+    frequency: 120000Hz
+    id: LED_gpio_27
+  - platform: ledc
+    pin: 14
+    frequency: 120000Hz
+    id: LED_gpio_14
+  - platform: ledc
+    pin: 12
+    frequency: 120000Hz
+    id: LED_gpio_12
+  - platform: ledc
+    pin: 16
+    frequency: 120000Hz
+    id: LED_gpio_16
+  - platform: ledc
+    pin: 17
+    frequency: 120000Hz
+    id: LED_gpio_17
+  - platform: ledc
+    pin: 18
+    frequency: 120000Hz
+    id: LED_gpio_18
+  - platform: ledc
+    pin: 19
+    frequency: 120000Hz
+    id: LED_gpio_19
+  - platform: ledc
+    pin: 21
+    frequency: 120000Hz
+    id: LED_gpio_21
+light:
+  - platform: monochromatic
+    name: "q1_quinled_deca-1"
+    default_transition_length: 2s
+    output: LED_gpio_25
+  - platform: monochromatic
+    name: "q1_quinled_deca-2"
+    default_transition_length: 2s
+    output: LED_gpio_26
+  - platform: monochromatic
+    name: "q1_quinled_deca-3"
+    default_transition_length: 2s
+    output: LED_gpio_27
+  - platform: monochromatic
+    name: "q1_quinled_deca-4"
+    default_transition_length: 2s
+    output: LED_gpio_14
+  - platform: monochromatic
+    name: "q1_quinled_deca-5"
+    default_transition_length: 2s
+    output: LED_gpio_12
+  - platform: monochromatic
+    name: "q1_quinled_deca-6"
+    default_transition_length: 2s
+    output: LED_gpio_16
+  - platform: monochromatic
+    name: "q1_quinled_deca-7"
+    default_transition_length: 2s
+    output: LED_gpio_17
+  - platform: monochromatic
+    name: "q1_quinled_deca-8"
+    default_transition_length: 2s
+    output: LED_gpio_18
+  - platform: monochromatic
+    name: "q1_quinled_deca-9"
+    default_transition_length: 2s
+    output: LED_gpio_19
+    
+  - platform: monochromatic
+    name: "q1_quinled_deca-10"
+    default_transition_length: 2s
+    output: LED_gpio_21
+    
+sensor:
+  - platform: dallas
+    index: 0
+    name: "q1_quinled_deca temp"

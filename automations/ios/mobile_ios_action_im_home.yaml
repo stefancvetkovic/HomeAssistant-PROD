@@ -1,0 +1,10 @@
+- alias: iOS action arrived home
+  initial_state: true
+  trigger:
+    - platform: event
+      event_type: ios.action_fired
+      event_data:
+        actionName: 'Im Home'
+  action:
+    service: script.turn_on
+    entity_id: script.welcome_home

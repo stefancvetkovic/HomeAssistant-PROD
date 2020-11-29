@@ -1,0 +1,4 @@
+  # condition:
+  #   condition: state
+  #   entity_id: input_boolean.guest_mode
+  #   state: 'on'

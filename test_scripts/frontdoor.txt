@@ -1,0 +1,37 @@
+{% if now().timestamp() - as_timestamp(states.binary_sensor.motion_sensor_frontdoor.last_changed) | int >= 15 and states.binary_sensor.motion_sensor_frontdoor.last_changed == 'on' %}True{% else %}False{% endif %}
+
+{{ states.binary_sensor.motion_sensor_frontdoor.state }}
+
+- wait_for_trigger:
+    - platform: event
+      event_type: ifttt_webhook_received
+      event_data:
+        action: connected_to_network
+  timeout:
+    minutes: "{{ timeout_minutes }}"
+  continue_on_timeout: false
+
+.
+
+  # - alias: 'Coridor NFC In_Out Resident By Movement Entrance Door Sensor'
+  #   trigger:
+  #     platform: state
+  #     entity_id: binary_sensor.motion_sensor_frontdoor
+  #     to: 'on' 
+  #   action:
+  #     - wait_template: "{{ is_state('binary_sensor.motion_sensor_frontdoor', 'on') }}"
+  #       timeout: 15
+  #     - choose:
+  #         - conditions:
+  #             - condition: template
+  #               value_template: "{{ not wait.completed }}"
+  #           sequence:
+  #             - service: persistent_notification.create
+  #               data:
+  #                 title: 'You are leaving! Great!'
+  #                 message: "Never come back."
+  #       default:
+  #         - service: persistent_notification.create
+  #           data:
+  #             title: 'You are entering into mansion! Great!'
+  #             message: "Take a glass of whiskey."

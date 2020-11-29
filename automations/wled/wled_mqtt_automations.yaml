@@ -1,0 +1,154 @@
+#BEDROOM WARDROBE LEFT
+- id: bedroom_wardrobe_left_wled_speed
+  alias: bedroom_wardrobe_left_wled_speed
+  trigger:
+  - entity_id: input_number.bedroom_wardrobe_left_led_speed
+    platform: state
+  condition: []
+  action:
+  - data_template:
+      topic: wled/bedroom-wardrobe-left/api
+      payload: SX={{ states(trigger.to_state.state) | int }}
+    service: mqtt.publish
+
+- id: bedroom_wardrobe_left_wled_intensity
+  alias: bedroom_wardrobe_left_wled_intensity
+  trigger:
+  - entity_id: input_number.bedroom_wardrobe_left_led_intensity
+    platform: state
+  condition: []
+  action:
+  - data_template:
+      topic: wled/bedroom-wardrobe-left/api
+      payload: IX={{ states(trigger.to_state.state) | int }}
+    service: mqtt.publish
+
+- id: bedroom_wardrobe_left_wled_palette
+  alias: bedroom_wardrobe_left_wled_palette
+  trigger:
+  - platform: state
+    entity_id: input_select.bedroom_wardrobe_left_wled_pallete_list
+  condition: []
+  action:
+  - service: mqtt.publish
+    data_template:
+      topic: wled/bedroom-wardrobe-left/api
+      payload: "{{states(trigger.to_state.state)}}"
+
+- id: bedroom_wardrobe_left_wled_presets
+  alias: bedroom_wardrobe_left_wled_presets
+  trigger:
+  - platform: state
+    entity_id: input_select.bedroom_wardrobe_left_wled_presets
+  condition: []
+  action:
+  - service: mqtt.publish
+    data_template:
+      topic: wled/bedroom-wardrobe-left/api
+      payload: "{{states(trigger.to_state.state)}}"
+
+#BEDROOM WARDROBE RIGHT
+- id: bedroom_wardrobe_right_wled_speed
+  alias: bedroom_wardrobe_right_wled_speed
+  trigger:
+  - entity_id: input_number.bedroom_wardrobe_right_led_speed
+    platform: state
+  condition: []
+  action:
+  - data_template:
+      topic: wled/bedroom-wardrobe-right/api
+      payload: SX={{ states(trigger.to_state.state) | int }}
+    service: mqtt.publish
+
+- id: bedroom_wardrobe_right_wled_intensity
+  alias: bedroom_wardrobe_right_wled_intensity
+  trigger:
+  - entity_id: input_number.bedroom_wardrobe_right_led_intensity
+    platform: state
+  condition: []
+  action:
+  - data_template:
+      topic: wled/bedroom-wardrobe-right/api
+      payload: IX={{ states(trigger.to_state.state) | int }}
+    service: mqtt.publish
+
+- id: bedroom_wardrobe_right_wled_palette
+  alias: bedroom_wardrobe_right_wled_palette
+  trigger:
+  - platform: state
+    entity_id: input_select.bedroom_wardrobe_right_wled_pallete_list
+  condition: []
+  action:
+  - service: mqtt.publish
+    data_template:
+      topic: wled/bedroom-wardrobe-right/api
+      payload: "{{states(trigger.to_state.state)}}"
+
+- id: bedroom_wardrobe_right_wled_presets
+  alias: bedroom_wardrobe_right_wled_presets
+  trigger:
+  - platform: state
+    entity_id: input_select.bedroom_wardrobe_right_wled_presets
+  condition: []
+  action:
+  - service: mqtt.publish
+    data_template:
+      topic: wled/bedroom-wardrobe-right/api
+      payload: "{{states(trigger.to_state.state)}}"
+
+
+##########OFFICE LAMP##################################
+- id: office_lamp_wled_speed
+  alias: Office Lamp WLED Speed
+  trigger:
+  - entity_id: 
+      - input_number.office_lamp_led_intensity
+      - input_number.office_lamp_led_speed
+    platform: state
+  condition: []
+  action:
+  - data_template:
+      topic: wled/office-lamp/api
+      payload: SX={{ states(trigger.to_state.state) | int }}
+    service: mqtt.publish
+
+- id: office_lamp_wled_intensity
+  alias: Office Lamp WLED Intensity
+  trigger:
+  - entity_id: 
+      - input_number.office_lamp_led_intensity
+      - input_number.office_lamp_led_speed
+    platform: state
+  condition: []
+  action:
+  - data_template:
+      topic: wled/office-lamp/api
+      payload: IX={{ states(trigger.to_state.state) | int }}
+    service: mqtt.publish
+
+- id: office_lamp_wled_palette
+  alias: Office Lamp WLED Palette
+  trigger:
+  - platform: state
+    entity_id: 
+      - input_select.office_lamp_wled_pallete_list
+  condition: []
+  action:
+  - service: mqtt.publish
+    data_template:
+      topic: wled/bedroom-wardrobe-left/api
+      payload: "{{states(trigger.to_state.state)}}"
+
+- id: office_lamp_wled_presets
+  alias: Office Lamp WLED Presets
+  trigger:
+  - platform: state
+    entity_id: 
+      - input_select.office_lamp_wled_pallete_list
+      - input_select.office_lamp_wled_presets
+  condition: []
+  action:
+  - service: mqtt.publish
+    data_template:
+      topic: wled/office-lamp/api
+      payload: "{{states(trigger.to_state.state)}}"

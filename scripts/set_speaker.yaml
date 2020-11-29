@@ -1,0 +1,33 @@
+alias: Set notification speaker
+icon: "mdi:party-popper"
+description: 'Set volume, source, on/off state based on location of a speakear - media_player (bathroom, office, bedroom)'
+fields:
+  speaker:
+    description: 'The speaker that will reproduce sound'
+    example: media_player.bedroom_ceiling_speaker
+  source:
+    description: 'Correct source for playing audio - amplifier sources'
+    example: AVR Zone2, Primary Chromecast, Livingroom TV, Workroom TV, Secondary Chromecast, Bedroom TV !
+  volume:
+    description: "sets the volume on the speaker"
+    example: '0.4'
+
+sequence:
+  - choose:
+      - conditions:
+          - condition: template
+            value_template: "{{ not is_state(speaker,'on') }}"
+        sequence:
+          - service: media_player.turn_on
+            data:
+              entity_id: "{{ speaker }}"
+
+  - service: media_player.volume_set
+    data:
+      entity_id: "{{ speaker }}"
+      volume_level: "{{ volume }}"
+
+  - service: media_player.select_source
+    data:
+      entity_id: "{{ speaker }}"
+      source: "{{ source }}"

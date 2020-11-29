@@ -1,0 +1,27 @@
+- alias: Tag Resident check in_out is scanned
+  description: 'Based on frontdoor movement sensor we have 2 automations for leaving home and entering home'
+  trigger:
+    - platform: tag
+      tag_id: 3e7ee5ba-ee40-4f2d-9206-ef2866cdaa3d
+  action:
+    - wait_template: "{{ is_state('binary_sensor.motion_sensor_frontdoor', 'on') }}"
+      timeout: 15
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ not wait.completed }}"
+          sequence:
+            - service: script.turn_on
+              entity_id: script.turn_off_all_lights_and_devices
+
+            - service: persistent_notification.create
+              data:
+                title: 'You are leaving! Great!'
+                message: "Never come back."
+      default:
+        - service: script.turn_on
+          entity_id: script.welcome_home
+        - service: persistent_notification.create
+          data:
+            title: 'You are entering into mansion! Great!'
+            message: "Take a glass of whiskey."

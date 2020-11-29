@@ -1,3 +1,4 @@
+#BATHROOM
 - platform: mqtt
   name: "Bathroom Boiler"
   command_topic: "cmnd/bathroomBoilerSonoff/power"
@@ -29,17 +30,19 @@
   payload_off: "OFF"
   retain: false
 
+#OFFICE
 - platform: mqtt
-  name: "Office LED"
-  command_topic: "cmnd/officeLEDWallSonoff/power"
-  state_topic: "stat/officeLEDWallSonoff/POWER"
-  availability_topic: "tele/officeLEDWallSonoff/LWT"
+  name: "Office Main Light"
+  command_topic: "cmnd/officeMainLightSonoff/power"
+  state_topic: "stat/officeMainLightSonoff/POWER"
+  availability_topic: "tele/officeMainLightSonoff/LWT"
   payload_available: "Online"
   payload_not_available: "Offline"
   payload_on: "ON"
   payload_off: "OFF"
   retain: false
 
+#TERACE
 - platform: mqtt
   name: "Terace Heater"
   command_topic: "cmnd/teraceHeaterSonoff/power"
@@ -71,6 +74,7 @@
   payload_off: "OFF"
   retain: false
 
+#RACK
 - platform: mqtt
   name: "Rack Main Light"
   command_topic: "cmnd/rackLightSonoff/power"
@@ -81,6 +85,8 @@
   payload_on: "ON"
   payload_off: "OFF"
   retain: false 
+
+#CORIDORS
 - platform: mqtt
   name: "Bedroom Coridor Main Light"
   command_topic: "cmnd/coridorBedroomMainLightSonoff/power"
@@ -102,10 +108,10 @@
   payload_off: "OFF"
   retain: false
 - platform: mqtt
-  name: "Living Room Coridor Main Light"
-  command_topic: "cmnd/coridorLivingRoomMainLightSonoff/power"
-  state_topic: "stat/coridorLivingRoomMainLightSonoff/POWER"
-  availability_topic: "tele/coridorLivingRoomMainLightSonoff/LWT"
+  name: "Livingroom Coridor Main Light"
+  command_topic: "cmnd/coridorLivingroomMainLightSonoff/power"
+  state_topic: "stat/coridorLivingroomMainLightSonoff/POWER"
+  availability_topic: "tele/coridorLivingroomMainLightSonoff/LWT"
   payload_available: "Online"
   payload_not_available: "Offline"
   payload_on: "ON"
@@ -123,6 +129,16 @@
   retain: false 
 
 #BEDROOM
+- platform: mqtt
+  name: "Bedroom Main Light"
+  command_topic: "cmnd/bedroomMainLightSonoff/power"
+  state_topic: "stat/bedroomMainLightSonoff/POWER"
+  availability_topic: "tele/bedroomMainLightSonoff/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: false 
 - platform: mqtt
   name: "Bedroom Led Light Trafo"
   command_topic: "cmnd/bedroomBedLightSonoff/power"
@@ -153,7 +169,18 @@
   payload_on: "ON"
   payload_off: "OFF"
   retain: false 
+- platform: mqtt
+  name: "Bedroom Wardrobe Pre Trafo"
+  command_topic: "cmnd/bedroomPreTrafoWardrobeSonoff/power"
+  state_topic: "stat/bedroomPreTrafoWardrobeSonoff/POWER"
+  availability_topic: "tele/bedroomPreTrafoWardrobeSonoff/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: false 
 
+#LIVING ROOM
 - platform: mqtt
   name: "Living Room Main Light"
   command_topic: "cmnd/livingRoomMainLightSonoff/power"
@@ -195,6 +222,17 @@
   payload_off: "OFF"
   retain: false 
 
+#KITCHEN
+- platform: mqtt
+  name: "Kitchen Pre-Trafo Working Desk Light"
+  command_topic: "cmnd/kitchenPreTrafoWorkingDeskSonoff/power"
+  state_topic: "stat/kitchenPreTrafoWorkingDeskSonoff/POWER"
+  availability_topic: "tele/kitchenPreTrafoWorkingDeskSonoff/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: false 
 - platform: mqtt
   name: "UPS No Power"
   command_topic: "cmnd/powerDownUPSSonoff/power"
@@ -206,3 +244,30 @@
   payload_off: "OFF"
   retain: false 
 
+# - platform: broadlink
+#   host: !secret rm3-bedroom_ip
+#   mac: !secret rm3-bedroom_mac
+#   switches:
+#     tv_volume_up:
+#       friendly_name: Bedroom Tv Volume Up
+#       command_on: "JgBIAAABJZAUEhMSFDUTExMSExITEhQRFDUUNRQSFDUUNRQ2FDUUNhMTEzUUEhQSExITEhQRFBEUNRQSEzUUNhQ1FDYUNRQ2FAANBQ=="
+#     tv_volume_down:
+#       friendly_name: Bedroom Tv Volume Down      
+#       command_on: "JgBQAAABIJURFRAVETcSFBEVEBUQFREUETgROBIUETgROBI4ETgSOBE4EjgRFRMSEBURFBQRERQRFRAVEDgSOBE4EjgROBI4EQAFJAABI0sRAA0FAAAAAAAAAAA="
+#     tv_memory_1:
+#       friendly_name: Bedroom Tv Memory 1
+#       command_on: "JgD4AAABI5IUEhQRFDUUEhMSFBEUEhQREzUUNhQSEzUUNhQ1FDYUNRQ2FBITEhMSEzYUEhMSExITEhQ1FDUUNhQSEzUUNhQ1FAAFHgABKUgUAAxcAAEpSBQADF4AASdIFAAMXQABKEgUAAxcAAEpSBQADFwAASlIFAAMXAABKUgUAAxcAAEpSBQADFwAASlIFAAMYAABJUgUAAxeAAEnSBQADF0AAShIFAAMXAABKUgUAAxdAAEoSBQADF0AAShIFAAMXQABJ0kUAAxcAAEoSRQADFwAASlIFAAMXAABKEkUAAxfAAElSRQADFwAAShJFAAMXAABKEkUAA0F"
+#     tv_memory_2:
+#       friendly_name: Bedroom Tv Memory 2
+#       command_on: "JgD4AAABI5IUEhMSFDUUEhMSExIUERQRFDUUNRQSFDUUNRQ2FDUUNhQSFDQUExMSEzUUEhQRFBITNRQSFDUUNRQSFDUUNRQ2FAAFHgABJ0oTAAxeAAElSxIADF4AASdKEwAMXQABKEkUAAxhAAEjSRQADFwAAShJFAAMXAABKEkUAAxcAAEoSRQADFwAAShJFAAMXgABJkkUAAxcAAEpSBQADFwAAShJFAAMXAABKEkUAAxeAAEmSBQADF0AAShIFAAMXAABKUgUAAxdAAEoSBQADF0AAShIFAAMXQABKEgUAAxdAAEoSBQADF0AAShIFAAMXQABKEgUAA0F"
+#     tv_memory_3:
+#       friendly_name: Bedroom Tv Memory 3
+#       command_on: "JgDwAAABI5IUEhQRFDUUEhQRFBEUEhMSEzUUNhQSEzUUNhQ1FDYUNRQ2FDUUEhQRFDUUEhQRFBEUERQSEzUUNhQSEzUUNhQ1FAAFHgABKUgUAAxdAAEoSBQADF0AAShIFAAMXQABKEgUAAxdAAEoSBQADFwAASlIFAAMXAABKUgUAAxcAAEpSBQADF0AAShIFAAMYAABJUgUAAxeAAEmSRQADFwAAShJFAAMXAABKEkUAAxcAAEoSRQADFwAAShJFAAMXAABKEkUAAxdAAEnSRQADF0AASdJFAAMXwABJUkUAAxcAAEoSRQADFsAASlJFAANBQAAAAAAAAAA"
+#     tv_memory_4:
+#       friendly_name: Bedroom Tv Memory 4
+#       command_on: "JgDoAAABJJIVERMSEzUUEhQSExITEhMSFDUUNRQSFDUUNRQ2EzYUNhMTExITNRQSFDUUEhQRFBEUNRM2ExMSNxMTETgROBI3EgAFIQABJksRAAxfAAEmSxEADF8AAShJEwAMXQABJksTAAxdAAEpRxUADFsAASpHFQAMXAABKEgVAAxcAAEmShQADF0AASdJFQAMXAABJ0kUAAxgAAEjShMADF4AASZKEwAMXgABJkoTAAxdAAEnShMADF0AASdKEwAMXQABJ0oTAAxeAAEnSRQADFwAASdKFAAMXQABKUcSAAxfAAEnSRQADQU="
+
+#     bedroom_air_conditioner:
+#       friendly_name: "Air conditioner turn on"
+#       command_on: 'JgBkAVsAASgQERAyEBEQEQ8SDxIPERAREBEQMhAREBEQMg8SDxIPMhAyEDEQMhAyEBEQERAREBEPEg8REBEQERAREBEQERAREBEQERAREBEQERAREBEQERAREBEQERAREBEQERAREBEQEQ8REBEQERAyEDIQMRAyEGNiAAEnEDIQERAREBEQERAREBEQERAREDEQERASDzIQERAyEDEQMhAyEDEQMhAREBEQERAREBEQERAREBEQERAREBEPERAREBEQERAREBEQERAREBEQERAREBEQERAREBEQERAREBEQERAREBEQERAREBEPERBTYgABKBAxEBEQERAREBEQERAREBEQERAxEBEQERAyEDIQMRAyEBEQMhAxEDISDxIwERARMBIwEg8SDxIPEi8SMBIwEg8SDxIPERASDhMOEw4TDhMvEy8TDhIvEy8TDhMOEw4TDhMOEw4TDhMOEi8TLxMvEi8TAA0FAAAAAA=='
+#       command_off: 'JgBkAVwAASgREBAyEBEQEBEQEBEREBEQERAQMhEQERAQMRAyERAQMhEwETERMREwERAQERAREBEQERAREBEQERARERAQERAREBEQERAREBEQERAREBEQERARDxEQERAREBEQERAREBEQERARERAQERAREBEQMhAxEVJhAAEpDzIQERAREBEQEREQEBEQERAREDEQERAREDIREBAxEDIRMRAxEDIRMREQEBEQERAREBEQEQ8REBEQERAREBEQERAREBEQERAREBEQERAREBEQERAREBEQERAREBEQERAREBEQERAREBAQERARERAREBBTYgABJxExEBEQERARERAREBARERAQERAxERAREBExERAQERARETARMRExETAQERAyERARMRAxERAREBEQETERMBExEBEREBEQEBEQEREQERAREBEwETEREBAyETAQEREQEBEREBEQEBEQERAREBEQERAyEDERAA0FAAAAAA=='

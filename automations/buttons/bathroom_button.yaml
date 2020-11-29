@@ -1,0 +1,35 @@
+#Single Click
+- alias: 'Bathroom Button Single Click'
+  description: 'Uses xiomi WXKG11LM to do different things - single click'
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: bathroom_button
+      unique_id: "00:15:8d:00:02:3d:c2:5a"
+      event: 1002
+  action:
+    - service: script.turn_on
+      data:
+        entity_id: >
+          {% if is_state('media_player.bathroom_ceiling_speaker', 'on') %}
+            script.stop_showering
+          {%- else -%}
+            script.start_showering
+          {%- endif %}
+
+
+
+#Double Click
+- alias: 'Bathroom Button Double Click'
+  description: 'Uses xiomi WXKG11LM to do different things - double click'
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: bathroom_button
+      unique_id: "00:15:8d:00:02:3d:c2:5a"
+      event: 1004
+  action:
+    - service: media_player.media_next_track
+      entity_id: media_player.spotify_stefan

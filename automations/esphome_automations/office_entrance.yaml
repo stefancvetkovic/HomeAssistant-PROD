@@ -1,0 +1,47 @@
+- alias: Office Desk Lamp Switch
+  trigger:
+    platform: event
+    event_type: esphome.office_entrance
+    event_data:
+      type: single_short_click_1
+  action:
+    - service: light.toggle
+      entity_id: 
+        - light.office_desk_lamp
+
+# - alias: Office Rotary Encoder set
+#   trigger:
+#     platform: state
+#     entity_id: light.office_desk_lamp
+#   condition:
+#     condition: template
+#     value_template: >
+#       {{ trigger.from_state is not none and
+#         trigger.from_state.state == 'on' and
+#         trigger.from_state.attributes.brightness > 0 and
+#         trigger.to_state is not none and
+#         trigger.to_state.state == 'on' }}
+#   action:
+#     - service: python_script.set_state
+#       data:
+#         entity_id: sensor.office_entrance_rotary
+#         state: "{{ trigger.from_state.attributes.brightness | int }}"
+        
+
+- alias: 'Office Desk Lamp Dimming via encoder'
+  id: office_desk_lamp_dimming_encoder
+  trigger:
+    - platform: state
+      entity_id: sensor.office_desk_lamp_dimmer
+  action:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.to_state.state not in ['Unavailable','Unknown'] }}"
+          sequence:
+            - service: light.turn_on
+              entity_id: light.office_desk_lamp
+              data:
+                brightness: >
+                  {{states('sensor.office_desk_lamp_dimmer') | int * 2.55 | round(0) }}
+

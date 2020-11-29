@@ -1,0 +1,205 @@
+#SINGLE SHORT CLICK
+
+- alias: Livingroom Entrance Controller Greywall LED
+  id: livingroom_entrance_graywall_wall_led_short_click
+  trigger:
+    platform: event
+    event_type: esphome.livingroom_entrance_1
+    event_data:
+      type: single_short_click_1
+  action:
+    - service: light.toggle
+      entity_id: group.livingroom_led_graywall_all_channels
+
+- alias: Livingroom Entrance Controller LED Above TV
+  id: livingroom_entrance_led_above_tv_short_click
+  trigger:
+    platform: event
+    event_type: esphome.livingroom_entrance_2
+    event_data:
+      type: single_short_click_1
+  action:
+    - service: light.toggle
+      entity_id: group.livingroom_led_above_tv_all_channels
+
+- alias: Livingroom Entrance Controller LED Below TV
+  id: livingroom_entrance_led_below_tv_short_click
+  trigger:
+    platform: event
+    event_type: esphome.livingroom_entrance_1
+    event_data:
+      type: single_short_click_3
+  action:
+    - service: light.toggle
+      entity_id: light.livingroom_wled_below_tv
+      
+# - alias: Livingroom Entrance Controller
+#   id: livingroom_entrance_graywall_spots_short_click
+#   trigger:
+#     platform: event
+#     event_type: esphome.livingroom_entrance_2
+#     event_data:
+#       type: single_short_click_1
+#   action:
+#     - service: light.toggle
+#       entity_id: 
+
+- alias: Livingroom Entrance Ledstrip Terace Switch
+  id: livingroom_entrance_ledstrip_teracewall_short_click
+  trigger:
+    platform: event
+    event_type: esphome.livingroom_entrance_1
+    event_data:
+      type: single_short_click_2
+  action:
+    - service: light.toggle
+      entity_id: group.livingroom_led_teracewall_all_channels
+
+#DOUBLE CLICK
+
+- alias: Livingroom Entrance Controller
+  id: livingroom_entrance_ceiling_short_click
+  trigger:
+    platform: event
+    event_type: esphome.livingroom_entrance_1
+    event_data:
+      type: double_click_4
+  action:
+    - service: light.turn_off
+      entity_id: light.livingroom
+
+    - service: script.turn_off
+      entity_id: script.play_notification
+  
+    - service: script.turn_on
+      entity_id: script.play_notification
+      data:
+        variables:
+          speaker: "media_player.chromecast_livingroom_tv"
+          volume: "0.4"
+          custom_message: "Warning. Home will self-destruct in 30 seconds.Run."
+  
+    - repeat:
+        count: 10
+        sequence:
+          - service: light.toggle
+            entity_id: group.all_ledstrips_livingroom
+          - delay:
+              milliseconds: 500
+          - service: light.toggle
+            entity_id: group.all_ledstrips_livingroom
+          - delay:
+              milliseconds: 500
+
+
+#ROTARY ENCODERS
+
+- alias: 'Livingroom Entrance Ledstrip Greywall Dimming via encoder'
+  id: livingroom_entrance_led_greywall_dimming_encoder
+  trigger:
+    - platform: state
+      entity_id: sensor.livingroom_ledstrip_greywall
+  action:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.to_state.state not in ['Unavailable','Unknown'] }}"
+          sequence:
+            - service: light.turn_on
+              entity_id: light.livingroom_go_temp_greywall
+              data:
+                brightness: >
+                  {{states('sensor.livingroom_ledstrip_greywall') | int * 2.55 | round(0) }}
+
+- alias: 'Livingroom Entrance Ledstrip Terace Dimming via encoder'
+  id: livingroom_entrance_ledstrip_terace_dimming_encoder
+  trigger:
+    - platform: state
+      entity_id: sensor.livingroom_ledstrip_teracewall
+  action:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.to_state.state not in ['Unavailable','Unknown'] }}"
+          sequence:
+            - service: light.turn_on
+              entity_id: light.livingroom_go_temp_teracewall
+              data:
+                brightness: >
+                  {{states('sensor.livingroom_ledstrip_teracewall') | int * 2.55 | round(0) }}
+
+- alias: 'Livingroom Entrance Ledstrip Above TV Dimming via encoder'
+  id: livingroom_entrance_ledstrip_above_tv_dimming_encoder
+  trigger:
+    - platform: state
+      entity_id: sensor.livingroom_ledstrip_abovetv
+  action:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.to_state.state not in ['Unavailable','Unknown'] }}"
+          sequence:
+            - service: light.turn_on
+              entity_id: group.livingroom_led_above_tv_all_channels
+              data:
+                brightness: >
+                  {{states('sensor.livingroom_ledstrip_abovetv') | int * 2.55 | round(0) }}
+
+- alias: 'Livingroom Entrance Ledstrip Below TV Dimming via encoder'
+  id: livingroom_entrance_ledstrip_below_tv_dimming_encoder
+  trigger:
+    - platform: state
+      entity_id: sensor.livingroom_ledstrip_belowtv
+  action:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.to_state.state not in ['Unavailable','Unknown'] }}"
+          sequence:
+            - service: light.turn_on
+              entity_id: light.livingroom_wled_below_tv
+              data:
+                brightness: >
+                  {{states('sensor.livingroom_ledstrip_belowtv') | int * 2.55 | round(0) }}
+
+
+# #DOUBLE CLICK
+
+# - alias: Livingroom Entrance Ceiling Double Click
+#   id: livingroom_entrance_ceiling_double_click
+#   trigger:
+#     platform: event
+#     event_type: esphome.livingroom_entrance
+#     event_data:
+#       type: double_click_2
+#   action:
+#     - service: light.turn_off
+#       entity_id: light.livingroom_go_temperature_wall          
+
+#     - service: light.turn_on
+#       entity_id: light.livingroom_go_color_wall
+#       data:
+#         rgb_color: ["{{range(256)|random}}","{{range(256)|random}}","{{range(256)|random}}"]
+
+
+
+
+# - alias: Livingroom Entrance Bed Double Click
+#   id: livingroom_entrance_bed_double_click
+#   trigger:
+#     platform: event
+#     event_type: esphome.livingroom_entrance
+#     event_data:
+#       type: double_click_1
+#   action:
+#     - service: switch.turn_on
+#       entity_id: switch.livingroom_led_light_trafo
+
+#     - service: light.turn_off
+#       entity_id: light.livingroom_go_temperature_bed          
+
+#     - service: light.turn_on
+#       entity_id: light.livingroom_go_color_bed
+#       data:
+#         rgb_color: ["{{range(256)|random}}","{{range(256)|random}}","{{range(256)|random}}"]
+

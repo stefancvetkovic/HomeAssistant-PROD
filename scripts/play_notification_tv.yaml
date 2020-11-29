@@ -1,0 +1,41 @@
+alias: Play notification TV
+icon: "mdi:party-popper"
+description: 'Play notification on tv built-in chromecast'
+fields:
+  custom_message:
+    description: 'Custom message that will be reproduced'
+    example: Hello world!
+  source:
+    description: 'Correct source for playing audio - amplifier sources'
+    example: media_player.chromecast_livingroom_tv
+  volume:
+    description: "sets the volume on the speaker"
+    example: '0.6'
+
+sequence:
+  - service: scene.create
+    data:
+      scene_id: before
+      snapshot_entities: "{{ speaker }}"
+  - service: script.turn_on
+    entity_id: script.set_speaker
+    data:
+      variables:
+        speaker: "{{ speaker }}"
+        volume: "{{ volume }}"
+        source: "{{ source }}"
+  - delay: "00:00:03"
+  - service: tts.google_translate_say
+    entity_id: media_player.system_chromecast
+    data:
+      message: "{{ custom_message }}"
+      cache: true
+  - wait_template: "{{ is_state('media_player.system_chromecast', 'playing') }}"
+    timeout: '00:00:10'                                                                                                                                    
+    continue_on_timeout: 'true'                                                                                                                            
+  - wait_template: "{{ is_state('media_player.system_chromecast', 'idle') }}"                                                                             
+    timeout: '00:00:10'                                                                                                                                     
+    continue_on_timeout: 'true'  
+  - service: scene.turn_on
+    data: 
+      entity_id: scene.before

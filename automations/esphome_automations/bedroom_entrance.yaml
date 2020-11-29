@@ -1,0 +1,161 @@
+#SINGLE SHORT CLICK
+
+- alias: Bedroom Entrance Ceiling Ledstrip toggle via encoder
+  id: bedroom_entrance_ceiling_short_click
+  trigger:
+    platform: event
+    event_type: esphome.bedroom_entrance
+    event_data:
+      type: single_short_click_2
+  action:
+    - service: light.toggle
+      entity_id: 
+        - light.bedroom_go_temperature_wall
+        - light.bedroom_go_color_wall
+
+- alias: Bedroom Entrance Bed Ledstrip toggle via encoder
+  id: bedroom_entrance_bed_short_click
+  trigger:
+    platform: event
+    event_type: esphome.bedroom_entrance
+    event_data:
+      type: single_short_click_1
+  action:
+    - service: switch.toggle
+      entity_id: switch.bedroom_led_light_trafo
+    - service: light.toggle
+      entity_id:
+        - light.bedroom_go_color_bed
+        - light.bedroom_go_temp_bed
+
+- alias: Bedroom Entrance TV toggle via encoder
+  id: bedroom_entrance_tv_short_click
+  trigger:
+    platform: event
+    event_type: esphome.bedroom_entrance
+    event_data:
+      type: single_short_click_3
+  action:
+    # - service: script.turn_on
+    #   entity_id: script.bedroom_tv
+    #   data:
+    #     variables:
+    #       tvsource: "EON"
+    - service: media_player.turn_on
+      entity_id: media_player.bedroom_tv
+
+#SINGLE LONG CLICK
+
+- alias: Bedroom Entrance Ceiling Ledstrip Single Long Click
+  id: bedroom_entrance_ceiling_single_long_click
+  trigger:
+    platform: event
+    event_type: esphome.bedroom_entrance
+    event_data:
+      type: single_long_click_2
+  action:
+    - service: light.turn_off
+      entity_id: 
+        - light.bedroom_go_temperature_wall
+        - light.bedroom_go_color_wall
+
+- alias: Bedroom Entrance TV Single Long Click
+  id: bedroom_entrance_tv_single_long_click
+  trigger:
+    platform: event
+    event_type: esphome.bedroom_entrance
+    event_data:
+      type: single_long_click_3
+  action:
+    - service: media_player.turn_off
+      entity_id: media_player.bedroom_tv
+
+#DOUBLE CLICK
+
+- alias: Bedroom Entrance Ceiling Double Click
+  id: bedroom_entrance_ceiling_double_click
+  trigger:
+    platform: event
+    event_type: esphome.bedroom_entrance
+    event_data:
+      type: double_click_2
+  action:
+    - service: light.turn_off
+      entity_id: light.bedroom_go_temperature_wall          
+
+    - service: light.turn_on
+      entity_id: light.bedroom_go_color_wall
+      data:
+        rgb_color: ["{{range(256)|random}}","{{range(256)|random}}","{{range(256)|random}}"]
+
+- alias: Bedroom Entrance Bed Double Click
+  id: bedroom_entrance_bed_double_click
+  trigger:
+    platform: event
+    event_type: esphome.bedroom_entrance
+    event_data:
+      type: double_click_1
+  action:
+    - service: switch.turn_on
+      entity_id: switch.bedroom_led_light_trafo
+
+    - service: light.turn_off
+      entity_id: light.bedroom_go_temperature_bed          
+
+    - service: light.turn_on
+      entity_id: light.bedroom_go_color_bed
+      data:
+        rgb_color: ["{{range(256)|random}}","{{range(256)|random}}","{{range(256)|random}}"]
+
+#ROTARY ENCODER
+
+- alias: 'Bedroom Entrance Ceiling Dimming via encoder'
+  id: bedroom_entrance_ceiling_dimming_encoder
+  trigger:
+    - platform: state
+      entity_id: sensor.bedroom_entrance_led_ceiling_dimmer
+  action:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.to_state.state not in ['Unavailable','Unknown'] }}"
+          sequence:
+            - service: light.turn_on
+              entity_id: light.bedroom_go_temperature_wall
+              data:
+                brightness: >
+                  {{states('sensor.bedroom_entrance_led_ceiling_dimmer') | int * 2.55 | round(0) }}
+
+- alias: 'Bedroom Entrance Bedroom Bed Dimming via encoder' 
+  id: bedroom_entrance_bed_dimming_encoder 
+  trigger:
+    - platform: state
+      entity_id: sensor.bedroom_entrance_led_bed_dimmer
+  action:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.to_state.state not in ['Unavailable','Unknown'] }}"
+          sequence:
+            - service: light.turn_on
+              entity_id: light.bedroom_go_temp_bed
+              data:
+                brightness: >
+                  {{states('sensor.bedroom_entrance_led_bed_dimmer') | int }}
+
+- alias: 'Bedroom Entrance TV Volume via encoder'
+  id: bedroom_entrance_tv_volume_encoder 
+  trigger:
+    - platform: state
+      entity_id: sensor.bedroom_entrance_actuator_1
+  action:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.to_state.state not in ['Unavailable','Unknown'] }}"
+          sequence:
+            - service: media_player.volume_set
+              entity_id: media_player.bedroom_ceiling_speaker
+              data:
+                volume_level: >
+                  {{ states('sensor.bedroom_entrance_actuator_1')|float/100 }}

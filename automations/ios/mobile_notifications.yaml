@@ -1,0 +1,95 @@
+#GREJALICA NOTIFIKACIJA
+- id: iOS notify terace heater on
+  alias: 'Notify when terace heater is ON'
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: switch.terace_heater
+      from: 'off'
+      to: 'on'
+  action:
+    service: notify.mobile_app_stefans_iphone
+    data:
+      title: 'ALERT!'
+      message: "Upaljena je grejalica na terasi!"
+      data:
+        push:
+          category: "teraceheater" # Needs to match the top level identifier you used in the ios configuration
+
+- alias: iOS action terace heater off
+  initial_state: 'on'
+  trigger:
+    - platform: event
+      event_type: ios.notification_action_fired
+      event_data:
+        actionName: TERACEHEATEROFF
+  action:
+    service: switch.turn_off
+    entity_id: switch.terace_heater
+
+
+
+#BOJLER NOTIFIKACIJA
+- alias: iOS notify bathroom boiler off
+  initial_state: 'on'
+  trigger:
+    - platform: state
+      entity_id: switch.bathroom_boiler
+      from: 'on'
+      to: 'off'
+  action:
+    service: notify.mobile_app_stefans_iphone
+    data:
+      title: 'Action in Bathroom'
+      message: "Bojler je ugasen"
+      data:
+        push:
+          category: "boiler" # Needs to match the top level identifier you used in the ios configuration
+
+- alias: ios action bathroom boiler on
+  initial_state: 'on'
+  trigger:
+    - platform: event
+      event_type: ios.notification_action_fired
+      event_data:
+        actionName: BOILERON
+  action:
+    service: switch.turn_on
+    entity_id: switch.bathroom_boiler
+
+
+#ACTIONS
+- alias: iOS action residents left house
+  initial_state: 'on'
+  trigger:
+    - platform: event
+      event_type: ios.action_fired
+      event_data:
+        actionName: residents_left_house
+  action:
+    service: script.turn_on
+    entity_id: script.residents_left
+
+- alias: iOS action turn off all media speakers
+  initial_state: 'on'
+  trigger:
+    - platform: event
+      event_type: ios.action_fired
+      event_data:
+        actionName: turn_off_all_music
+  action:
+    service: script.turn_on
+    entity_id: script.turn_off_music_all
+
+- alias: iOS action turn off all appliancies (lights and media) #for example good action for GoodNight
+  initial_state: 'on'
+  trigger:
+    - platform: event
+      event_type: ios.action_fired
+      event_data:
+        actionName: turn_off_all_appliancies
+  action:
+    service: script.turn_on
+    entity_id: 
+      - script.turn_off_music_all
+      - script.residents_left

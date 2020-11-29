@@ -1,0 +1,60 @@
+  - name: Bedroom Romantic
+    entities:
+      switch.bedroom_main_light:
+        state: "off"
+      switch.bedroom_left_lamp:
+        state: "off"
+      switch.bedroom_right_lamp:
+        state: "off"
+      light.bedroom_go_temperature_wall:
+        state: "off"
+      light.bedroom_go_color_wall:
+        state: "on"
+        rgb_color: [255,0,0]
+        brightness: 254
+      switch.bedroom_led_light_trafo:
+        state: "off"
+      light.bedroom_go_color_bed:
+        state: "off"
+      light.bedroom_go_temp_bed:
+        state: "off"
+
+  - name: MovieTime
+    entities:
+      scene.bedroom_spaceship:
+        state: "on"
+    
+  - name: Bedroom Spaceship
+    entities:
+      switch.bedroom_main_light:
+        state: "off"
+      switch.bedroom_left_lamp:
+        state: "off"
+      switch.bedroom_right_lamp:
+        state: "off"
+      light.bedroom_go_temperature_wall:
+        state: "off"
+      light.bedroom_go_color_wall:
+        state: "off"
+      switch.bedroom_led_light_trafo:
+        state: "on"
+      light.bedroom_go_color_bed:
+        state: "on"
+  - name: Bedroom Reading
+    entities:
+      switch.bedroom_main_light:
+        state: "off"
+      switch.bedroom_led_light_trafo:
+        state: "off"
+      light.bedroom_go_temperature_wall:
+        state: "off"
+      light.bedroom_go_color_wall:
+        state: "off"
+      light.bedroom_go_color_bed:
+        state: "off"
+      light.bedroom_go_temp_bed:
+        state: "off"
+      switch.bedroom_left_lamp:
+        state: "on"
+      switch.bedroom_right_lamp:
+        state: "on"      

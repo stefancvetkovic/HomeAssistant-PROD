@@ -1,0 +1,26 @@
+alias: Livingroom TV Set
+icon: "mdi:youtube-tv"
+description: 'Sets inputs and otputs for livingroom TV'
+sequence:
+  - service: script.turn_on
+    entity_id: script.set_avr
+    data:
+      variables:
+        avr_media_player: 'media_player.avr_zone1'
+        volume: 0.4
+        source : >
+          {% if is_state('input_select.livingroom_tv_source', 'HDMI 3 (eARC/ARC)') -%}
+            SBB BOX
+          {%- else -%}
+            TV Audio
+          {%- endif %}
+
+  - service: media_player.turn_on
+    entity_id: media_player.livingroom_tv
+
+  - wait_template: "{{ is_state('media_player.livingroom_tv', 'on') }}"
+
+  - service: media_player.select_source
+    entity_id: media_player.livingroom_tv
+    data:
+      source: "{{ states('input_select.livingroom_tv_source') }}"

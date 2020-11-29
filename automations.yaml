@@ -1,1 +1,203 @@
-[]
+- id: '1592771497607'
+  alias: TestWledBedroomWardrobe
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.toilet_door
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data: {}
+    entity_id: light.bedroom_wled_wardrobe_left_master, light.bedroom_wled_wardrobe_left_segment_0,
+      light.bedroom_wled_wardrobe_left_segment_1
+    service: light.turn_on
+- id: '1592771689208'
+  alias: TestWledWardrobeBedroomOff
+  description: ''
+  trigger:
+  - entity_id: binary_sensor.toilet_door
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data: {}
+    entity_id: light.bedroom_wled_wardrobe_left_master, light.bedroom_wled_wardrobe_left_segment_0,
+      light.bedroom_wled_wardrobe_left_segment_1
+    service: light.turn_off
+- id: '1592936518874'
+  alias: TurnOnLedStripGO
+  description: ''
+  trigger:
+  - entity_id: light.livingroom_ac_ledstrip_greywall
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data: {}
+    entity_id: light.livingroom_go_color_greywall
+    service: light.turn_on
+- id: '1592937215382'
+  alias: Bedroom Sensor Detected
+  description: If its triggers between 23.00 - 08.00, it turns bed led strip on
+  trigger:
+  - entity_id: binary_sensor.motion_sensor_bedroom_left, binary_sensor.motion_sensor_bedroom_right
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - after: '23:00:00'
+    before: 08:00:00
+    condition: time
+  action:
+  - data: {}
+    entity_id: switch.bedroom_led_light_trafo
+    service: switch.turn_on
+  - delay: 0:05
+  - data: {}
+    entity_id: light.bedroom_go_color_bed, light.bedroom_go_temp_bed
+    service: light.turn_on
+- id: '1592938524703'
+  alias: Bedroom Turn Off Bed Lights
+  description: Turning bed ledstrip lights and trafo when no movement is detected
+  trigger:
+  - entity_id: binary_sensor.motion_sensor_bedroom_right,binary_sensor.motion_sensor_bedroom_left
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data: {}
+    entity_id: light.bedroom_go_color_bed, light.bedroom_go_temp_bed
+    service: light.turn_off
+  - data: {}
+    entity_id: switch.bedroom_led_light_trafo
+    service: switch.turn_off
+- id: '1593092839889'
+  alias: Terace Turn On Wall Lights
+  description: Turn on lights after sunset and offset
+  trigger:
+  - event: sunset
+    offset: -00:59:00
+    platform: sun
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.terace_wall_light
+    service: switch.turn_on
+- id: '1593093255568'
+  alias: Terace Turn Off Wall Lights
+  description: Turn off wall light on terace when is dawn
+  trigger:
+  - event: sunrise
+    offset: -00:45:00
+    platform: sun
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.terace_wall_light
+    service: switch.turn_off
+- id: '1593093721068'
+  alias: Livingroom AboveTV Keep on
+  description: Keeps trafo turned on whole time in order to see zigbee controller
+    for abovetv ledstrip
+  trigger:
+  - entity_id: switch.living_room_above_tv_led
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.living_room_above_tv_led
+    service: switch.turn_on
+- id: '1593629260708'
+  alias: Rotary Button AboveTv
+  description: ''
+  trigger:
+  - event_data:
+      action: double_click
+    event_type: esphome.above_tv_button
+    platform: event
+  condition: []
+  action:
+  - data: {}
+    entity_id: light.livingroom_go_temp_abovetv
+    service: light.turn_off
+  - data: {}
+    entity_id: light.livingroom_go_color_abovetv
+    service: light.turn_on
+- id: '1593960834082'
+  alias: Teraace heater set to off
+  description: If someone turns on the hater, automaticallz turn off
+  trigger:
+  - entity_id: switch.terace_heater
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      entity_id: switch.terace_heater
+    service: switch.turn_off
+- id: '1595183286313'
+  alias: Bedroom AC turn On Color LedWall
+  description: ''
+  trigger:
+  - entity_id: light.bedroom_ac_ledstrip_wall
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      brightness: 254
+      rgb_color:
+      - 255
+      - 0
+      - 0
+    entity_id: light.bedroom_go_color_wall
+    service: light.turn_on
+- id: '1595183556064'
+  alias: Bedroom AC turn off Color LedWall
+  description: ''
+  trigger:
+  - entity_id: light.bedroom_ac_ledstrip_wall, light.bedroom_go_color_wall
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data: {}
+    entity_id: light.bedroom_go_color_wall
+    service: light.turn_off
+- id: '1604097341808'
+  alias: Livinngroom belowtv switch always on
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: switch.living_room_below_tv_led
+    from: 'on'
+    to: 'off'
+  condition: []
+  action:
+  - service: switch.turn_on
+    data: {}
+    entity_id: switch.living_room_below_tv_led
+  mode: single
+- id: '1604097639894'
+  alias: Kitchen Working Desk Pre-Trafo Always On
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: switch.kitchen_pre_trafo_working_desk_light
+    from: 'on'
+    to: 'off'
+  condition: []
+  action:
+  - service: switch.turn_on
+    data: {}
+    entity_id: switch.kitchen_pre_trafo_working_desk_light
+  mode: single

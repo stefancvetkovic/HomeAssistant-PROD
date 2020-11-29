@@ -1,0 +1,23 @@
+- alias: Bathroom turn on boiler at cheapest tarif
+  trigger:
+    - platform: time
+      at: '00:01:00'
+  # condition:
+  #   condition: state
+  #   entity_id: input_boolean.boiler_specific_time_on
+  #   state: 'on'
+  action:
+      service: switch.turn_on
+      entity_id: switch.bathroom_boiler
+
+- alias: Bathroom turn off boiler at non_cheapest tarif
+  trigger:
+    - platform: time
+      at: '06:00:00'
+  # condition:
+  #   condition: state
+  #   entity_id: input_boolean.boiler_specific_time_on
+  #   state: 'off'
+  action:
+      service: switch.turn_off
+      entity_id: switch.bathroom_boiler

@@ -1,0 +1,14 @@
+alias: Set bedroom scene romantic
+description: 'Sets the appropriete scene in the bedroom with television and music'
+sequence:
+  - service: scene.turn_on
+    data:
+      entity_id: scene.bedroom_romantic
+
+  - service: script.play_spotify_zone2
+    data_template:
+      speaker_name: media_player.zone_13     
+
+  # - service: media_player.turn_off
+  #   data:
+  #     entity_id: media_player.bedroom_tv

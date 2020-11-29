@@ -1,0 +1,197 @@
+#SINGLE SHORT CLICK
+
+- alias: Bedroom Bed Left Ceiling ledstrip toggle via encoder
+  trigger:
+    platform: event
+    event_type: esphome.bedroom_bed_left
+    event_data:
+      type: single_short_click_2
+  action:
+    - service: light.toggle
+      entity_id: 
+        - light.bedroom_go_temperature_wall
+        - light.bedroom_go_color_wall
+
+- alias: Bedroom Bed Left  ledstrip toggle via encoder
+  trigger:
+    platform: event
+    event_type: esphome.bedroom_bed_left
+    event_data:
+      type: single_short_click_1
+  action:
+    - service: switch.toggle
+      entity_id: switch.bedroom_led_light_trafo
+    - service: light.toggle
+      entity_id:
+        - light.bedroom_go_color_bed
+        - light.bedroom_go_temp_bed
+
+- alias: Bedroom Bed Left TV toggle via encoder
+  trigger:
+    platform: event
+    event_type: esphome.bedroom_bed_left
+    event_data:
+      type: single_short_click_3
+  action:
+    # - service: script.turn_on
+    #   entity_id: script.bedroom_tv
+    #   data:
+    #     variables:
+    #       tvsource: "EON"
+    - service: media_player.turn_on
+      entity_id: media_player.bedroom_tv
+
+- alias: Bedroom Bed Right TV toggle via encoder
+  trigger:
+    platform: event
+    event_type: esphome.bedroom_bed_right
+    event_data:
+      type: single_short_click_1
+  action:
+    # - service: script.turn_on
+    #   entity_id: script.bedroom_tv
+    #   data:
+    #     variables:
+    #       tvsource: "EON"
+    - service: media_player.turn_on
+      entity_id: media_player.bedroom_tv
+
+#SINGLE LONG CLICK
+
+- alias: Bedroom Bed Left ceiling ledstrip toggle via encoder
+  trigger:
+    platform: event
+    event_type: esphome.bedroom_bed_left
+    event_data:
+      type: single_long_click_2
+  action:
+    - service: light.turn_off
+      entity_id: 
+        - light.bedroom_go_temperature_wall
+        - light.bedroom_go_color_wall
+
+- alias: Bedroom Bed Left TV turn off via encoder
+  trigger:
+    platform: event
+    event_type: esphome.bedroom_bed_left
+    event_data:
+      type: single_long_click_3
+  action:
+    - service: media_player.turn_off
+      entity_id: media_player.bedroom_tv
+
+- alias: Bedroom Bed Right TV turn off via encoder
+  trigger:
+    platform: event
+    event_type: esphome.bedroom_bed_right
+    event_data:
+      type: single_long_click_1
+  action:
+    - service: media_player.turn_off
+      entity_id: media_player.bedroom_tv
+
+#DOUBLE CLICK
+
+- alias: Bedroom Bed Left Ceiling Change Colors Double Click
+  trigger:
+    platform: event
+    event_type: esphome.bedroom_bed_left
+    event_data:
+      type: double_click_2
+  action:
+    - service: light.turn_off
+      entity_id: light.bedroom_go_temperature_wall          
+
+    - service: light.turn_on
+      entity_id: light.bedroom_go_color_wall
+      data:
+        rgb_color: ["{{range(256)|random}}","{{range(256)|random}}","{{range(256)|random}}"]
+
+- alias: Bedroom Bed Left Bed Change Colors Double Click
+  trigger:
+    platform: event
+    event_type: esphome.bedroom_bed_left
+    event_data:
+      type: double_click_1
+  action:
+    - service: switch.turn_on
+      entity_id: switch.bedroom_led_light_trafo
+
+    - service: light.turn_off
+      entity_id: light.bedroom_go_temperature_bed          
+
+    - service: light.turn_on
+      entity_id: light.bedroom_go_color_bed
+      data:
+        rgb_color: ["{{range(256)|random}}","{{range(256)|random}}","{{range(256)|random}}"]
+
+#ROTARY ENCODER
+
+- alias: 'Bedroom Bed Left Ceiling LED Dimming via encoder'
+  id: bedroom_bed_left_ceiling_dimming_encoder
+  trigger:
+    - platform: state
+      entity_id: sensor.bedroom_led_ceiling_left
+  action:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.to_state.state not in ['Unavailable','Unknown'] }}"
+          sequence:
+            - service: light.turn_on
+              entity_id: light.bedroom_go_temperature_wall
+              data:
+                brightness_pct: >
+                  {{states('sensor.bedroom_led_ceiling_left') | int }}
+
+- alias: 'Bedroom Bed Left LED Dimming via encoder' 
+  id: bedroom_bed_left_dimming_encoder 
+  trigger:
+    - platform: state
+      entity_id: sensor.bedroom_led_bed_left
+  action:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.to_state.state not in ['Unavailable','Unknown'] }}"
+          sequence:
+            - service: light.turn_on
+              entity_id: light.bedroom_go_temperature_bed
+              data:
+                brightness_pct: >
+                  {{states('sensor.bedroom_led_bed_left') | int }}
+
+- alias: 'Bedroom Bed Left TV Volume via encoder'
+  id: bedroom_bed_left_tv_volume_encoder 
+  trigger:
+  - platform: state
+    entity_id: sensor.bedroom_audio_volume_left
+  action:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.to_state.state not in ['Unavailable','Unknown'] }}"
+          sequence:
+            - service: media_player.volume_set
+              entity_id: media_player.bedroom_ceiling_speaker
+              data:
+                volume_level: >
+                  {{ states('sensor.bedroom_audio_volume_left')|float/100 }}
+
+- alias: 'Bedroom Bed Right TV Volume via encoder'
+  id: bedroom_bed_right_tv_volume_encoder 
+  trigger:
+  - platform: state
+    entity_id: 
+      - sensor.bedroom_audio_volume_right
+  action:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.to_state.state not in ['Unavailable','Unknown'] }}"
+          sequence:
+            - service: media_player.volume_set
+              entity_id: media_player.bedroom_ceiling_speaker
+              data:
+                volume_level: >
+                  {{ states('sensor.bedroom_audio_volume_right')|float/100 }}

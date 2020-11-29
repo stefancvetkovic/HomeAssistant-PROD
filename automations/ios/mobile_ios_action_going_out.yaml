@@ -1,0 +1,10 @@
+- alias: "iOS action going out"
+  initial_state: true
+  trigger:
+    - platform: event
+      event_type: ios.action_fired
+      event_data:
+        actionName: 'Going Out'
+  action:
+    service: script.turn_on
+    entity_id: script.turn_off_all_lights_and_devices

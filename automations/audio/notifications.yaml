@@ -1,0 +1,119 @@
+- id: OfficeMainLightIsON_TTS
+  alias: Audio notification in bathroom when main light in bathroom is turned on
+  trigger:
+    - platform: state
+      entity_id: switch.bathroom_light
+      from:  'off'
+      to:  'on'
+  action:
+  - service: script.turn_off
+    entity_id: script.play_notification
+
+  - service: script.turn_on
+    entity_id: script.play_notification
+    data:
+      variables:
+        speaker: "media_player.bathroom_ceiling_speaker"
+        source: "Primary Chromecast"
+        volume: "0.4"
+        custom_message: "Welcome to the bathroom."
+
+- alias: 'Bedroom Wardrobe Notification Based On Door Sensor'
+  id: bedroom_wardrobe_notification_based_on_door_sensor
+  trigger:
+    - platform: state
+      entity_id: 
+        - binary_sensor.bedroom_wardrobe_left_door
+        - binary_sensor.bedroom_wardrobe_right_door
+      to: 'on'
+      for: "00:05:00"
+  action:
+    - alias: Repeat the sequence UNTIL the conditions are true
+      repeat:
+        sequence:
+          - service: script.turn_off
+            entity_id: script.play_notification
+
+          - service: script.turn_on
+            entity_id: script.play_notification
+            data:
+              variables:
+                speaker: "media_player.bedroom_ceiling_speaker"
+                source: "Primary Chromecast"
+                custom_message: "Please, close the wardrobe."
+                volume: "0.4"
+
+            #wait 3 minutes 
+          - delay: 00:03:00
+        until:
+          # Did it work?
+          - condition: state
+            entity_id: 
+            - binary_sensor.bedroom_wardrobe_left_door
+            - binary_sensor.bedroom_wardrobe_right_door
+            state: 'off'
+
+- alias: 'Bathroom Notification Based On Humidity'
+  id: bathroom_notification_clear_glass
+  trigger:
+    - platform: state
+      entity_id: switch.bathroom_fan
+      from: 'off'
+      to: 'on'
+  action:
+  - service: script.turn_off
+    entity_id: script.play_notification
+
+  - service: script.turn_on
+    entity_id: script.play_notification
+    data:
+      variables:
+        speaker: "media_player.bathroom_ceiling_speaker"
+        source: "Primary Chromecast"
+        volume: "0.4"
+        custom_message: "Reminder: Please clean the glass after shower."
+
+- alias: Google Calendar check events for today
+  trigger:
+  - platform: numeric_state
+    below: '500'
+    entity_id: sensor.google_ete
+  # condition:
+  #   condition: state
+  #   entity_id: 'input_boolean.reminder_calendar'
+  #   state: 'on'
+  action:
+    # - service: persistent_notification.create
+    #   data:
+    #     message: "In one hour, you have an event: {{state_attr('calendar.stefan_j_cvetkovic_gmail_com', 'message')}}"
+
+    - service: script.turn_off
+      entity_id: script.play_notification
+
+    - service: script.turn_on
+      entity_id: script.play_notification
+      data:
+        variables:
+          speaker: "media_player.bedroom_ceiling_speaker"
+          source: "Primary Chromecast"
+          volume: "0.4"
+          custom_message: "Reminder: In 10 minutes start next event: {{state_attr('calendar.stefan_j_cvetkovic_gmail_com', 'message')}}. Stay clean. Stay safe."
+
+- alias: Announce temperture in the bedroom by scanned radiator tag
+  description: ''
+  trigger:
+    - platform: tag
+      tag_id: !secret bedroom_tag_radiator
+  action:
+  - service: script.turn_off
+    entity_id: script.play_notification
+
+  - service: script.turn_on
+    entity_id: script.play_notification
+    data:
+      variables:
+        speaker: "media_player.bedroom_ceiling_speaker"
+        source: "Primary Chromecast"
+        volume: "0.4"
+        custom_message: "Current tempereture in the bedroom is {{ states('sensor.bedroom_temperature')}} degrees."
+  mode: single

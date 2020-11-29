@@ -1,0 +1,14 @@
+- alias: "Stefan's iPhone is charching"
+  initial_state: true
+  trigger:
+    - platform: event
+      event_type: ios.action_fired
+      event_data:
+        actionName: 'Charging Battery State'
+  condition:
+    - condition: state
+      entity_id: device_tracker.stefans_iphone
+      state: 'home'
+  action:
+    service: script.turn_off
+    entity_id: script.low_battery_iphone

@@ -1,0 +1,25 @@
+alias: Turn off all lights and devices
+sequence:
+  - service: script.turn_off
+    entity_id: script.play_notification
+  - service: script.turn_on
+    entity_id: script.play_notification
+    data:
+      variables:
+        speaker: "media_player.bathroom_ceiling_speaker"
+        source: "Primary Chromecast"
+        volume: "0.4"
+        custom_message: "Attention: Lights are turning off and all media."
+
+  #Kill all the lights
+  - service: script.turn_on
+    entity_id: script.lights_off
+
+  #Turn off all media players
+  - service: media_player.turn_off
+    data:
+      entity_id:
+        - group.livingroom_media_players
+        - group.bedroom_media_players
+        - group.office_media_players
+        - group.bathroom_media_players

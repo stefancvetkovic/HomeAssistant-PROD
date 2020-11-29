@@ -1,0 +1,124 @@
+  livingroom_led_above_tv_all_channels:
+    name: livingroom led above tv all channels
+    entities:
+      - light.livingroom_go_temp_abovetv
+      - light.livingroom_go_color_abovetv
+
+  livingroom_led_teracewall_all_channels:
+    name: livingroom led terace wall all channels
+    entities:
+      - light.livingroom_go_color_teracewall
+      - light.livingroom_go_temp_teracewall
+
+  livingroom_led_graywall_all_channels:
+    name: livingroom led graywall all channels
+    entities:
+      - light.livingroom_go_temp_greywall
+      - light.livingroom_go_color_greywall
+
+  bedroom_wall_ledstrip_all_channels:
+    name: Bedroom Wall Ledstrip All
+    entities:
+      - light.bedroom_go_color_wall
+      - light.bedroom_go_temperature_wall
+
+  bedroom_bed_ledstrip_all_channels:
+    name: Bedroom Bed Ledstrip All
+    entities:
+      - light.bedroom_go_color_bed
+      - light.bedroom_go_temp_bed
+  
+  
+  livingroom_adaptive_lights:
+    name: Adaptive Lights Livingroom
+    entities:
+      - group.livingroom_led_graywall_all_channels
+  all_lights_entites:
+    name: All lights
+    entities:
+      - group.bedroom_bed_ledstrip_all_channels
+      - group.bedroom_wall_ledstrip_all_channels
+      - group.livingroom_led_graywall_all_channels
+      - group.livingroom_led_teracewall_all_channels
+      - group.livingroom_led_above_tv_all_channels
+      - light.livingroom_ac_bulbs_mirrowall
+      - light.kitchen_topgun_ac
+      - light.office_desk_lamp
+      - light.kitchen_wled_desk
+      - light.livingroom_wled_below_tv
+      
+  all_switch_lights_livingroom:
+    name: All switch lights in the livingroom
+    entities:
+      - switch.living_room_above_tv_led
+      - switch.living_room_above_tv_light_mini_led
+      - switch.livingroom_coridor_main_light
+      - switch.living_room_main_light
+
+  all_lights_livingroom:
+    name: All lights in the livingroom
+    entities:
+      - group.livingroom_led_above_tv_all_channels
+      - group.livingroom_led_graywall_all_channels
+      - group.livingroom_led_teracewall_all_channels
+
+  all_switchlights_entites:
+    name: All switch lights
+    entities:
+     - switch.bathroom_light
+     - switch.bedroom_main_light
+     - switch.bedroom_coridor_main_light
+     - switch.bedroom_coridor_wall_light
+     - switch.bedroom_led_light_trafo
+     - switch.bedroom_left_lamp
+     - switch.bedroom_right_lamp
+     - switch.living_room_above_tv_led
+     - switch.living_room_above_tv_light_mini_led
+     - switch.livingroom_coridor_main_light
+     - switch.living_room_main_light
+     - switch.rack_main_light
+     - switch.office_main_light
+     - switch.terace_main_light
+     - switch.terace_wall_light
+     - switch.toilet_main_light
+
+  all_ledstrips_livingroom:
+    name: All ledstrips livingroom
+    entities:
+      - light.livingroom_go_color_greywall
+      - light.livingroom_go_color_teracewall
+      - light.livingroom_go_color_abovetv
+      - light.livingroom_wled_below_tv
+
+  livingroom_media_players:
+    name: Livingroom media players
+    entities:
+      - media_player.avr_zone1
+      - media_player.avr_zone2
+      - media_player.spotify_stefan
+      - media_player.livingroom_tv
+      - media_player.chromecast_livingroom_tv
+      - media_player.wallpad_livingroom
+      - media_player.plex_livingroom_tv
+  bedroom_media_players:
+    name: Bedroom media players
+    entities:
+      - media_player.bedroom_tv
+      - media_player.bedroom_ceiling_speaker
+  office_media_players:
+    name: Office media players
+    entities:
+      - media_player.office_tv
+      - media_player.office_amp_speaker
+      - media_player.chromecast_office_tv
+  bathroom_media_players:
+    name: Bathroom media players
+    entities:
+      - media_player.bathroom_ceiling_speaker
+
+
+  device_trackers:
+    name: Device Trackers
+    entities:
+        - device_tracker.anjas_iphone
+        - device_tracker.stefans_iphone

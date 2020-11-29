@@ -1,0 +1,17 @@
+# - alias: 'Livingroom Below TV Led Turn On when TV is turned on after sunset'
+#   trigger:
+#     - platform: state
+#       entity_id: media_player.livingroom_tv
+
+#   # condition:
+#   #   conditions: and
+#   #     - condition: state
+#   #       entity_id: switch.living_room_below_tv_led
+#   #       state: 'on'
+#   #     - condition: sun
+#   #       after: sunset
+#   action:
+#     - service_template: light.turn_{{trigger.to_state.state}}
+#       entity_id: light.livingroom_wled_below_tv
+#       data:
+#         effect: 'Solid'

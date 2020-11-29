@@ -1,0 +1,12 @@
+- alias: 'Toggle the main light based on door sensor'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.rack_door
+  action:
+    - service_template: >
+        {% if states('binary_sensor.rack_door') == "on" %}
+          switch.turn_on
+        {% else %}
+          switch.turn_off
+        {% endif %}
+      entity_id: switch.rack_main_light

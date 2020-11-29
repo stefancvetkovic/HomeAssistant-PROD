@@ -1,0 +1,42 @@
+alias: Play spotify
+icon: "mdi:party-popper"
+description: 'Play spotify on dedicated speaker'
+fields:
+  source_avr:
+    description: 'The avr zone/speaker that will reproduce sound'
+    example: media_player.avr_zone1
+  volume_avr:
+    description: "sets the volume on the speaker"
+    example: '0.4'
+  speaker:
+    description: 'Media player that will be playing - ONLY IF ZONE2'
+    example: media_player.bedroom_ceiling_speaker
+  volume_speaker:
+    description: "sets the volume on the speaker"
+    example: '0.4'
+
+sequence:
+  - service: script.turn_on
+    entity_id: script.set_avr
+    data:
+      variables:
+        avr_media_player: "{{ source_avr }}"
+        volume: "{{ volume_avr }}"
+
+  - service: script.turn_on
+    entity_id: script.set_speaker
+    data:
+      variables:
+        speaker: "{{ speaker }}"
+        volume: "{{ volume_speaker }}"
+        source: "AVR Zone2"
+
+  - service: spotcast.start
+    data:
+      device_name: 'Denon AVR-X2400H'
+      uri: 'spotify:playlist:37i9dQZF1DX9loJQLuEvap'
+      force_playback: true
+      random_song: true
+      repeat: track
+      shuffle: true
+      offset: 1

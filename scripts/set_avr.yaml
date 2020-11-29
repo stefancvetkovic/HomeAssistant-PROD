@@ -1,0 +1,33 @@
+alias: Set AVR
+icon: "mdi:party-popper"
+description: 'Sets AVR to different zones and sources'
+fields:
+  avr_media_player:
+    description: "gets the correct zone player for avr"
+    example: media_player.zone1, media_player.avr_zone2
+  volume:
+    description: "sets the volume on the avr"
+    example: "0.4"
+  source:
+    description: 'Correct source for playing audio - amplifier sources'
+    example:  AUX1,AUX2,Blu-ray,Bluetooth,SBB BOX,CD,DVD,Game,HEOS Music,Media Player,TV Audio,Tuner
+
+sequence:
+  - choose:
+    - conditions: "{{not is_state(avr_media_player,'on')}}"
+      sequence:
+        - service: media_player.turn_on
+          data:
+            entity_id: "{{ avr_media_player }}"
+
+  - wait_template: "{{ is_state(avr_media_player, 'on') }}"
+
+  - service: media_player.volume_set
+    data:
+      entity_id: "{{ avr_media_player }}"
+      volume_level: "{{ volume | float}}"
+
+  - service: media_player.select_source
+    data:
+      entity_id: "{{ avr_media_player }}"
+      source: "{{ source }}"

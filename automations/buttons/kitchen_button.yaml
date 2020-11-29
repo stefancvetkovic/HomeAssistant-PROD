@@ -1,0 +1,41 @@
+#Single Click
+- alias: 'Kitchen Button Single Click'
+  description: 'Uses xiomi WXKG01LM to do different things - single click'
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: kitchen_button
+      unique_id: "00:15:8d:00:04:18:9d:1c"
+      event: 1002
+  action:
+    - service: light.toggle
+      entity_id: light.kitchen_wled_desk
+
+#Double Click
+- alias: 'Kitchen Button Double Click'
+  description: 'Uses xiomi WXKG01LM to do different things - double click'
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: kitchen_button
+      unique_id: "00:15:8d:00:04:18:9d:1c"
+      event: 1004
+  action:
+    - service: script.turn_on
+      entity_id: script.livingroom_tv_set
+
+#Long click
+- alias: 'Kitchen Button Long Click'
+  description: 'Uses xiomi WXKG01LM to do different things - long click'
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: kitchen_button
+      unique_id: "00:15:8d:00:04:18:9d:1c"
+      event: 1003
+  action:
+    service: media_player.turn_off
+    entity_id: media_player.livingroom_tv

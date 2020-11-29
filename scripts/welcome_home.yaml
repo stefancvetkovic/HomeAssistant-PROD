@@ -1,0 +1,46 @@
+alias: Welcome home
+description: Turns some lights on and music tv when resident enter house by night
+sequence:
+  - service: light.turn_on
+    data:
+      entity_id: 
+        - light.livingroom_ac_ledstrip_greywall
+        - light.livingroom_go_temp_abovetv
+
+  - service: switch.turn_on
+    data:
+      entity_id:
+        - switch.bedroom_coridor_wall_light
+        - switch.terace_wall_light
+
+  - service: script.turn_on
+    entity_id: script.set_avr
+    data:
+      variables:
+        avr_media_player: 'media_player.avr_zone1'
+        volume: 0.4
+        source : >
+          {% if is_state('input_select.livingroom_tv_source', 'HDMI 3 (eARC/ARC)') -%}
+            SBB BOX
+          {%- else -%}
+            TV Audio
+          {%- endif %}
+
+  - service: media_player.turn_on
+    entity_id: media_player.livingroom_tv
+
+  - wait_template: "{{ is_state('media_player.livingroom_tv', 'on') }}"
+
+  - service: media_player.select_source
+    entity_id: media_player.livingroom_tv
+    data:
+      source: 'Spotify'
+
+  - service: spotcast.start
+    data:
+      device_name: 'LSONY KD-65XG8596'
+      uri: 'spotify:playlist:37i9dQZF1DX9loJQLuEvap'
+      force_playback: true
+      random_song: true
+      shuffle: true
+      offset: 1

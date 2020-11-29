@@ -1,0 +1,55 @@
+- alias: "Bedroom Audio TV Turn On"
+  description: "When Bedroom TV is turned on, turn on audio ceilings in bedroom and set correct source"
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id: media_player.bedroom_tv
+      from: 'off'
+      to: 'on'
+  action:
+    - choose:
+      - conditions:
+        - condition: not
+          conditions:
+          - condition: state
+            entity_id: media_player.bedroom_tv
+            state: 'on'
+        sequence:
+        - service: media_player.turn_on
+          data:
+            entity_id: media_player.bedroom_tv
+
+    - delay: "00:00:01"
+
+    - service: media_player.select_source
+      entity_id: media_player.bedroom_tv
+      data:
+        source: "EON"
+
+    - service: script.turn_on
+      entity_id: script.set_speaker
+      data:
+        variables:
+          speaker: "media_player.bedroom_ceiling_speaker"
+          volume: "0.3"
+          source: "Bedroom TV"
+
+    - delay: "00:00:15"
+    - service: webostv.button
+      data:
+        button: LEFT
+        entity_id: media_player.bedroom_tv
+      
+
+- alias: "Bedroom Audio TV Turn Off"
+  description: "When Bedroom TV is turned off, turn off audio ceilings in bedroom"
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id: media_player.bedroom_tv
+      from: 'on'
+      to: 'off'
+  action:
+      - service: media_player.turn_off
+        data:
+          entity_id: media_player.bedroom_ceiling_speaker

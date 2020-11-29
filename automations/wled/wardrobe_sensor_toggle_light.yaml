@@ -1,0 +1,50 @@
+- alias: 'bedroom wardrobe opens lights by wardrobe door sensor'
+  trigger:
+    - platform: state
+      entity_id: 
+        - binary_sensor.bedroom_wardrobe_left_door
+        - binary_sensor.bedroom_wardrobe_right_door
+      to: 'on'
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: >
+          {% if trigger.to_state.entity_id == 'binary_sensor.bedroom_wardrobe_left_door' %}
+            light.wled_br_wd_l
+          {% elif trigger.to_state.entity_id == 'binary_sensor.bedroom_wardrobe_right_door' %}
+            light.wled_br_wd_r
+          {% else %}
+            #DoNothing
+          {% endif %}
+      
+        color_name: >
+          {% if states('sensor.home_realfeel_temperature') | float <= 0 %} blueviolet
+          {% elif states('sensor.home_realfeel_temperature') | float > 0 and states('sensor.home_realfeel_temperature') | float <= 6 %} cyan
+          {% elif states('sensor.home_realfeel_temperature') | float > 6 and states('sensor.home_realfeel_temperature') | float <= 10 %} cadetblue
+          {% elif states('sensor.home_realfeel_temperature') | float > 10 and states('sensor.home_realfeel_temperature') | float <= 16 %} greenyellow
+          {% elif states('sensor.home_realfeel_temperature') | float > 16 and states('sensor.home_realfeel_temperature') | float <= 20 %} green
+          {% elif states('sensor.home_realfeel_temperature') | float > 20 and states('sensor.home_realfeel_temperature') | float <= 25 %} orange
+          {% elif states('sensor.home_realfeel_temperature') | float > 26 and states('sensor.home_realfeel_temperature') | float <= 30 %} orangered
+          {% elif states('sensor.home_realfeel_temperature') | float > 31 and states('sensor.home_realfeel_temperature') | float <= 35 %} tomato
+          {% elif states('sensor.home_realfeel_temperature') | float > 36 and states('sensor.home_realfeel_temperature') | float <= 40 %} red
+          {% else %} red
+          {% endif %}
+
+- alias: 'bedroom wardrobe closed lights by wardrobe door sensor'
+  trigger:
+    - platform: state
+      entity_id: 
+        - binary_sensor.bedroom_wardrobe_left_door
+        - binary_sensor.bedroom_wardrobe_right_door
+      to: 'off'
+  action:
+    - service: light.turn_off
+      data:
+        entity_id: >
+          {% if trigger.to_state.entity_id == 'binary_sensor.bedroom_wardrobe_left_door' %}
+            light.wled_br_wd_l
+          {% elif trigger.to_state.entity_id == 'binary_sensor.bedroom_wardrobe_right_door' %}
+            light.wled_br_wd_r
+          {% else %}
+            #DoNothing
+          {% endif %}

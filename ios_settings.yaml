@@ -1,0 +1,21 @@
+push:
+  categories:
+    - identifier: teraceheater
+      name: teraceheater
+      actions:
+        - identifier: TERACEHEATEROFF
+          title: 'Ugasi grejalicu na terasi'
+          activationMode: 'background'
+          authenticationRequired: no
+          destructive: yes
+          behavior: 'default'
+
+    - identifier: boiler
+      name: boiler
+      actions:
+        - identifier: BOILERON
+          title: 'Upali bojler'
+          activationMode: 'background'
+          authenticationRequired: no
+          destructive: yes
+          behavior: 'default'

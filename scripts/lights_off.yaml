@@ -1,0 +1,8 @@
+alias: Lights off
+sequence:
+  - service: light.turn_off
+    data:
+      entity_id: group.all_lights_entites
+  - service: switch.turn_off
+    data:
+      entity_id: group.all_switchlights_entites

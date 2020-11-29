@@ -1,0 +1,14 @@
+alias: Turn off speakers
+description: Turns off all the spekears including TVs
+sequence:
+  - service: media_player.turn_off
+    data:
+      entity_id: 
+        - media_player.bathroom_ceiling_speaker
+        - media_player.bedroom_ceiling_speaker
+        - media_player.bedroom_tv
+        - media_player.spotify_stefan
+        - media_player.system_chromecast
+        - media_player.wallpad_livingroom
+      # - media_player.avr_zone1
+      # - media_player.avr_zone2

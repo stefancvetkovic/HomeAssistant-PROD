@@ -1,0 +1,40 @@
+alias: Start shower
+icon: "mdi:party-popper"
+description: 'User has started showering process'
+sequence:
+  - service: script.turn_off
+    entity_id: script.stop_showering
+    
+  - service: media_player.turn_on
+    entity_id: media_player.bathroom_ceiling_speaker
+
+  - service: media_player.select_source
+    data:
+      entity_id: "media_player.bathroom_ceiling_speaker"
+      source: "AVR Zone2"
+
+  - service: script.turn_on
+    entity_id: script.play_notification
+    data:
+      variables:
+        speaker: "media_player.bathroom_ceiling_speaker"
+        source: "Primary Chromecast"
+        volume: "0.4"
+        custom_message: "Shower process started."
+  # - wait_template: "{{ is_state('media_player.system_chromecast', 'idle') }}"
+  #   timeout: '00:00:10'                                                                                                                                    
+  #   continue_on_timeout: 'true' 
+
+  - service: script.turn_on
+    entity_id: script.play_spotify
+    data: 
+      variables:
+        source_avr: media_player.avr_zone2
+        volume_avr: 0.7
+        speaker: media_player.bathroom_ceiling_speaker
+        volume_speaker: 0.5
+
+
+
+  - service: switch.turn_off
+    entity_id: switch.bathroom_boiler

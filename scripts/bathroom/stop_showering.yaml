@@ -1,0 +1,29 @@
+alias: Stop shower
+icon: "mdi:party-popper"
+description: 'User has finished with showering process'
+sequence:
+  # - service: script.turn_on
+  #   entity_id: script.play_notification
+  #   data:
+  #     variables:
+  #       speaker: "media_player.bathroom_ceiling_speaker"
+  #       source: "Primary Chromecast"
+  #       volume: "0.4"
+  #       custom_message: "Great! You're done with taking a shower! Outside temperature is {{ states('sensor.home_realfeel_temperature')}} degrees. Stay safe."
+  - service: script.turn_on
+    entity_id: script.play_notification
+    data:
+      variables:
+        speaker: "media_player.bathroom_ceiling_speaker"
+        source: "Primary Chromecast"
+        volume: "0.4"
+        custom_message: "Great! You're done with taking a shower! Outside temperature is {{ states('sensor.home_realfeel_temperature')}} degrees. Stay safe."
+  - wait_template: "{{ is_state('media_player.system_chromecast', 'idle') }}"
+    timeout: '00:00:10'                                                                                                                                    
+    continue_on_timeout: 'true' 
+  - service: switch.turn_on
+    entity_id: switch.bathroom_boiler
+
+  - delay: "00:00:55"
+  - service: media_player.turn_off
+    entity_id: media_player.bathroom_ceiling_speaker
