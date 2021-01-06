@@ -1,0 +1,95 @@
+ {
+  "directDebit" : {
+    "id" : "72077653-9b41-41db-8db7-df062aa1aa19",
+    "payee" : {
+      "id" : "VIP_MOBILE",
+      "account" : "265111031000025704",
+      "name" : "VIP MOBILE",
+      "payingFee" : false,
+      "currency" : {
+        "code" : "941",
+        "label" : "RSD"
+      },
+      "sepaPartner" : false
+    },
+    "payerAccountId" : "160000010017935036",
+    "consumerName" : "Jovo",
+    "consumerIdentifier" : "3245",
+    "smsNotification" : false,
+    "description" : "test2",
+    "fromParty" : {
+      "clazz" : "registeredPartyDTO",
+      "partyId" : "001960471",
+      "type" : "INDIVIDUAL",
+      "firstName" : "MILANKA",
+      "lastName" : "MITROVIĆ",
+      "fullName" : "MILANKA MITROVIĆ",
+      "dateOfBirth" : -313808400000,
+      "addressOfResidence" : {
+        "street" : "TODORA DUKINA",
+        "houseNumber" : "045",
+        "city" : "BEOGRAD-VOŽDOVAC",
+        "country" : "SERBIA, REPUBLIC OF",
+        "countryCode" : "688",
+        "zip" : "11050"
+      },
+      "contactAddress" : {
+        "street" : "TODORA DUKINA",
+        "houseNumber" : "045",
+        "city" : "BEOGRAD-VOŽDOVAC",
+        "country" : "SERBIA, REPUBLIC OF",
+        "countryCode" : "688",
+        "zip" : "11050"
+      },
+      "contactInfo" : {
+        "email" : "N/A",
+        "phoneNumber" : "",
+        "maskedCellNumber" : "*********960",
+        "cellNumber" : "381652201960"
+      },
+      "nationalCardInfo" : {
+        "idNumber" : "005415152",
+        "issueDate" : 1716415200000,
+        "expireDate" : 1716415200000,
+        "identityDocumentIssueDate" : 1400796000000,
+        "documentType" : "Lična karta",
+        "identityDocumentIssuer" : "PS VOŽDOVAC"
+      },
+      "passportCardInfo" : {
+        "documentType" : "Pasoš"
+      },
+      "customerBranch" : {
+        "branchId" : "113",
+        "branchType" : "BRANCH_CUSTOMER",
+        "branchName" : "Voždovac, Ustanička 69"
+      },
+      "gender" : "female",
+      "citizenStatus" : 1,
+      "registeredPartyId" : "001960471",
+      "applicationService" : {
+        "lastLoginTimestamp" : 1605860479420,
+        "status" : "STATUS_ACTIVE",
+        "applicationServiceType" : {
+          "currentAuthorizationType" : "AUTHORIZATION_TYPE_M_TOKEN",
+          "corporateService" : false,
+          "applicationServiceTypeCode" : "APPLICATION_SERVICE_TYPE_CODE_WEBAPP"
+        },
+        "loginCount" : 3
+      },
+      "registeredPartySegment" : "MASS",
+      "marketingConsentStatus" : "APPROVED",
+      "dailySavingServiceStatus" : "CLOSED",
+      "stateOfBirth" : "688",
+      "userCorporateOrPartyId" : "001960471",
+      "partyOib" : "2201960776014",
+      "corporateUser" : false
+    },
+    "closable" : false,
+    "editable" : false,
+    "showEditingWarning" : false
+  },
+  "otp" : "12345",
+  "pin" : "12345",
+  "authorizationId" : "56e8a86d-d445-4205-",
+  "userId" : "001960471"
+}

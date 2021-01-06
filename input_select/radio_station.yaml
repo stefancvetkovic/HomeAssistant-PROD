@@ -1,0 +1,11 @@
+
+#Radio stations
+
+name: Select radio station
+options:
+  - 'Radio Beograd 1'
+  - 'Radio Beograd 202'
+  - 'TDI'
+  - 'Radio S'
+initial: Radio Beograd 1
+icon: mdi:radio

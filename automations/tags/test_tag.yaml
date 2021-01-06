@@ -1,0 +1,8 @@
+- alias: Tag Test
+  description: 'Testing...'
+  trigger:
+    - platform: tag
+      tag_id: BC-21-E8-17
+  action:
+    - service: script.turn_on
+      entity_id: script.play_spotify_tv

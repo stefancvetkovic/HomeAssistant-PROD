@@ -1,0 +1,145 @@
+#SINGLE SHORT CLICK
+
+- alias: Hallway Wardrobe Ledstrip Short Button
+  id: hallway_wardrobe_ledstrip_short_button
+  trigger:
+    platform: event
+    event_type: esphome.hallway
+    event_data:
+      type: single_short_click_1
+  action:
+    - service: persistent_notification.create
+      data:
+        title: 'This is a Hallway short click 1 test'
+        message: "Test indeed."
+    # - service: light.toggle
+    #   entity_id: 
+    #     - light.bedroom_go_temperature_wall
+    #     - light.bedroom_go_color_wall
+
+- alias: Hallway Actuator
+  id: hallway_actuator_short_button
+  trigger:
+    platform: event
+    event_type: esphome.hallway
+    event_data:
+      type: single_short_click_2
+  action:
+    - service: script.turn_on
+      entity_id: script.welcome_home
+    # - service: persistent_notification.create
+    #   data:
+    #     title: 'This is a Hallway short click 1 test'
+    #     message: "Test indeed."
+
+#SINGLE LONG CLICK
+
+- alias: Hallway Wardrobe_Ledstrip Long Click
+  id: hallway_wardrobe_ledstrip_single_long_click
+  trigger:
+    platform: event
+    event_type: esphome.hallway
+    event_data:
+      type: single_long_click_1
+  action:
+    - service: persistent_notification.create
+      data:
+        title: 'This is a Hallway single long click 1 test'
+        message: "Test indeed."
+    # - service: light.turn_off
+    #   entity_id: 
+    #     - light.bedroom_go_temperature_wall
+    #     - light.bedroom_go_color_wall
+
+- alias: Hallway Actuator Long Click
+  id: hallway_actuator_long_click
+  trigger:
+    platform: event
+    event_type: esphome.hallway
+    event_data:
+      type: single_long_click_2
+  action:
+    - service: persistent_notification.create
+      data:
+        title: 'This is a Hallway short click 1 test'
+        message: "Test indeed."
+    # - service: media_player.turn_off
+    #   entity_id: media_player.bedroom_tv
+
+#DOUBLE CLICK
+
+- alias: Hallway Wardrobe Ledstrip Double Click
+  id: hallway_wardrobe_ledstrip_double_click
+  trigger:
+    platform: event
+    event_type: esphome.hallway
+    event_data:
+      type: double_click_1
+  action:
+    - service: persistent_notification.create
+      data:
+        title: 'This is a Hallway short click 1 test'
+        message: "Test indeed."
+    # - service: light.turn_off
+    #   entity_id: light.bedroom_go_temperature_wall          
+    # - service: light.turn_on
+    #   entity_id: light.bedroom_go_color_wall
+    #   data:
+    #     rgb_color: ["{{range(256)|random}}","{{range(256)|random}}","{{range(256)|random}}"]
+
+- alias: Hallway Actuator Double Click
+  id:  hallway_actuator_double_click
+  trigger:
+    platform: event
+    event_type: esphome.hallway
+    event_data:
+      type: double_click_2
+  action:
+    - service: persistent_notification.create
+      data:
+        title: 'This is a Hallway short click 1 test'
+        message: "Test indeed."
+    # - service: switch.turn_on
+    #   entity_id: switch.bedroom_led_light_trafo
+
+    # - service: light.turn_off
+    #   entity_id: light.bedroom_go_temperature_bed          
+
+    # - service: light.turn_on
+    #   entity_id: light.bedroom_go_color_bed
+    #   data:
+    #     rgb_color: ["{{range(256)|random}}","{{range(256)|random}}","{{range(256)|random}}"]
+
+#ROTARY ENCODER
+
+- alias: 'Hallway Wardrobe Ledstrip Dimmer'
+  id: hallway_wardrobe_ledstrip_dimmer
+  trigger:
+    - platform: state
+      entity_id: sensor.hallway_wardrobe_ledstrip
+  action:
+    - service: persistent_notification.create
+      data:
+        title: 'This is a Hallway short click 1 test'
+        message: "Test indeed."
+    # - choose:
+    #     - conditions:
+    #         - condition: template
+    #           value_template: "{{ trigger.to_state.state not in ['Unavailable','Unknown'] }}"
+    #       sequence:
+    #         - service: light.turn_on
+    #           entity_id: light.bedroom_go_temperature_wall
+    #           data:
+    #             brightness: >
+    #               {{states('sensor.kitchen_led_ceiling_dimmer') | int * 2.55 | round(0) }}
+
+- alias: 'Hallway actuator encoder' 
+  id: hallway_actuator_encoder
+  trigger:
+    - platform: state
+      entity_id: sensor.hallway_terace_ledstrip_dimmer
+  action:
+    - service: persistent_notification.create
+      data:
+        title: 'This is a Hallway short click 1 test'
+        message: "Test indeed."

@@ -1,0 +1,22 @@
+alias: Play spotify TV
+icon: "mdi:party-popper"
+description: 'Play spotify on TV'
+fields:
+  tv_source:
+    description: 'TV be playing'
+    example: media_player.office_tv
+  volume_speaker:
+    description: "sets the volume on the speaker"
+    example: '0.4'
+
+sequence:
+  - service: spotcast.start
+    data:
+      entity_id: media_player.office_tv
+      device_name: 'Office TV SONY KD-55XH8077'
+      uri: 'spotify:playlist:37i9dQZF1DX9loJQLuEvap'
+      force_playback: true
+      random_song: true
+      repeat: track
+      shuffle: true
+      offset: 1

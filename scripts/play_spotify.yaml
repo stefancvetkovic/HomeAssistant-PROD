@@ -33,7 +33,7 @@ sequence:
 
   - service: spotcast.start
     data:
-      device_name: 'Denon AVR-X2400H'
+      device_name: 'Denon AVR-X2400H-avr'
       uri: 'spotify:playlist:37i9dQZF1DX9loJQLuEvap'
       force_playback: true
       random_song: true

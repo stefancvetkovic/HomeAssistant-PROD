@@ -1,17 +1,17 @@
 - alias: "iOS Low battery"
   initial_state: true
   trigger:
-    - platform: homeassistant
-      event: start
-    - platform: event
-      event_type: automation_reloaded
-    - platform: numeric_state
-      entity_id: sensor.stefans_iphone_battery_level
-      below: 20
-    - platform: state
-      entity_id: sensor.stefans_iphone_battery_state
-      from: 'Charging'
-      to: 'Not Charging'
+    # - platform: homeassistant
+    #   event: start
+    # - platform: event
+    #   event_type: automation_reloaded
+    # - platform: numeric_state
+    #   entity_id: sensor.stefans_iphone_battery_level
+    #   below: 20
+    # - platform: state
+    #   entity_id: sensor.stefans_iphone_battery_state
+    #   from: 'Charging'
+    #   to: 'Not Charging'
     - platform: state
       entity_id: device_tracker.stefans_iphone
       to: 'home'
@@ -19,16 +19,16 @@
       event_type: ios.action_fired
       event_data:
         actionName: 'Low Battery'
-  condition:
-    - condition: state
-      entity_id: sensor.stefans_iphone_battery_state
-      state: 'Not Charging'
-    - condition: numeric_state
-      entity_id: sensor.stefans_iphone_battery_level
-      below: 20
-    - condition: state
-      entity_id: device_tracker.stefans_iphone
-      state: 'home'
+  # condition:
+  #   - condition: state
+  #     entity_id: sensor.stefans_iphone_battery_state
+  #     state: 'Not Charging'
+  #   - condition: numeric_state
+  #     entity_id: sensor.stefans_iphone_battery_level
+  #     below: 20
+  #   - condition: state
+  #     entity_id: device_tracker.stefans_iphone
+  #     state: 'home'
   action:
     service: script.turn_on
     entity_id: script.low_battery_iphone
