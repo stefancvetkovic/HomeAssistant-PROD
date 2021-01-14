@@ -1,0 +1,7 @@
+alias: Turn off all lights in office
+description: Turns off the lights in office
+sequence:
+  - service: switch.turn_off
+    entity_id: group.all_switch_lights_office
+  - service: light.turn_off
+    entity_id: group.all_lights_office

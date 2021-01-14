@@ -33,6 +33,7 @@
     name: Adaptive Lights Livingroom
     entities:
       - group.livingroom_led_graywall_all_channels
+
   all_lights_entites:
     name: All lights
     entities:
@@ -47,13 +48,46 @@
       - light.kitchen_wled_desk
       - light.livingroom_wled_below_tv
       
+  all_switch_lights_bedroom:
+    name: All switch lights bedroom
+    entities:
+      - switch.bedroom_main_light
+      - switch.bedroom_left_lamp
+      - switch.bedroom_right_lamp
+
+  all_lights_bedroom:
+    name: All lights bedroom
+    entities:
+      - group.bedroom_wall_ledstrip_all_channels
+      - group.bedroom_bed_ledstrip_all_channels
+
+  all_lights_office:
+    name: All lights office
+    entities: 
+      - light.office_desk_lamp
+  all_switch_lights_office:
+    name: All switch lights office
+    entities:
+      - switch.office_main_light
+
+
+  all_kitchen_lights:
+    name: All kitchen lights
+    entities:
+      - light.kitchen_topgun_ac
+      - light.kitchen_wled_desk   
+
   all_switch_lights_livingroom:
     name: All switch lights in the livingroom
     entities:
-      - switch.living_room_above_tv_led
       - switch.living_room_above_tv_light_mini_led
-      - switch.livingroom_coridor_main_light
       - switch.living_room_main_light
+  
+  all_switch_lights_terace:
+    name: All lights terace
+    entities:
+      - switch.terace_main_light
+      - switch.terace_wall_light
 
   all_lights_livingroom:
     name: All lights in the livingroom
@@ -61,6 +95,8 @@
       - group.livingroom_led_above_tv_all_channels
       - group.livingroom_led_graywall_all_channels
       - group.livingroom_led_teracewall_all_channels
+      - light.livingroom_wled_below_tv
+      - group.all_kitchen_lights
 
   all_switchlights_entites:
     name: All switch lights

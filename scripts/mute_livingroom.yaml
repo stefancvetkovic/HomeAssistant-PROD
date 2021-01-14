@@ -1,0 +1,10 @@
+alias: Mute livingroom
+description: Mute all media players in livingroom
+sequence:
+  - service: media_player.volume_mute
+    data:
+      is_volume_muted: true
+      entity_id: 
+        - media_player.avr_zone1
+        - media_player.livingroom_tv
+        - media_player.chromecast_livingroom_tv

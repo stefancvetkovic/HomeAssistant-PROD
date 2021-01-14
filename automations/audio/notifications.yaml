@@ -1,4 +1,4 @@
-- id: OfficeMainLightIsON_TTS
+- id: Bathroom Lights On
   alias: Audio notification in bathroom when main light in bathroom is turned on
   trigger:
     - platform: state
@@ -60,6 +60,11 @@
       entity_id: switch.bathroom_fan
       from: 'off'
       to: 'on'
+  condition:
+    - condition: numeric_state
+      entity_id: sensor.bathroom_humidity
+      below: 50
+      above: 60
   action:
   - service: script.turn_off
     entity_id: script.play_notification

@@ -1,17 +1,17 @@
 - alias: "iOS Low battery"
   initial_state: true
   trigger:
-    # - platform: homeassistant
-    #   event: start
-    # - platform: event
-    #   event_type: automation_reloaded
-    # - platform: numeric_state
-    #   entity_id: sensor.stefans_iphone_battery_level
-    #   below: 20
-    # - platform: state
-    #   entity_id: sensor.stefans_iphone_battery_state
-    #   from: 'Charging'
-    #   to: 'Not Charging'
+    - platform: homeassistant
+      event: start
+    - platform: event
+      event_type: automation_reloaded
+    - platform: numeric_state
+      entity_id: sensor.stefans_iphone_battery_level
+      below: 20
+    - platform: state
+      entity_id: sensor.stefans_iphone_battery_state
+      from: 'Charging'
+      to: 'Not Charging'
     - platform: state
       entity_id: device_tracker.stefans_iphone
       to: 'home'
@@ -19,70 +19,70 @@
       event_type: ios.action_fired
       event_data:
         actionName: 'Low Battery'
-  # condition:
-  #   - condition: state
-  #     entity_id: sensor.stefans_iphone_battery_state
-  #     state: 'Not Charging'
-  #   - condition: numeric_state
-  #     entity_id: sensor.stefans_iphone_battery_level
-  #     below: 20
-  #   - condition: state
-  #     entity_id: device_tracker.stefans_iphone
-  #     state: 'home'
+  condition:
+    - condition: state
+      entity_id: sensor.stefans_iphone_battery_state
+      state: 'Not Charging'
+    - condition: numeric_state
+      entity_id: sensor.stefans_iphone_battery_level
+      below: 20
+    - condition: state
+      entity_id: device_tracker.stefans_iphone
+      state: 'home'
   action:
     service: script.turn_on
     entity_id: script.low_battery_iphone
 
 
-# - alias: Low Phone Battery Warning
-#   trigger:
-#     - platform: homeassistant
-#       event: start
-#     - platform: event
-#       event_type: automation_reloaded
-#     - platform: numeric_state
-#       entity_id: sensor.stefans_iphone_battery_level
-#       below: 20
-#     - platform: state
-#       entity_id: sensor.stefans_iphone_battery_state
-#       from: 'Charging'
-#       to: 'Not Charging'
-#     - platform: state
-#       entity_id: device_tracker.stefans_iphone
-#       to: 'home'
-#   condition:
-#     - condition: state
-#       entity_id: sensor.stefans_iphone_battery_state
-#       state: 'Not Charging'
-#     - condition: numeric_state
-#       entity_id: sensor.stefans_iphone_battery_level
-#       below: 20
-#     - condition: state
-#       entity_id: device_tracker.stefans_iphone
-#       state: 'home'
-#     # - condition: time
-#     #   after: '01:01:00'
-#     #   before: '08:00:00'
-#   action:
-#     - alias: Repeat the sequence UNTIL the conditions are true
-#       repeat:
-#         sequence:
-#           - service: script.turn_off
-#             entity_id: script.play_notification
+- alias: Low Phone Battery Warning
+  trigger:
+    - platform: homeassistant
+      event: start
+    - platform: event
+      event_type: automation_reloaded
+    - platform: numeric_state
+      entity_id: sensor.stefans_iphone_battery_level
+      below: 20
+    - platform: state
+      entity_id: sensor.stefans_iphone_battery_state
+      from: 'Charging'
+      to: 'Not Charging'
+    - platform: state
+      entity_id: device_tracker.stefans_iphone
+      to: 'home'
+  condition:
+    - condition: state
+      entity_id: sensor.stefans_iphone_battery_state
+      state: 'Not Charging'
+    - condition: numeric_state
+      entity_id: sensor.stefans_iphone_battery_level
+      below: 20
+    - condition: state
+      entity_id: device_tracker.stefans_iphone
+      state: 'home'
+    # - condition: time
+    #   after: '01:01:00'
+    #   before: '08:00:00'
+  action:
+    - alias: Repeat the sequence UNTIL the conditions are true
+      repeat:
+        sequence:
+          - service: script.turn_off
+            entity_id: script.play_notification
 
-#           - service: script.turn_on
-#             entity_id: script.play_notification
-#             data:
-#               variables:
-#                 speaker: "media_player.bedroom_ceiling_speaker"
-#                 source: "Primary Chromecast"
-#                 custom_message: "Attention, Stefan's iphone need to be charged. Please put mobile phone to a charger."
-#                 volume: "0.4"
+          - service: script.turn_on
+            entity_id: script.play_notification
+            data:
+              variables:
+                speaker: "media_player.bedroom_ceiling_speaker"
+                source: "Primary Chromecast"
+                custom_message: "Attention, Stefan's iphone need to be charged. Please put mobile phone to a charger."
+                volume: "0.4"
 
-#             #wait 5 minutes 
-#           - delay: 00:5:00
-#         until:
-#           # Did it work?
-#           - condition: state
-#             entity_id: sensor.stefans_iphone_battery_state
-#             state: 'Charging'
+            #wait 5 minutes 
+          - delay: 00:5:00
+        until:
+          # Did it work?
+          - condition: state
+            entity_id: sensor.stefans_iphone_battery_state
+            state: 'Charging'

@@ -1,6 +1,7 @@
 alias: Play notification speaker
 icon: "mdi:party-popper"
 description: 'Play notification on system chromecast'
+mode: parallel
 fields:
   speaker:
     description: 'The speaker that will reproduce sound'
@@ -33,12 +34,14 @@ sequence:
     data:
       message: "{{ custom_message }}"
       cache: true
-  - wait_template: "{{ is_state('media_player.system_chromecast', 'playing') }}"
-    timeout: '00:00:10'                                                                                                                                    
-    continue_on_timeout: 'true'                                                                                                                            
-  - wait_template: "{{ is_state('media_player.system_chromecast', 'idle') }}"                                                                             
-    timeout: '00:00:10'                                                                                                                                     
-    continue_on_timeout: 'true'  
+
+  - wait_for_trigger:
+    - platform: state
+      entity_id: media_player.system_chromecast
+      from: 'playing'
+      to: 'idle'
+    timeout: 10
+    continue_on_timeout: true
   - service: scene.turn_on
     data: 
       entity_id: scene.before
