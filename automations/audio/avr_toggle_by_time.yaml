@@ -1,0 +1,34 @@
+# - alias: 'AVR turn off based on time'
+#   description: 'AVR turns off if none others media_players turned on'
+#   trigger:
+#     - platform: time
+#       at: input_datetime.avr_turn_off
+#   condition:
+#     - condition: state
+#       entity_id:   
+#         - media_player.livingroom_tv
+#         - media_player.spotify_stefan
+#       state: 'off'
+#     - condition: template
+#       value_template: >-
+#         {%- set sources = ['HEOS Music', 'Tuner'] -%}
+#         {{ state_attr('media_player.avr_zone2', 'source') not in sources
+#           and
+#           state_attr('media_player.avr_zone2', 'source') not in sources
+#         }}
+#   action:
+#     - service: media_player.turn_off
+#       entity_id:
+#         - media_player.avr_zone1
+#         - media_player.avr_zone2
+
+# - alias: 'AVR Zone2 turn on based on time'
+#   description: 'AVR Zone2 turns on if none others media_players turned on'
+#   trigger:
+#     - platform: time
+#       at: input_datetime.avr_turn_on
+#   action:
+#     - service: media_player.turn_on
+#       entity_id:
+#         #- media_player.avr_zone1
+#         - media_player.avr_zone2

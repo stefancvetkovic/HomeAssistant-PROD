@@ -10,7 +10,7 @@
   action:
     - service: persistent_notification.create
       data:
-        title: 'This is a Kitchen short click 1 test'
+        title: 'This is a Kitchen Terace Spots single short click'
         message: "Test indeed."
     # - service: light.toggle
     #   entity_id: 
@@ -25,12 +25,6 @@
     event_data:
       type: single_short_click_2
   action:
-    # - service: persistent_notification.create
-    #   data:
-    #     title: 'This is a Kitchen short click 1 test'
-    #     message: "Test indeed."
-    - service: light.toggle
-      entity_id: ligh.bedroom_led_light_trafo
     - service: light.toggle
       entity_id:
         - light.livingroom_go_temp_teracewall
@@ -44,13 +38,8 @@
     event_data:
       type: single_short_click_3
   action:
-    # - service: persistent_notification.create
-    #   data:
-    #     title: 'This is a Kitchen short click 1 test'
-    #     message: "Test indeed."
     - service: light.toggle
-      entity_id:
-      - light.kitchen_wled_desk
+      entity_id: light.kitchen_wled_desk
 
 - alias: Kitchen Actuator via encoder
   id: kitchen_actuator_click
@@ -60,17 +49,11 @@
     event_data:
       type: single_short_click_4
   action:
-    - service: persistent_notification.create
+    - service: script.turn_on
+      entity_id: script.watch_tv_livingroom
       data:
-        title: 'This is a Kitchen short click 1 test'
-        message: "Test indeed."
-    # - service: script.turn_on
-    #   entity_id: script.bedroom_tv
-    #   data:
-    #     variables:
-    #       tvsource: "EON"
-    # - service: media_player.turn_on
-    #   entity_id: media_player.bedroom_tv
+        variables:
+          tvsource: "SBB"
 
 #SINGLE LONG CLICK
 
@@ -99,12 +82,10 @@
     event_data:
       type: single_long_click_2
   action:
-    - service: persistent_notification.create
-      data:
-        title: 'This is a Kitchen short click 1 test'
-        message: "Test indeed."
-    # - service: media_player.turn_off
-    #   entity_id: media_player.bedroom_tv
+    - service: light.turn_off
+      entity_id: 
+        - light.livingroom_go_temp_teracewall
+        - light.livingroom_go_color_teracewall
 
 - alias: Kitchen Workdesk Long Click
   id: kitchen_workdesk_long_click
@@ -114,12 +95,8 @@
     event_data:
       type: single_long_click_3
   action:
-    - service: persistent_notification.create
-      data:
-        title: 'This is a Kitchen short click 1 test'
-        message: "Test indeed."
-    # - service: media_player.turn_off
-    #   entity_id: media_player.bedroom_tv
+    - service: light.turn_off
+      entity_id: light.kitchen_wled_desk
 
 - alias: Kitchen Actuator Long Click
   id: kitchen_actuator_long_click
@@ -129,12 +106,8 @@
     event_data:
       type: single_long_click_4
   action:
-    - service: persistent_notification.create
-      data:
-        title: 'This is a Kitchen short click 1 test'
-        message: "Test indeed."
-    # - service: media_player.turn_off
-    #   entity_id: media_player.bedroom_tv
+    - service: media_player.turn_off
+      entity_id: media_player.livingroom_tv
 
 #DOUBLE CLICK
 
@@ -146,10 +119,10 @@
     event_data:
       type: double_click_1
   action:
-    # - service: persistent_notification.create
-    #   data:
-    #     title: 'This is a Kitchen short click 1 test'
-    #     message: "Test indeed."
+    - service: persistent_notification.create
+      data:
+        title: 'This is a Kitchen short click 1 test'
+        message: "Test indeed."
     # - service: light.turn_off
     #   entity_id: light.bedroom_go_temperature_wall          
     # - service: light.turn_on
@@ -166,8 +139,7 @@
       type: double_click_2
   action:
     - service: light.turn_off
-      entity_id: light.livingroom_go_temp_teracewall          
-
+      entity_id: light.livingroom_go_temp_teracewall       
     - service: light.turn_on
       entity_id: light.livingroom_go_color_teracewall
       data:
@@ -217,10 +189,10 @@
     - platform: state
       entity_id: sensor.kitchen_terace_spots_dimmer
   action:
-    # - service: persistent_notification.create
-    #   data:
-    #     title: 'This is a Kitchen short click 1 test'
-    #     message: "Test indeed."
+    - service: persistent_notification.create
+      data:
+        title: 'This is a Terace Spots Dimmer encoder dimmer'
+        message: "Test indeed."
     # - choose:
     #     - conditions:
     #         - condition: template
@@ -238,10 +210,6 @@
     - platform: state
       entity_id: sensor.kitchen_terace_ledstrip_dimmer
   action:
-    # - service: persistent_notification.create
-    #   data:
-    #     title: 'This is a Kitchen short click 1 test'
-    #     message: "Test indeed."
     - choose:
         - conditions:
             - condition: template
@@ -259,20 +227,16 @@
     - platform: state
       entity_id: sensor.kitchen_workingdesk_dimmer
   action:
-    - service: persistent_notification.create
-      data:
-        title: 'This is a Kitchen short click 1 test'
-        message: "Test indeed."
     - choose:
         - conditions:
             - condition: template
               value_template: "{{ trigger.to_state.state not in ['Unavailable','Unknown'] }}"
           sequence:
-            - service: media_player.volume_set
-              entity_id: media_player.bedroom_ceiling_speaker
+            - service: light.turn_on
+              entity_id: light.kitchen_wled_desk
               data:
-                volume_level: >
-                  {{ states('sensor.kitchen_workingdesk_dimmer')|float/100 }}
+                brightness: >
+                  {{states('sensor.kitchen_workingdesk_dimmer') | int }}
 
 - alias: 'Kitchen Actuator Encoder'
   id: kitchen_actuator_encoder 
@@ -280,17 +244,13 @@
     - platform: state
       entity_id: sensor.kitchen_actuator_encoder
   action:
-    # - service: persistent_notification.create
-    #   data:
-    #     title: 'This is a Kitchen short click 1 test'
-    #     message: "Test indeed."
-    # - choose:
-    #     - conditions:
-    #         - condition: template
-    #           value_template: "{{ trigger.to_state.state not in ['Unavailable','Unknown'] }}"
-    #       sequence:
-    #         - service: media_player.volume_set
-    #           entity_id: media_player.bedroom_ceiling_speaker
-    #           data:
-    #             volume_level: >
-    #               {{ states('sensor.kitchen_actuator_1')|float/100 }}
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.to_state.state not in ['Unavailable','Unknown'] }}"
+          sequence:
+            - service: media_player.volume_set
+              entity_id: media_player.avr_zone1
+              data:
+                volume_level: >
+                  {{ states('sensor.kitchen_actuator_encoder')|float/100 }}

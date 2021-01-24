@@ -2,10 +2,6 @@
   trigger:
     - platform: time
       at: input_datetime.time_when_boiler_goes_to_on
-  # condition:
-  #   condition: state
-  #   entity_id: input_boolean.boiler_specific_time_on
-  #   state: 'on'
   action:
       service: switch.turn_on
       entity_id: switch.bathroom_boiler
@@ -14,10 +10,6 @@
   trigger:
     - platform: time
       at: input_datetime.time_when_boiler_goes_to_off
-  # condition:
-  #   condition: state
-  #   entity_id: input_boolean.boiler_specific_time_on
-  #   state: 'off'
   action:
       service: switch.turn_off
       entity_id: switch.bathroom_boiler

@@ -1,0 +1,31 @@
+alias: Wake Up
+icon: "mdi:party-popper"
+description: 'Turns on the bedroom lights and then the living room lights after a delay'
+variables:
+  turn_on_entity: group.living_room
+fields:
+  minutes:
+    description: 'The amount of time to wait before turning on the living room lights'
+    example: '1'
+# If called again while still running (probably in delay step), start over.
+mode: restart
+sequence:
+  # This is Home Assistant Script Syntax
+  - event: LOGBOOK_ENTRY
+    event_data:
+      name: Paulus
+      message: is waking up
+      entity_id: device_tracker.paulus
+      domain: light
+  - alias: Bedroom lights on
+    service: light.turn_on
+    data:
+      entity_id: group.bedroom
+      brightness: 100
+  - delay:
+      # supports seconds, milliseconds, minutes, hours
+      minutes: "{{ minutes }}"
+  - alias: Living room lights on
+    service: light.turn_on
+    data:
+      entity_id: "{{ turn_on_entity }}"

@@ -63,7 +63,6 @@
   condition:
     - condition: numeric_state
       entity_id: sensor.bathroom_humidity
-      below: 50
       above: 60
   action:
   - service: script.turn_off

@@ -1,0 +1,9 @@
+- alias: "Countdown seconds for scanned tag"
+  description: "Interval which is mandatory to scan another time tag (double scanned tag)"
+  initial_state: true
+  trigger:
+    - platform: state
+      entity_id: media_player.bedroom_tv
+      from: 'off'
+      to: 'on'
+  action:

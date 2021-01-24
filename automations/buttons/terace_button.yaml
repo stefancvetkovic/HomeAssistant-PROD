@@ -1,0 +1,59 @@
+#Single Click
+- alias: 'Terace Button Single Click'
+  description: 'Uses xiomi WXKG01LM to do different things - single click'
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: terace_button
+      unique_id: "00:15:8d:00:03:d4:d7:42"
+      event: 1002
+  action:
+    - service: switch.toggle
+      entity_id: switch.terace_main_light
+
+#Single Long click
+- alias: 'Terace Button Long Click'
+  description: 'Uses xiomi WXKG01LM to do different things - long click'
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: terace_button
+      unique_id: "00:15:8d:00:03:d4:d7:42"
+      event: 1003
+  action:
+    - service: cover.open_cover
+      entity_id: 
+        - cover.ds_d
+        - cover.ds_s
+        - cover.ds_l
+
+#Double Click
+- alias: 'Terace Button Double Click'
+  description: 'Uses xiomi WXKG01LM to do different things - double click'
+  trigger:
+    platform: event
+    event_type: deconz_event
+    event_data:
+      id: terace_button
+      unique_id: "00:15:8d:00:03:d4:d7:42"
+      event: 1004
+  action:
+    - service: switch.toggle
+      entity_id: switch.terace_wall_light
+
+#   #Triple Click
+# - alias: 'Terace Button triple Click'
+#   description: 'Uses xiomi WXKG01LM to do different things - triple click'
+#   trigger:
+#     platform: event
+#     event_type: deconz_event
+#     event_data:
+#       id: terace_button
+#       unique_id: "00:15:8d:00:03:d4:d7:42"
+#       event: 1004
+#   action:
+#     - service: script.turn_on
+#       entity_id: script.livingroom_tv_set
+

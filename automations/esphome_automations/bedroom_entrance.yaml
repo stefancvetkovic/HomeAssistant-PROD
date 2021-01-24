@@ -36,11 +36,6 @@
     event_data:
       type: single_short_click_3
   action:
-    # - service: script.turn_on
-    #   entity_id: script.bedroom_tv
-    #   data:
-    #     variables:
-    #       tvsource: "EON"
     - service: media_player.turn_on
       entity_id: media_player.bedroom_tv
 

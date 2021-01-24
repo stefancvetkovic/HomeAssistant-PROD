@@ -1,14 +1,13 @@
-# - alias: Residents Away From Home
-#   description: 'When residents left the house, house will go to standby mode'
-#   trigger:
-#     - platfrom: state
-#       entity_id: device_tracker.stefans_iphone
-#       from: 'home'
-#       to: 'not_home'
-#   condition:
-#     condition: state
-#     entity_id: input_boolean.guest_mode
-#     state: 'off'
-#   action:
-#    - service: script.turn_on
-#      entity_id: script.turn_off_all_lights_and_devices
+- alias: Residents Away From Home
+  trigger:
+    - platform: state
+      entity_id: device_tracker.stefans_iphone
+      from: 'home'
+      to: 'not_home'
+  condition:
+    - condition: state
+      entity_id: input_boolean.guest_mode
+      state:  'off'
+  action:
+   - service: script.turn_on
+     entity_id: script.turn_off_all_lights_and_devices
