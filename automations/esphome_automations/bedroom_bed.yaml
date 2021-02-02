@@ -161,37 +161,37 @@
                 brightness_pct: >
                   {{states('sensor.bedroom_led_bed_left') | int }}
 
-- alias: 'Bedroom Bed Left TV Volume via encoder'
-  id: bedroom_bed_left_tv_volume_encoder 
-  trigger:
-  - platform: state
-    entity_id: sensor.bedroom_audio_volume_left
-  action:
-    - choose:
-        - conditions:
-            - condition: template
-              value_template: "{{ trigger.to_state.state not in ['Unavailable','Unknown'] }}"
-          sequence:
-            - service: media_player.volume_set
-              entity_id: media_player.bedroom_ceiling_speaker
-              data:
-                volume_level: >
-                  {{ states('sensor.bedroom_audio_volume_left')|float/100 }}
+# - alias: 'Bedroom Bed Left TV Volume via encoder'
+#   id: bedroom_bed_left_tv_volume_encoder 
+#   trigger:
+#   - platform: state
+#     entity_id: sensor.bedroom_audio_volume_left
+#   action:
+#     - choose:
+#         - conditions:
+#             - condition: template
+#               value_template: "{{ trigger.to_state.state not in ['Unavailable','Unknown'] }}"
+#           sequence:
+#             - service: media_player.volume_set
+#               entity_id: media_player.bedroom_ceiling_speaker
+#               data:
+#                 volume_level: >
+#                   {{ states('sensor.bedroom_audio_volume_left')|float/100 }}
 
-- alias: 'Bedroom Bed Right TV Volume via encoder'
-  id: bedroom_bed_right_tv_volume_encoder 
-  trigger:
-  - platform: state
-    entity_id: 
-      - sensor.bedroom_audio_volume_right
-  action:
-    - choose:
-        - conditions:
-            - condition: template
-              value_template: "{{ trigger.to_state.state not in ['Unavailable','Unknown'] }}"
-          sequence:
-            - service: media_player.volume_set
-              entity_id: media_player.bedroom_ceiling_speaker
-              data:
-                volume_level: >
-                  {{ states('sensor.bedroom_audio_volume_right')|float/100 }}
+# - alias: 'Bedroom Bed Right TV Volume via encoder'
+#   id: bedroom_bed_right_tv_volume_encoder 
+#   trigger:
+#   - platform: state
+#     entity_id: 
+#       - sensor.bedroom_audio_volume_right
+#   action:
+#     - choose:
+#         - conditions:
+#             - condition: template
+#               value_template: "{{ trigger.to_state.state not in ['Unavailable','Unknown'] }}"
+#           sequence:
+#             - service: media_player.volume_set
+#               entity_id: media_player.bedroom_ceiling_speaker
+#               data:
+#                 volume_level: >
+#                   {{ states('sensor.bedroom_audio_volume_right')|float/100 }}

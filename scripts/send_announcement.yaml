@@ -1,0 +1,59 @@
+alias: Send Announcment to speakers
+icon: "mdi:party-popper"
+description: 'Play announcment on speakers'
+mode: parallel
+sequence:
+  - service: scene.create
+    data:
+      scene_id: before
+      snapshot_entities: >
+        {% if is_state("input_select.speaker", "Everywhere") %}
+          media_player.hallway_ceiling_speaker, media_player.bathroom_ceiling_speaker, media_player.bedroom_ceiling_speaker, media_player.office_shelf_speaker
+        {% elif is_state("input_select.speaker", "Hallway") %}
+          media_player.hallway_ceiling_speaker
+        {% elif is_state("input_select.speaker", "Bathroom") %}
+          media_player.bathroom_ceiling_speaker
+        {% elif is_state("input_select.speaker", "Bedroom") %}
+          media_player.bedroom_ceiling_speaker
+        {% elif is_state("input_select.speaker", "Office") %}
+          media_player.office_shelf_speaker
+        {%else%} 
+          #DoNothing  
+        {% endif %}
+  - service: script.turn_on
+    entity_id: script.set_speaker
+    data:
+      variables:
+        speaker: >
+          {% if is_state("input_select.speaker", "Everywhere") %}
+            media_player.hallway_ceiling_speaker, media_player.bathroom_ceiling_speaker, media_player.bedroom_ceiling_speaker, media_player.office_shelf_speaker
+          {% elif is_state("input_select.speaker", "Hallway") %}
+            media_player.hallway_ceiling_speaker
+          {% elif is_state("input_select.speaker", "Bathroom") %}
+            media_player.bathroom_ceiling_speaker
+          {% elif is_state("input_select.speaker", "Bedroom") %}
+            media_player.bedroom_ceiling_speaker
+          {% elif is_state("input_select.speaker", "Office") %}
+            media_player.office_shelf_speaker
+          {% endif %}
+        volume: >
+          "{{states('input_number.alexa_announce_vol')|float}}"
+        source: "Primary Chromecast"
+  - delay: "00:00:03"
+  - service: tts.google_translate_say
+    entity_id: media_player.system_chromecast
+    data:
+      message: >
+       {{states('input_text.announcement_text')}}
+      cache: true
+
+  - wait_for_trigger:
+    - platform: state
+      entity_id: media_player.system_chromecast
+      from: 'playing'
+      to: 'idle'
+    timeout: 10
+    continue_on_timeout: true
+  - service: scene.turn_on
+    data: 
+      entity_id: scene.before

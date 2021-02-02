@@ -201,3 +201,18 @@
     data: {}
     entity_id: switch.kitchen_pre_trafo_working_desk_light
   mode: single
+- id: '1612222652712'
+  alias: deCONZ - IKEA SYMFONISK remote
+  description: ''
+  use_blueprint:
+    path: L-Carslake/deconz-ikea-symfonisk.yaml
+    input:
+      remote: 90447a3ed72fb898704f80ae2b5d4b1c
+      rotate_clockwise_start:
+      - service: media_player.volume_up
+        data: {}
+        entity_id: media_player.bedroom_ceiling_speaker
+      rotate_anticlockwise_start:
+      - service: media_player.volume_down
+        data: {}
+        entity_id: media_player.bedroom_ceiling_speaker

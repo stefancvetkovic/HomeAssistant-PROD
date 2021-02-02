@@ -3,6 +3,9 @@
     - platform: numeric_state
       entity_id: sensor.bathroom_humidity
       above: 60  
+    - platform: numeric_state
+      entity_id: sensor.bathroom_humidity
+      below: 50  
   action:
     - service_template: >
         {% if states('sensor.bathroom_humidity') | float >= 60 %}

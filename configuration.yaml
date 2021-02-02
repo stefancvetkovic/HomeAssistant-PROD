@@ -17,6 +17,7 @@ tts:
   - platform: google_translate
 hacs:
   token: !secret hacs_token
+  appdaemon: true
 group: !include groups.yaml
 
 
@@ -40,7 +41,7 @@ light: !include_dir_merge_list lights
 
 timer: !include_dir_named timers/
 
-script: !include_dir_merge_list scripts
+script: !include_dir_named scripts/
 automation: !include automations.yaml
 automation old: !include_dir_merge_list automations
 

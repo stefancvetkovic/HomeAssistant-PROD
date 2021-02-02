@@ -1,0 +1,44 @@
+alias: Play notification everywhere
+icon: "mdi:party-popper"
+description: 'Play notification on all zoned speakers via chromecast'
+mode: parallel
+fields:
+  custom_message:
+    description: 'Custom message that will be reproduced'
+    example: Hello world!
+  source:
+    description: 'Correct source for playing audio - amplifier sources'
+    example: Primary Chromecast
+  volume:
+    description: "sets the volume on the speaker"
+    example: '0.4'
+
+sequence:
+  - service: scene.create
+    data:
+      scene_id: before
+      snapshot_entities: group.all_zoned_media_players
+  - service: script.turn_on
+    entity_id: script.set_speaker
+    data:
+      variables:
+        speaker: group.all_zoned_media_players
+        volume: "{{ volume }}"
+        source: "{{ source }}"
+  - delay: "00:00:03"
+  - service: tts.google_translate_say
+    entity_id: media_player.system_chromecast
+    data:
+      message: "{{ custom_message }}"
+      cache: true
+
+  - wait_for_trigger:
+    - platform: state
+      entity_id: media_player.system_chromecast
+      from: 'playing'
+      to: 'idle'
+    timeout: 10
+    continue_on_timeout: true
+  - service: scene.turn_on
+    data: 
+      entity_id: scene.before
