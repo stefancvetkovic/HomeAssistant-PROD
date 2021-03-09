@@ -1,0 +1,99 @@
+#############################################################################
+## Toggle lights randomly
+#############################################################################
+- id: 'Automatic light toggle'
+  alias: Random Away Lights
+  initial_state: True
+  hide_entity: False
+
+  trigger:
+      platform: time_pattern
+      minutes: '/15'
+
+  condition:
+    - condition: state
+      entity_id: group.device_trackers
+      state: 'not_home'
+      #12 hours not home both residents
+    - condition: template
+      value_template: >
+        {{ as_timestamp(now()) - as_timestamp(states.device_tracker.stefans_iphone.last_changed) > 43200 }} 
+    - condition: sun
+      after: sunset
+      after_offset: '-00:30:00'
+    - condition: state
+      entity_id: input_boolean.guest_mode
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.vacation_mode
+      state: 'on'
+    - condition: time
+      before: '22:00:00'
+
+  action:
+    #turn off boiler on after midnight
+    - service: automation.turn_off
+      entity_id: automation.bathroom_turn_on_boiler_at_cheapest_tarif
+
+    - delay: "00:{{ '{:02}'.format(range(0,30) | random | int) }}:00"
+
+    # Selecting entity for toggling
+    - service: input_text.set_value
+      data_template:
+        entity_id: input_text.vacation_lights
+        value: "{{ state_attr('group.simulation_lights','entity_id') | random }}"
+
+    - service: cover.set_cover_position
+      data:
+        position: >
+          {{ range(20,100)|random }}
+        entity_id: >
+          {% set covers = ['ds_l', 'ds_s', 'ds_d', 'ss_l', 'ss_d', 'rs_l', 'rs_d'] %}
+          {% set first = covers | random %}
+          {% set second = covers | reject('==',first) | list | random%} 
+
+          - cover.{{first}}
+          - cover.{{second}}         
+
+
+    # Toggling entity state
+    - service: homeassistant.toggle
+      data_template:
+        entity_id: "{{states('input_text.vacation_lights')}}"
+
+################################################################
+## Stopping presence simulation randomly 22:30
+################################################################
+- id: 'Turning off all toggled lights'
+  alias: Turn off all lights
+  initial_state: True
+  hide_entity: False
+
+  trigger:
+      platform: time
+      at: '22:30:00'
+
+  condition:
+      condition: state
+      entity_id: group.device_trackers
+      state: 'not_home'
+
+  action:
+    - delay: '00:{{ range(15,59) | random | int }}:00'
+    - service: homeassistant.turn_off
+      entity_id: group.simulation_lights
+
+- id: 'Stop automatic light toggle'
+  alias: Stopping random lights in vacation mode
+  initial_state: True
+  hide_entity: False
+
+  trigger:
+    - platform: state
+      entity_id: input_boolean.vacation_mode
+      from:  'on'
+      to:  'off'
+  action:
+    service: automation.turn_off
+    data:
+      entity_id: automation.vacation_mode

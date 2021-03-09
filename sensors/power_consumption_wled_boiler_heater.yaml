@@ -1,0 +1,13 @@
+- platform: template
+  sensors:
+    wled_boiler_heater_power_consumption_amps:
+      value_template: >
+        {{ 
+          states.sensor.bathroom_wled_estimated_current.state  | float / 1000
+        + states.sensor.hallway_wled_estimated_current.state | float / 1000
+        + states.sensor.bedroom_wled_wd_l_estimated_current.state | float / 1000
+        + states.sensor.bedroom_wled_wd_r_estimated_current.state | float / 1000
+        + states.sensor.kitchen_wled_estimated_current.state | float / 1000
+        + states.sensor.livingroom_wled_below_tv_estimated_current.state | float / 1000 
+        + states.sensor.bathroom_boiler_power_consumption.state | float
+        }}

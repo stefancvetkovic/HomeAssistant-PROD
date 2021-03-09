@@ -1,0 +1,31 @@
+- alias: Covers set for bedtime
+  description: 'Sets covers for bedtime'
+  trigger:
+    - platform: time
+      at: input_datetime.time_when_covers_goes_down
+  action:
+    - service: script.turn_off
+      entity_id: 
+        - script.play_notification
+        - script.play_notification_everywhere
+    - service: script.turn_on
+      entity_id: script.play_notification_everywhere
+      data:
+        variables:
+          speaker: "media_player.bathroom_ceiling_speaker"
+          source: "Primary Chromecast"
+          volume: "0.3"
+          custom_message: "Attention: Covers are shutting down in bedroom and office room in a few seconds."
+          
+    - wait_template: "{{ is_state('script.play_notification_everywhere','off') }}"
+      timeout: '00:01:00'
+      continue_on_timeout: 'true'
+    - service: cover.set_cover_position
+      data:
+        position: 10
+        entity_id: 
+          - cover.rs_l
+          - cover.ss_l
+          - cover.ss_d
+
+

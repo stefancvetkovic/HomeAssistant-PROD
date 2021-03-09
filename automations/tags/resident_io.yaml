@@ -1,27 +1,38 @@
 - alias: Tag Resident check in_out is scanned
-  description: 'Based on frontdoor movement sensor we have 2 automations for leaving home and entering home'
+  description: >
+    'Based on frontdoor movement sensor we have 2 automations for leaving home and entering home. 
+    1. If 'binary_sensor.motion_sensor_frontdoor' is off for more than 15 seconds, that means that residents is leaving the house. 
+    2. If `binary_sensor.motion_sensor_frontdoor` is triggered between 0 < x < 15 seconds, that means resident is entering the house.'
   trigger:
     - platform: tag
       tag_id: 04-6D-98-52-97-69-81
   action:
-    - wait_template: "{{ is_state('binary_sensor.motion_sensor_frontdoor', 'on') }}"
-      timeout: 15
     - choose:
         - conditions:
             - condition: template
-              value_template: "{{ not wait.completed }}"
+              value_template: "{{ as_timestamp(now()) -  as_timestamp(states.binary_sensor.motion_sensor_frontdoor.last_changed) > 25 }}"
           sequence:
             # - service: script.turn_on
             #   entity_id: script.turn_off_all_lights_and_devices
-
-            - service: persistent_notification.create
+            - service: script.turn_on
+              entity_id: script.play_notification
               data:
-                title: 'You are leaving! Great!'
-                message: "Never come back."
-      default:
-        # - service: script.turn_on
-        #   entity_id: script.welcome_home
-        - service: persistent_notification.create
-          data:
-            title: 'You are entering into mansion! Great!'
-            message: "Take a glass of whiskey."
+                variables:
+                  speaker: "media_player.hallway_ceiling_speaker"
+                  source: "Primary Chromecast"
+                  volume: "0.4"
+                  custom_message: "Napuštate stan? Napolju je trenutna temperatura {{ states('sensor.home_realfeel_temperature')}} stepeni. Ostanite bezbedni, ponesite masku."
+                  platform: "tts.cloud_say"
+        - conditions:
+            - condition: template
+              value_template: "{{ as_timestamp(now()) -  as_timestamp(states.binary_sensor.motion_sensor_frontdoor.last_changed) <= 25 }}"
+          sequence:
+            - service: script.turn_on
+              entity_id: script.play_notification
+              data:
+                variables:
+                  speaker: "media_player.hallway_ceiling_speaker"
+                  source: "Primary Chromecast"
+                  volume: "0.4"
+                  custom_message: "Dobrodošli! Prosečna temperatura u stanu je {{states('sensor.livingroom_temperature')}} stepeni."
+                  platform: "tts.cloud_say"

@@ -1,15 +1,20 @@
 alias: Turn off all lights and devices
 sequence:
   - service: script.turn_off
-    entity_id: script.play_notification
+    entity_id: 
+      - script.play_notification
+      - script.play_notification_everywhere
   - service: script.turn_on
-    entity_id: script.play_notification
+    entity_id: script.play_notification_everywhere
     data:
       variables:
-        speaker: "media_player.bathroom_ceiling_speaker"
         source: "Primary Chromecast"
-        volume: "0.4"
-        custom_message: "Attention: Lights are turning off and all media."
+        volume: "0.3"
+        custom_message: "Attention: Lights and media will be turned off in a few seconds."
+
+  - wait_template: "{{ is_state('script.play_notification_everywhere','off') }}"
+    timeout: '00:01:00'
+    continue_on_timeout: 'true'
 
   #Kill all the lights
   - service: script.turn_on
@@ -22,4 +27,4 @@ sequence:
         - group.livingroom_media_players
         - group.bedroom_media_players
         - group.office_media_players
-        - group.bathroom_media_players
+        - group.all_zoned_media_players

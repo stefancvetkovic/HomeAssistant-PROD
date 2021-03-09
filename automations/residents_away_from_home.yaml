@@ -1,10 +1,15 @@
 - alias: Residents Away From Home
   trigger:
     - platform: state
-      entity_id: device_tracker.stefans_iphone
+      entity_id: 
+        - device_tracker.stefans_iphone
+        - device_tracker.anjas_iphone
       from: 'home'
       to: 'not_home'
   condition:
+    - condition: template
+      value_template: > 
+        {{  states.input_boolean.guest_mode.state == 'off' and states.device_tracker.stefans_iphone.state == 'not_home' and states.device_tracker.anjas_iphone.state == 'not_home' }}
     - condition: state
       entity_id: input_boolean.guest_mode
       state:  'off'

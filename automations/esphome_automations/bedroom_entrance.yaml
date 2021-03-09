@@ -95,7 +95,7 @@
       entity_id: switch.bedroom_led_light_trafo
 
     - service: light.turn_off
-      entity_id: light.bedroom_go_temperature_bed          
+      entity_id: light.bedroom_go_temp_bed        
 
     - service: light.turn_on
       entity_id: light.bedroom_go_color_bed
@@ -138,19 +138,19 @@
                 brightness: >
                   {{states('sensor.bedroom_entrance_led_bed_dimmer') | int }}
 
-# - alias: 'Bedroom Entrance TV Volume via encoder'
-#   id: bedroom_entrance_tv_volume_encoder 
-#   trigger:
-#     - platform: state
-#       entity_id: sensor.bedroom_entrance_actuator_1
-#   action:
-#     - choose:
-#         - conditions:
-#             - condition: template
-#               value_template: "{{ trigger.to_state.state not in ['Unavailable','Unknown'] }}"
-#           sequence:
-#             - service: media_player.volume_set
-#               entity_id: media_player.bedroom_ceiling_speaker
-#               data:
-#                 volume_level: >
-#                   {{ states('sensor.bedroom_entrance_actuator_1')|float/100 }}
+- alias: 'Bedroom Entrance TV Volume via encoder'
+  id: bedroom_entrance_tv_volume_encoder 
+  trigger:
+    - platform: state
+      entity_id: sensor.bedroom_entrance_actuator_1
+  action:
+    - choose:
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.to_state.state not in ['Unavailable','Unknown'] }}"
+          sequence:
+            - service: media_player.volume_set
+              entity_id: media_player.bedroom_ceiling_speaker
+              data:
+                volume_level: >
+                  {{ states('sensor.bedroom_entrance_actuator_1')|float/100 }}

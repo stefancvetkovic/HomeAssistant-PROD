@@ -1,6 +1,6 @@
 default_config:
 system_health:
-
+my:
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
 # http:
 #   base_url: example.duckdns.org:8123
@@ -40,28 +40,39 @@ input_datetime: !include_dir_named input_datetime/
 light: !include_dir_merge_list lights 
 
 timer: !include_dir_named timers/
-
 script: !include_dir_named scripts/
 automation: !include automations.yaml
 automation old: !include_dir_merge_list automations
 
 #Google calendar
-google:
-  client_id: !secret google_calendar_client_id
-  client_secret: !secret google_calendar_client_secret
+# google:
+#   client_id: !secret google_calendar_client_id
+#   client_secret: !secret google_calendar_client_secret
 
 webostv:
-  host: !secret bedroom_tv_ip
-  name: Bedroom TV
+  host: !secret office_tv_ip
+  name: Office TV
   turn_on_action:
     service: wake_on_lan.send_magic_packet
     data:
-      mac: !secret bedroom_tv_mac_address
+      mac: !secret office_tv_mac_address
   customize:
     sources:
       - youtube
       - netflix
       - eon
+      # - Spotify
+      # - Plex
+      # - Chromecast
 
 media_player: !include_dir_merge_list media_player
 notify:
+
+# influxdb:
+#   host: a0d7b954-influxdb
+#   port: 8086
+#   database: homeassistant
+#   username: homeassistant
+#   password: !secret influx_db_ha_password
+#   max_retries: 3
+#   default_measurement: state

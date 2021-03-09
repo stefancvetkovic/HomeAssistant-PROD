@@ -7,24 +7,24 @@
       from: 'off'
       to: 'on'
   action:
-    - choose:
-      - conditions:
-        - condition: not
-          conditions:
-          - condition: state
-            entity_id: media_player.bedroom_tv
-            state: 'on'
-        sequence:
-        - service: media_player.turn_on
-          data:
-            entity_id: media_player.bedroom_tv
+    # - choose:
+    #   - conditions:
+    #     - condition: not
+    #       conditions:
+    #       - condition: state
+    #         entity_id: media_player.bedroom_tv
+    #         state: 'on'
+    #     sequence:
+    #     - service: media_player.turn_on
+    #       data:
+    #         entity_id: media_player.bedroom_tv
 
-    - delay: "00:00:01"
+    # - delay: "00:00:01"
 
-    - service: media_player.select_source
-      entity_id: media_player.bedroom_tv
-      data:
-        source: "EON"
+    # - service: media_player.select_source
+    #   entity_id: media_player.bedroom_tv
+    #   data:
+    #     source: "EON"
 
     - service: script.turn_on
       entity_id: script.set_speaker

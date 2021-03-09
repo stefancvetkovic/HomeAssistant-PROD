@@ -1,0 +1,9 @@
+- platform: mqtt
+  name: "Bathroom Boiler Power Consumption"
+  state_topic: "tele/bathroomBoilerSonoff/SENSOR"
+  availability_topic: "tele/bathroomBoilerSonoff/LWT"
+  qos: 2
+  value_template: "{{value_json['ENERGY'].Current }}"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  unit_of_measurement: "amps"

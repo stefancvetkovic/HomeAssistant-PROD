@@ -1,36 +1,42 @@
-- alias: 'Turn off WatchTv Activity when TV and AVR are turned off'
-  trigger:
-    - platform: state
-      entity_id: 
-        - media_player.livingroom_tv
-        - media_player.avr_zone1
-      to: 'off'
-  action:
-    - service: remote.turn_off
-      entity_id: remote.harmony_hub_livingroom
-      data:
-          activity: "Watch TV"
+# - alias: 'Turn off WatchTv Activity when TV and AVR are turned off'
+#   trigger:
+#     - platform: state
+#       entity_id: 
+#         - media_player.livingroom_tv
+#         - media_player.avr_zone1
+#       to: 'off'
+#     - platform: state
+#       entity_id: 
+#         - media_player.livingroom_tv
+#         - media_player.avr_zone1
+#       to: 'on'
+#   action:
+#     - service_template: > 
+#         remote.turn_{{trigger.to_state.state}}
+#       entity_id: remote.harmony_hub_livingroom
+#       data:
+#           activity: "Watch TV"
 
-- alias: 'Turn off Tv Activity when TV is turned off'
-  trigger:
-    - platform: state
-      entity_id: 
-        - media_player.livingroom_tv
-      to: 'off'
-  action:
-    - service: remote.turn_off
-      entity_id: remote.harmony_hub_livingroom
-      data:
-          activity: "Smart TV"
+# - alias: 'Turn off Tv Activity when TV is turned off'
+#   trigger:
+#     - platform: state
+#       entity_id: 
+#         - media_player.livingroom_tv
+#       to: 'off'
+#   action:
+#     - service: remote.turn_off
+#       entity_id: remote.harmony_hub_livingroom
+#       data:
+#           activity: "Smart TV"
 
-- alias: 'Turn off WatchTv Activity when AVR are turned off'
-  trigger:
-    - platform: state
-      entity_id: 
-        - media_player.avr_zone1
-      to: 'off'
-  action:
-    - service: remote.turn_off
-      entity_id: remote.harmony_hub_livingroom
-      data:
-          activity: "AVR"
+# - alias: 'Turn off WatchTv Activity when AVR are turned off'
+#   trigger:
+#     - platform: state
+#       entity_id: 
+#         - media_player.avr_zone1
+#       to: 'off'
+#   action:
+#     - service: remote.turn_off
+#       entity_id: remote.harmony_hub_livingroom
+#       data:
+#           activity: "AVR"

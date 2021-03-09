@@ -1,0 +1,14 @@
+- platform: template
+  sensors:
+    wled_momentary_comsumption_summary:
+      value_template: >
+        {{ 
+          states.sensor.bathroom_wled_estimated_current.state | float 
+        + states.sensor.hallway_wled_estimated_current.state | float 
+        + states.sensor.bedroom_wled_wd_l_estimated_current.state | float
+        + states.sensor.bedroom_wled_wd_r_estimated_current.state | float
+        + states.sensor.kitchen_wled_estimated_current.state | float
+        + states.sensor.livingroom_wled_below_tv_estimated_current.state | float 
+        + sensor.bathroom_boiler_power_consumption | float
+        + sensor.terace_heater_consumption | float
+        }}

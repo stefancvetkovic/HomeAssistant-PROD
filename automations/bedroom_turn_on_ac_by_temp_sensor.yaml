@@ -1,32 +1,32 @@
-- alias: 'Bedroom toggle AC by temperature'
-  trigger:
-    - platform: numeric_state
-      entity_id: sensor.bedroom_temperature
-      above: 25  
-    - platform: numeric_state
-      entity_id: sensor.bedroom_temperature
-      below: 23  
-  action:
+# - alias: 'Bedroom toggle AC by temperature'
+#   trigger:
+#     - platform: numeric_state
+#       entity_id: sensor.bedroom_temperature
+#       above: 25  
+#     - platform: numeric_state
+#       entity_id: sensor.bedroom_temperature
+#       below: 23  
+#   action:
 
-    # - service_template: >
-    #        switch.turn_{{trigger.to_state.state}} 
-    #   data_template:
-    #     entity_id: >
-    #       {% if trigger.to_state.entity_id == 'binary_sensor.bedroom_wardrobe_left_door' %}
-    #         light.bedroom_wardrobe_left_light
-    #       {% elif trigger.to_state.entity_id == 'binary_sensor.bedroom_wardrobe_right_door' %}
-    #         light.bedroom_wardrobe_right_light
-    #       {% else %}
-    #         #DoNothing
-    #       {% endif %}
+#     # - service_template: >
+#     #        switch.turn_{{trigger.to_state.state}} 
+#     #   data_template:
+#     #     entity_id: >
+#     #       {% if trigger.to_state.entity_id == 'binary_sensor.bedroom_wardrobe_left_door' %}
+#     #         light.bedroom_wardrobe_left_light
+#     #       {% elif trigger.to_state.entity_id == 'binary_sensor.bedroom_wardrobe_right_door' %}
+#     #         light.bedroom_wardrobe_right_light
+#     #       {% else %}
+#     #         #DoNothing
+#     #       {% endif %}
 
 
-    - service_template: >
-        {% if trigger.to_state.state | float >= 25 %}
-          switch.turn_on
-        {% elif trigger.to_state.state | float <= 23 %}
-           switch.turn_off
-        {%else%}
-          #DoNothing
-        {% endif %}
-      entity_id: switch.bedroom_air_conditioner
+#     - service_template: >
+#         {% if trigger.to_state.state | float >= 25 %}
+#           switch.turn_on
+#         {% elif trigger.to_state.state | float <= 23 %}
+#            switch.turn_off
+#         {%else%}
+#           #DoNothing
+#         {% endif %}
+#       entity_id: switch.bedroom_air_conditioner

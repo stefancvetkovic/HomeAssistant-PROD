@@ -15,7 +15,9 @@ fields:
   volume:
     description: "sets the volume on the speaker"
     example: '0.4'
-
+  platform:
+    description: 'sets appropriete platform for tts - `tts.cloud_say` or `tts.google_translate_say`'
+    example: 'tts.google_translate_say'
 sequence:
   - service: scene.create
     data:
@@ -29,11 +31,29 @@ sequence:
         volume: "{{ volume }}"
         source: "{{ source }}"
   - delay: "00:00:03"
-  - service: tts.google_translate_say
-    entity_id: media_player.system_chromecast
-    data:
-      message: "{{ custom_message }}"
-      cache: true
+  - choose:
+    - conditions:
+        - condition: template
+          value_template: "{{ platform ==  'tts.google_translate_say'}}"
+      sequence:
+        #TTS GOOGLE TRANSLATE (English)
+        - service: tts.google_translate_say
+          entity_id: media_player.system_chromecast
+          data:
+            message: "{{ custom_message }}"
+
+    - conditions:
+        - condition: template
+          value_template: "{{ platform ==  'tts.cloud_say'}}"
+      sequence:
+        #TTS CLOUD SAY NABU CASA
+        - service: tts.cloud_say
+          data:
+            entity_id: media_player.system_chromecast
+            message: "{{ custom_message }}"
+            options:
+              gender: female
+            language: hr-HR
 
   - wait_for_trigger:
     - platform: state

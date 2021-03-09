@@ -1,0 +1,102 @@
+- alias: 'Bathroom Spotify Button'
+  description: 'Plays and operates spotify'
+  trigger:
+    - platform: event
+      event_type: deconz_event
+      event_data:
+        device_id: '2b8eee6536ee2e2188774f3cb4e1e1cc'
+  action:
+  - variables:
+      event: '{{ trigger.event.data.event }}'
+  - choose:
+    - conditions:
+      - "{{ event == 1002 }}"
+      - "{{ not is_state('media_player.bathroom_ceiling_speaker', 'on') }}"
+      sequence:
+      - service: script.turn_on
+        entity_id: script.play_spotify
+        data: 
+          variables:
+            source_avr: media_player.avr_zone2
+            volume_avr: 0.7
+            speaker: media_player.bathroom_ceiling_speaker
+            volume_speaker: 0.5
+
+    - conditions:
+      - "{{ event == 1002 }}"
+      - "{{ is_state('media_player.spotify_stefan', 'playing') }}"
+      sequence:
+      - service: media_player.turn_off
+        entity_id: 
+          - media_player.spotify_stefan
+          - media_player.bathroom_ceiling_speaker
+    - conditions:
+      - '{{ event == 2002 }}'
+      sequence:
+      - service: media_player.volume_up
+        entity_id: media_player.spotify_stefan
+    - conditions:
+      - '{{ event == 2001 }}'
+      sequence:
+      - service: media_player.volume_up
+        entity_id: media_player.spotify_stefan
+    - conditions:
+      - '{{ event == 3002 }}'
+      sequence:
+      - service: media_player.volume_down
+        entity_id: media_player.spotify_stefan
+
+    - conditions:
+      - '{{ event == 3001 }}'
+      sequence:
+      - service: media_player.volume_down
+        entity_id: media_player.spotify_stefan
+    - conditions:
+      - condition: and
+        conditions:
+        - '{{ event == 4002 }}'
+      sequence:
+      - service: media_player.media_previous_track
+        entity_id: media_player.spotify_stefan
+    - conditions:
+      - condition: and
+        conditions:
+        - '{{ event == 3001 }}'
+      sequence:
+      - service: persistent_notification.create
+        data:
+          title: 'This is a test'
+          message: "Test indeed."
+    - conditions:
+      - condition: and
+        conditions:
+        - '{{ event == 5002 }}'
+      sequence:
+      - service: media_player.media_next_track
+        entity_id: media_player.spotify_stefan
+         
+    - conditions:
+      - condition: and
+        conditions:
+        - '{{ event == 5001 }}'
+      sequence:
+      - service: persistent_notification.create
+        data:
+          title: 'This is a test'
+          message: "Test indeed."
+
+      # sequence:
+      # - repeat:
+      #     count: '{{ color_temp_step_count }}'
+      #     sequence:
+      #     - service: light.turn_on
+      #       entity_id: !input 'light'
+      #       data:
+      #         color_temp: '{{ [(state_attr(light_entity, "color_temp")|default(1e6/([[[2.7182818284**(((state_attr(light_entity,
+      #           "rgb_color")|default([0,0,0], true))[1]+161.1195681661)/99.4708025861)*100,
+      #           6600]|min, 1000]|max, [[(2.7182818284**(((state_attr(light_entity, "rgb_color")|default([0,0,0],
+      #           true))[2]+305.0447927307)/138.5177312231)+10)*100, 6600]|min, 1900]|max]|sum/2),
+      #           True) - color_temp_step), color_temp_min|int*(1-is_white_spectrum_light)]|max
+      #           }}'
+      #         transition: 1
+      #     - delay: 1

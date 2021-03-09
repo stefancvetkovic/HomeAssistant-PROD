@@ -34,9 +34,11 @@ sequence:
   - service: spotcast.start
     data:
       device_name: 'Denon AVR-X2400H'
-      uri: 'spotify:playlist:37i9dQZF1DX9loJQLuEvap'
-      force_playback: true
+      uri: >
+       {% set playlists = ['spotify:playlist:37i9dQZF1DX9loJQLuEvap','spotify:playlist:37i9dQZF1DX4UtSsGT1Sbe','spotify:playlist:37i9dQZF1DX0s5kDXi1oC5', 'spotify:playlist:37i9dQZF1DX4o1oenSJRJd','spotify:playlist:37i9dQZF1DX5Ejj0EkURtP','spotify:playlist:37i9dQZF1DWSqmBTGDYngZ']%}
+       {{ playlists | random}}
+      #force_playback: true
       random_song: true
-      repeat: track
+      #repeat: track
       shuffle: true
       offset: 1

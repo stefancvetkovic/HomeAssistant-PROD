@@ -15,6 +15,7 @@ sequence:
               source: "Primary Chromecast"
               custom_message: "Attention, Stefan's iphone need to be charged. Please put mobile phone to a charger."
               volume: "0.4"
+              platform: "tts.google_translate_say"
 
           #wait 5 minutes 
         - delay: 00:05:00

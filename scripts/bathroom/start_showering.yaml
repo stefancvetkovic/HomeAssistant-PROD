@@ -21,6 +21,7 @@ sequence:
         source: "Primary Chromecast"
         volume: "0.4"
         custom_message: "Shower process started."
+        platform: "tts.google_translate_say"
   # - wait_template: "{{ is_state('media_player.system_chromecast', 'idle') }}"
   #   timeout: '00:00:10'                                                                                                                                    
   #   continue_on_timeout: 'true' 

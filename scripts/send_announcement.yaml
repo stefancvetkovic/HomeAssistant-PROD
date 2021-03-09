@@ -37,7 +37,7 @@ sequence:
             media_player.office_shelf_speaker
           {% endif %}
         volume: >
-          "{{states('input_number.alexa_announce_vol')|float}}"
+          "{{states('input_number.announce_volume')|float}}"
         source: "Primary Chromecast"
   - delay: "00:00:03"
   - service: tts.google_translate_say

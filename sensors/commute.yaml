@@ -1,0 +1,7 @@
+- platform: here_travel_time
+  name: Home to City center
+  api_key: !secret here_time_travel_api_key
+  origin_latitude: !secret latitude
+  origin_longitude: !secret longitude
+  destination_latitude: !secret latitude_citycenter
+  destination_longitude: !secret longitude_citycenter

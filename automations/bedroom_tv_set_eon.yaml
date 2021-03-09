@@ -1,0 +1,17 @@
+- alias: Turn on and set Bedroom TV
+  description: 'Sets EON for Bedroom TV when turns on'
+  trigger:
+    - platform: state
+      entity_id: media_player.bedroom_tv
+      to: 'on'
+  action:
+    - delay: "00:00:03"
+    - service: media_player.select_source
+      data:
+        entity_id: media_player.bedroom_tv
+        source: 'EON'
+    - delay: "00:00:10"
+    - service: webostv.button
+      entity_id: media_player.bedroom_tv
+      data:
+        button: 'LEFT'

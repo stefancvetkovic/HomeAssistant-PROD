@@ -13,4 +13,4 @@
         {% else %}
           #DoNothing
         {% endif %}
-      entity_id: input_boolean.unobtrusive_mode      
+      entity_id: input_boolean.unobtrusive_mode

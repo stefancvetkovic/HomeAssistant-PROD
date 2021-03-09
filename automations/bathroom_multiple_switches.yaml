@@ -1,0 +1,19 @@
+- alias: Bathroom main light and fan switches turned on together
+  description: 'This automation will toggle the wled light when user presses simulteniosly or in within 3 seconds both switches for the main light and fan'
+  trigger:
+    - platform: state
+      entity_id:
+        - switch.bathroom_light
+        - switch.bathroom_fan
+  action:
+      - choose:
+        - conditions:
+            - condition: template
+              value_template: >
+                {% set bathroom_main_light_last_changed = as_timestamp(states.switch.bathroom_light.last_changed) %}
+                {% set bathroom_fan_last_changed = as_timestamp(states.switch.bathroom_fan.last_changed) %}
+                {% set time_diff = (bathroom_main_light_last_changed - bathroom_fan_last_changed) | abs %}
+                {{ 3 > time_diff > 0 }}
+          sequence:
+            - service: light.toggle
+              entity_id: light.bathroom_wled

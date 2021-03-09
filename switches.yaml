@@ -9,6 +9,9 @@
   payload_on: "ON"
   payload_off: "OFF"
   retain: false
+
+
+
 - platform: mqtt
   name: "Bathroom Light"
   command_topic: "cmnd/bathroomMainLightSonoff/power"
@@ -228,6 +231,16 @@
   command_topic: "cmnd/kitchenPreTrafoWorkingDeskSonoff/power"
   state_topic: "stat/kitchenPreTrafoWorkingDeskSonoff/POWER"
   availability_topic: "tele/kitchenPreTrafoWorkingDeskSonoff/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: false 
+- platform: mqtt
+  name: "Kitchen Extraction Fan"
+  command_topic: "cmnd/kitchenExtractionFan/power"
+  state_topic: "stat/kitchenExtractionFan/POWER"
+  availability_topic: "tele/kitchenExtractionFan/LWT"
   payload_available: "Online"
   payload_not_available: "Offline"
   payload_on: "ON"

@@ -39,7 +39,7 @@
       type: single_short_click_3
   action:
     - service: light.toggle
-      entity_id: light.kitchen_wled_desk
+      entity_id: light.kitchen_wled
 
 - alias: Kitchen Actuator via encoder
   id: kitchen_actuator_click
@@ -96,7 +96,7 @@
       type: single_long_click_3
   action:
     - service: light.turn_off
-      entity_id: light.kitchen_wled_desk
+      entity_id: light.kitchen_wled
 
 - alias: Kitchen Actuator Long Click
   id: kitchen_actuator_long_click
@@ -154,7 +154,7 @@
       type: double_click_3
   action:
     - service: light.turn_on
-      entity_id: light.kitchen_wled_desk
+      entity_id: light.kitchen_wled
       data:
         rgb_color: ["{{range(256)|random}}","{{range(256)|random}}","{{range(256)|random}}"]
 
@@ -174,7 +174,7 @@
     #   entity_id: switch.bedroom_led_light_trafo
 
     # - service: light.turn_off
-    #   entity_id: light.bedroom_go_temperature_bed          
+    #   entity_id: light.bedroom_go_temp_bed       
 
     # - service: light.turn_on
     #   entity_id: light.bedroom_go_color_bed
@@ -233,7 +233,7 @@
               value_template: "{{ trigger.to_state.state not in ['Unavailable','Unknown'] }}"
           sequence:
             - service: light.turn_on
-              entity_id: light.kitchen_wled_desk
+              entity_id: light.kitchen_wled
               data:
                 brightness: >
                   {{states('sensor.kitchen_workingdesk_dimmer') | int }}

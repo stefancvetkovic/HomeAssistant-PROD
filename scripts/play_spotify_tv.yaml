@@ -13,7 +13,7 @@ sequence:
   - service: spotcast.start
     data:
       entity_id: media_player.office_tv
-      device_name: 'Office TV SONY KD-55XH8077'
+      device_name: '{{tv_source}}'
       uri: 'spotify:playlist:37i9dQZF1DX9loJQLuEvap'
       force_playback: true
       random_song: true

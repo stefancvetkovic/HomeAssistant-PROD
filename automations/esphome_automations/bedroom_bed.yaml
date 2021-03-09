@@ -41,20 +41,20 @@
     - service: media_player.turn_on
       entity_id: media_player.bedroom_tv
 
-- alias: Bedroom Bed Right TV toggle via encoder
-  trigger:
-    platform: event
-    event_type: esphome.bedroom_bed_right
-    event_data:
-      type: single_short_click_1
-  action:
-    # - service: script.turn_on
-    #   entity_id: script.bedroom_tv
-    #   data:
-    #     variables:
-    #       tvsource: "EON"
-    - service: media_player.turn_on
-      entity_id: media_player.bedroom_tv
+# - alias: Bedroom Bed Right TV toggle via encoder
+#   trigger:
+#     platform: event
+#     event_type: esphome.bedroom_bed_right
+#     event_data:
+#       type: single_short_click_1
+#   action:
+#     # - service: script.turn_on
+#     #   entity_id: script.bedroom_tv
+#     #   data:
+#     #     variables:
+#     #       tvsource: "EON"
+#     - service: media_player.turn_on
+#       entity_id: media_player.bedroom_tv
 
 #SINGLE LONG CLICK
 
@@ -118,7 +118,7 @@
       entity_id: switch.bedroom_led_light_trafo
 
     - service: light.turn_off
-      entity_id: light.bedroom_go_temperature_bed          
+      entity_id: light.bedroom_go_temp_bed          
 
     - service: light.turn_on
       entity_id: light.bedroom_go_color_bed
@@ -156,7 +156,7 @@
               value_template: "{{ trigger.to_state.state not in ['Unavailable','Unknown'] }}"
           sequence:
             - service: light.turn_on
-              entity_id: light.bedroom_go_temperature_bed
+              entity_id: light.bedroom_go_temp_bed
               data:
                 brightness_pct: >
                   {{states('sensor.bedroom_led_bed_left') | int }}

@@ -1,0 +1,17 @@
+alias: Wled Random
+fields:
+  wled:
+    description: 'Light Wled entity'
+    example: light.livingroom_wled_below_tv
+sequence:
+- data:
+    entity_id: "{{wled}}"
+    brightness: 150
+  service: light.turn_on
+- data_template:
+    entity_id: "{{wled}}"
+    effect: '{{ state_attr(wled, "effect_list") | random }}'
+    palette: '{{ (range(0, 50)|random) }}'
+    speed: '{{ (range(0, 255)|random) }}'
+    intensity: '{{ (range(0, 255)|random) }}'
+  service: wled.effect

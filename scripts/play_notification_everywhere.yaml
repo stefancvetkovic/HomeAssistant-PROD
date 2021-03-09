@@ -17,7 +17,16 @@ sequence:
   - service: scene.create
     data:
       scene_id: before
-      snapshot_entities: group.all_zoned_media_players
+      snapshot_entities: 
+        - media_player.bathroom_ceiling_speaker
+        - media_player.hallway_ceiling_speaker
+        - media_player.bedroom_ceiling_speaker
+        - media_player.office_shelf_speaker
+
+      #group.all_zoned_media_players
+        #- media_player.hallway_ceiling_speaker
+      #group.all_zoned_media_players
+      
   - service: script.turn_on
     entity_id: script.set_speaker
     data:

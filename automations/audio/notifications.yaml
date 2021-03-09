@@ -5,6 +5,10 @@
       entity_id: switch.bathroom_light
       from:  'off'
       to:  'on'
+  condition:
+    - condition: time
+      after: "07:00:00"
+      before: "00:00:00"
   action:
   - service: script.turn_off
     entity_id: script.play_notification
@@ -16,7 +20,8 @@
         speaker: "media_player.bathroom_ceiling_speaker"
         source: "Primary Chromecast"
         volume: "0.4"
-        custom_message: "Welcome to the bathroom."
+        custom_message: "Dobro došli u kupatilo."
+        platform: "tts.cloud_say"
 
 - alias: 'Bedroom Wardrobe Notification Based On Door Sensor'
   id: bedroom_wardrobe_notification_based_on_door_sensor
@@ -42,6 +47,7 @@
                 source: "Primary Chromecast"
                 custom_message: "Please, close the wardrobe."
                 volume: "0.4"
+                platform: "tts.google_translate_say"
 
             #wait 3 minutes 
           - delay: 00:03:00
@@ -76,6 +82,7 @@
         source: "Primary Chromecast"
         volume: "0.4"
         custom_message: "Reminder: Please clean the glass after shower."
+        platform: "tts.google_translate_say"
 
 - alias: Google Calendar check events for today
   trigger:
@@ -102,6 +109,7 @@
           source: "Primary Chromecast"
           volume: "0.4"
           custom_message: "Reminder: In 10 minutes start next event: {{state_attr('calendar.stefan_j_cvetkovic_gmail_com', 'message')}}. Stay clean. Stay safe."
+          platform: "tts.google_translate_say"
 
 - alias: Announce temperture in the bedroom by scanned radiator tag
   description: ''
@@ -120,4 +128,4 @@
         source: "Primary Chromecast"
         volume: "0.4"
         custom_message: "Current tempereture in the bedroom is {{ states('sensor.bedroom_temperature')}} degrees."
-  mode: single
+        platform: "tts.google_translate_say"

@@ -45,8 +45,10 @@
       - light.livingroom_ac_bulbs_mirrowall
       - light.kitchen_topgun_ac
       - light.office_desk_lamp
-      - light.kitchen_wled_desk
+      - light.kitchen_wled
       - light.livingroom_wled_below_tv
+      - light.hallway_wled
+      - light.bathroom_wled
       
   all_switch_lights_bedroom:
     name: All switch lights bedroom
@@ -75,7 +77,7 @@
     name: All kitchen lights
     entities:
       - light.kitchen_topgun_ac
-      - light.kitchen_wled_desk   
+      - light.kitchen_wled  
 
   all_switch_lights_livingroom:
     name: All switch lights in the livingroom
@@ -145,7 +147,7 @@
     name: Office media players
     entities:
       - media_player.office_tv
-      - media_player.office_amp_speaker
+      - media_player.office_shelf_speaker
       - media_player.chromecast_office_tv
   bathroom_media_players:
     name: Bathroom media players
@@ -165,4 +167,11 @@
       - media_player.hallway_ceiling_speaker
       - media_player.bathroom_ceiling_speaker
       - media_player.bedroom_ceiling_speaker
-      - media_player.hallway_ceiling_speaker
+      - media_player.office_shelf_speaker
+
+  simulation_lights:
+    name: Simulation lights
+    entities:
+      - switch.livingroom_coridor_main_light
+      - switch.bedroom_main_light
+      - switch.office_main_light

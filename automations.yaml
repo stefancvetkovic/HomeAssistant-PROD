@@ -216,3 +216,16 @@
       - service: media_player.volume_down
         data: {}
         entity_id: media_player.bedroom_ceiling_speaker
+      button_single_press:
+      - service: media_player.toggle
+        entity_id: media_player.bedroom_tv
+      button_double_press:
+      - service: webostv.button
+        data:
+          entity_id: media_player.bedroom_tv
+          button: CHANNELUP
+      button_triple_press:
+      - service: webostv.button
+        data:
+          entity_id: media_player.bedroom_tv
+          button: CHANNELDOWN

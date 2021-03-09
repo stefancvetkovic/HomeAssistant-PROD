@@ -1,0 +1,58 @@
+- alias: Bathroom wled by washing machine
+  description: 'Sets wled light above washing machine when starts to wash landry'
+  trigger:
+    - platform: state
+      entity_id: sensor.washer
+      to: 'on'
+  condition:
+    - condition: time
+      after: "07:00:00"
+      before: "00:00:00"
+  action:
+    - service: script.turn_on
+      entity_id: script.play_notification
+      data:
+        variables:
+          speaker: "media_player.bathroom_ceiling_speaker"
+          source: "Primary Chromecast"
+          volume: "0.4"
+          custom_message: "Attention! Washing machine started. Remaining time is {{ states.sensor.washer.attributes.remain_time }} and program temperature is set to {{ states.sensor.washer.attributes.watertemp_option_state }}"
+          platform: "tts.google_translate_say"
+    - service: light.turn_on
+      entity_id: light.bathroom_wled
+      data:
+        effect: 'Washing Machine'
+
+- alias: Bathroom washing machine completed
+  description: 'Notify when washing laundry is finished'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.washer_wash_completed
+      to: 'on'
+  condition:
+    - condition: time
+      after: "07:00:00"
+      before: "00:00:00"
+  action:
+    - service: script.turn_on
+      entity_id: script.play_notification_everywhere
+      data:
+        variables:
+          speaker: "media_player.bathroom_ceiling_speaker"
+          source: "Primary Chromecast"
+          volume: "0.4"
+          custom_message: "Attention! Washing machine has finished washing the laundry."
+          platform: "tts.google_translate_say"
+
+    - service: light.turn_off
+      entity_id: light.bathroom_wled
+
+- alias: Bathroom turn off lights above washer when washer turns off
+  trigger:
+  - entity_id: sensor.washer
+    from: 'on'
+    platform: state
+    to: 'off'
+  action:
+      service: light.turn_off
+      entity_id: light.bathroom_wled

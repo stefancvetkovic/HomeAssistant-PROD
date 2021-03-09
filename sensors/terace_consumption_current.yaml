@@ -1,0 +1,9 @@
+- platform: mqtt
+  name: "Terace Heater Power Consumption"
+  state_topic: "tele/teraceHeaterSonoff/SENSOR"
+  availability_topic: "tele/teraceHeaterSonoff/LWT"
+  qos: 2
+  value_template: "{{value_json['ENERGY'].Current }}"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  unit_of_measurement: "amps"

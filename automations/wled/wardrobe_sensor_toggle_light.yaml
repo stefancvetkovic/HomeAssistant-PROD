@@ -10,7 +10,7 @@
       data:
         entity_id: >
           {% if trigger.to_state.entity_id == 'binary_sensor.bedroom_wardrobe_left_door' %}
-            light.wled_br_wd_l
+            light.wled_br_wd_l_segment_0
           {% elif trigger.to_state.entity_id == 'binary_sensor.bedroom_wardrobe_right_door' %}
             light.wled_br_wd_r
           {% else %}
@@ -42,7 +42,7 @@
       data:
         entity_id: >
           {% if trigger.to_state.entity_id == 'binary_sensor.bedroom_wardrobe_left_door' %}
-            light.wled_br_wd_l
+            light.wled_br_wd_l_segment_0
           {% elif trigger.to_state.entity_id == 'binary_sensor.bedroom_wardrobe_right_door' %}
             light.wled_br_wd_r
           {% else %}
