@@ -36,8 +36,11 @@
     event_data:
       type: single_short_click_3
   action:
-    - service: media_player.turn_on
-      entity_id: media_player.bedroom_tv
+    - service: braviatv_psk.bravia_open_app
+      data:
+        entity_id: media_player.bedroom_bravia
+        uri: >-
+          com.sony.dtv.com.ug.eon.android.tv.com.ug.eon.android.tv.TvActivity
 
 #SINGLE LONG CLICK
 

@@ -1,31 +1,26 @@
-# - alias: 'Office Wardrobe Lights By Door sensors'
-#   description: 'toggle office wardrobe and closet lights by wardrobe and closet door sensor'
-#   trigger:
-#     - platform: state
-#       entity_id: 
-#         - binary_sensor.office_closet_left_door
-#         - binary_sensor.office_closet_right_door
-#         - binary_sensor.office_wardrobe_left_door
-#         - binary_sensor.office_wardrobe_right_door
-#   action:
-#     - service: persistent_notification.create
-#       data:
-#         title: 'This is a test'
-#         message: "Test indeed."
-#     # - service_template: >
-#     #       light.turn_{{trigger.to_state.state}}
-#     #   data_template:
-#     #     entity_id: >
-#     #       {% if trigger.to_state.entity_id == 'binary_sensor.office_closet_left_door' %}
-#     #         light.office_closet_left
-#     #       {% elif trigger.to_state.entity_id == 'binary_sensor.office_closet_right_door' %}
-#     #         light.office_closet_right
-#     #       {% elif trigger.to_state.entity_id == 'binary_sensor.office_wardrobe_left_door' %}
-#     #         light.office_wardrobe_left_left
-#     #         light.office_wardrobe_left_right
-#     #       {% elif trigger.to_state.entity_id == 'binary_sensor.office_wardrobe_right_door' %}
-#     #         light.office_wardrobe_right_left
-#     #         light.office_wardrobe_right_right
-#     #       {% else %}
-#     #         #DoNothing
-#     #       {% endif %}
+- alias: 'Office Wardrobe Lights By Door sensors'
+  description: 'toggle office wardrobe and closet lights by wardrobe and closet door sensor'
+  trigger:
+    - platform: state
+      entity_id: 
+        - binary_sensor.office_closet_left_door
+        - binary_sensor.office_closet_right_door
+        - binary_sensor.office_wardrobe_left_door
+        - binary_sensor.office_wardrobe_right_door
+  action:
+    - service_template: >
+          light.turn_{{trigger.to_state.state}}
+      data_template:
+        entity_id: >
+          {% if trigger.to_state.entity_id == 'binary_sensor.office_closet_left_door' %}
+            light.office_closet_left
+          {% elif trigger.to_state.entity_id == 'binary_sensor.office_closet_right_door' %}
+            light.office_closet_right
+          {% elif trigger.to_state.entity_id == 'binary_sensor.office_wardrobe_left_door' %}
+            light.office_wardrobe_left_left
+            light.office_wardrobe_left_right
+          {% elif trigger.to_state.entity_id == 'binary_sensor.office_wardrobe_right_door' %}
+            light.office_wardrobe_right_right, light.office_wardrobe_right_left
+          {% else %}
+            #DoNothing
+          {% endif %}

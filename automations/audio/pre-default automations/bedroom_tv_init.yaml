@@ -34,11 +34,11 @@
           volume: "0.3"
           source: "Bedroom TV"
 
-    - delay: "00:00:15"
-    - service: webostv.button
-      data:
-        button: LEFT
-        entity_id: media_player.bedroom_tv
+    # - delay: "00:00:15"
+    # - service: webostv.button
+    #   data:
+    #     button: LEFT
+    #     entity_id: media_player.bedroom_tv
       
 
 - alias: "Bedroom Audio TV Turn Off"
@@ -53,3 +53,34 @@
       - service: media_player.turn_off
         data:
           entity_id: media_player.bedroom_ceiling_speaker
+
+- alias: 'Sync volume bedroom speakers ceiling and tv'
+  mode: parallel
+  trigger:
+  - platform: state
+    entity_id: media_player.bedroom_tv, media_player.bedroom_ceiling_speaker
+    attribute: volume_level
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: media_player.bedroom_tv
+        state: "on"
+      - condition: state
+        entity_id: "media_player.bedroom_ceiling_speaker"
+        state: "on"
+  action:
+  - variables:
+      vol_from: "{{ trigger.from_state.attributes.volume_level }}" 
+      vol_to: "{{ trigger.to_state.attributes.volume_level }}" 
+  - service: media_player.volume_set
+    data:
+      entity_id: media_player.bedroom_tv, media_player.bedroom_ceiling_speaker
+      volume_level: >
+        {% set volumes =  state_attr('media_player.bedroom_tv', 'volume_level'),
+                          state_attr('media_player.bedroom_ceiling_speaker', 'volume_level') %}
+        {% if vol_to|float > vol_from|float %}
+          {{ (volumes|max)|float }}
+        {% else %}
+          {{ (volumes|min)|float  }}
+        {% endif %}

@@ -16,6 +16,20 @@
       - light.livingroom_go_temp_greywall
       - light.livingroom_go_color_greywall
 
+  office_closet_lights:
+    name: office closet lights
+    entities:
+      - light.office_closet_left
+      - light.office_closet_right
+
+  office_wardrobe_lights:
+    name: office wardrobe lights
+    entities:
+      - light.office_wardrobe_left_left
+      - light.office_wardrobe_left_right
+      - light.office_wardrobe_right_left
+      - light.office_wardrobe_right_right
+
   bedroom_wall_ledstrip_all_channels:
     name: Bedroom Wall Ledstrip All
     entities:
@@ -44,7 +58,7 @@
       - group.livingroom_led_above_tv_all_channels
       - light.livingroom_ac_bulbs_mirrowall
       - light.kitchen_topgun_ac
-      - light.office_desk_lamp
+      - group.all_lights_office
       - light.kitchen_wled
       - light.livingroom_wled_below_tv
       - light.hallway_wled
@@ -67,6 +81,8 @@
     name: All lights office
     entities: 
       - light.office_desk_lamp
+      - group.office_closet_lights
+      - group.office_wardrobe_lights
   all_switch_lights_office:
     name: All switch lights office
     entities:

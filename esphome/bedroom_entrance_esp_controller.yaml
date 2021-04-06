@@ -1,0 +1,168 @@
+esphome:
+  name: bedroom_entrance_esp_controller
+  platform: ESP32
+  board: wemos_d1_mini32
+
+wifi:
+  ssid: "ThePingInTheNorth"
+  password: "lanister"
+  # ...
+  power_save_mode: none
+  manual_ip:
+    # Set this to the IP of the ESP
+    static_ip: 192.168.1.36
+    # Set this to the IP address of the router. Often ends with .1
+    gateway: 192.168.1.1
+    # The subnet of the network. 255.255.255.0 works for most home networks.
+    subnet: 255.255.255.0
+
+captive_portal:
+
+# Enable logging
+logger:
+# debug:
+# Enable Home Assistant API
+api:
+
+ota:
+sensor:
+
+  - platform: rotary_encoder
+    name: "Bedroom Entrance LED Ceiling Dimmer"
+    id: bedroom_entrance_led_ceiling_dimmer
+    pin_a: GPIO21
+    pin_b: GPIO17
+    min_value: 0
+    max_value: 100
+    resolution: 2
+    filters:
+      - delta: 4.0
+  - platform: rotary_encoder
+    name: "Bedroom Entrance Led Bed Dimmer"
+    id: bedroom_entrance_led_bed_dimmer
+    pin_a: GPIO19
+    pin_b: GPIO34
+    min_value: 0
+    max_value: 100
+    resolution: 2
+    filters:
+      - delta: 4.0
+  - platform: rotary_encoder
+    name: "Bedroom Entrance Actuator 1"
+    id: bedroom_entrance_actuator_1
+    pin_a: GPIO26
+    pin_b: GPIO33
+    min_value: 0
+    max_value: 100
+    resolution: 2
+    filters:
+      - delta: 4.0
+
+binary_sensor:
+
+ - platform: gpio
+   name: "Bedroom Entrance LED Bed Switcher"
+   id: bedroom_entrance_led_bed_switcher
+   pin:
+     number: GPIO18
+     mode: INPUT_PULLUP
+     inverted: true
+   on_multi_click:
+    - timing:
+        - ON for at most 1s
+        - OFF for at least 0.5s
+      then:
+        - homeassistant.event:
+            event: esphome.bedroom_entrance
+            data:
+              type: single_short_click_1
+    - timing:
+        - ON for 1s to 2s
+        - OFF for at least 0.5s
+      then:
+        - homeassistant.event:
+            event: esphome.bedroom_entrance
+            data:
+              type: single_long_click_1
+    - timing:
+        - ON for at most 1s
+        - OFF for at most 1s
+        - ON for at most 1s
+        - OFF for at least 0.2s
+      then:
+        - homeassistant.event:
+            event: esphome.bedroom_entrance
+            data:
+              type: double_click_1
+
+ - platform: gpio
+   name: "Bedroom Entrance LED Ceiling Switcher"
+   id: bedroom_entrance_led_ceiling_switcher
+   pin:
+     number: GPIO22
+     mode: INPUT_PULLUP
+     inverted: true
+   on_multi_click:
+    - timing:
+        - ON for at most 1s
+        - OFF for at least 0.5s
+      then:
+        - homeassistant.event:
+            event: esphome.bedroom_entrance
+            data:
+              type: single_short_click_2
+    - timing:
+        - ON for 1s to 2s
+        - OFF for at least 0.5s
+      then:
+        - homeassistant.event:
+            event: esphome.bedroom_entrance
+            data:
+              type: single_long_click_2
+    - timing:
+        - ON for at most 1s
+        - OFF for at most 1s
+        - ON for at most 1s
+        - OFF for at least 0.2s
+      then:
+        - homeassistant.event:
+            event: esphome.bedroom_entrance
+            data:
+              type: double_click_2
+
+ - platform: gpio
+   name: "Bedroom Entrance Actutator 1 Switcher"
+   id: bedroom_entrance_actuator_1_switcher
+   pin:
+     number: GPIO23
+     mode: INPUT_PULLUP
+     inverted: true
+   on_multi_click:
+     - timing:
+         - ON for at most 1s
+         - OFF for at least 0.5s
+       then:
+         - homeassistant.event:
+             event: esphome.bedroom_entrance
+             data:
+               type: single_short_click_3
+     - timing:
+         - ON for 1s to 2s
+         - OFF for at least 0.5s
+       then:
+         - homeassistant.event:
+             event: esphome.bedroom_entrance
+             data:
+               type: single_long_click_3
+     - timing:
+         - ON for at most 1s
+         - OFF for at most 1s
+         - ON for at most 1s
+         - OFF for at least 0.2s
+       then:
+         - homeassistant.event:
+             event: esphome.bedroom_entrance
+             data:
+               type: double_click_3
+           
+           

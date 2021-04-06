@@ -1,0 +1,80 @@
+esphome:
+  name: office_room_controller
+  platform: ESP32
+  board: wemos_d1_mini32
+
+wifi:
+  ssid: "ThePingInTheNorth"
+  password: "lanister"
+  # ...
+  power_save_mode: none
+  manual_ip:
+    # Set this to the IP of the ESP
+    static_ip: 192.168.1.23
+    # Set this to the IP address of the router. Often ends with .1
+    gateway: 192.168.1.1
+    # The subnet of the network. 255.255.255.0 works for most home networks.
+    subnet: 255.255.255.0
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "PanicVIFI"
+    password: "dubai.2020"
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+sensor:
+  - platform: rotary_encoder
+    name: "Office Desk Lamp Dimmer"
+    id: office_desk_lamp_dimmer
+    pin_a: GPIO26
+    pin_b: GPIO33
+    min_value: 0
+    max_value: 100
+    resolution: 2
+    filters:
+      - delta: 4.0
+
+binary_sensor:
+  - platform: gpio
+    name: "Office Desk Lamp Switc"
+    id: office_desk_lamp_switch
+    on_multi_click:
+      - timing:
+          - ON for at most 1s
+          - OFF for at least 0.5s
+        then:
+          - homeassistant.event:
+              event: esphome.office_entrance
+              data:
+                type: single_short_click_1
+      - timing:
+          - ON for 1s to 2s
+          - OFF for at least 0.5s
+        then:
+          - homeassistant.event:
+              event: esphome.office_entrance
+              data:
+                type: single_long_click_1
+      - timing:
+          - ON for at most 1s
+          - OFF for at most 1s
+          - ON for at most 1s
+          - OFF for at least 0.2s
+        then:
+          - homeassistant.event:
+              event: esphome.office_entrance
+              data:
+                type: double_click_1
+    pin:
+      number: GPIO23
+      mode: INPUT_PULLUP
+      inverted: true

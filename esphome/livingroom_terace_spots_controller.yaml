@@ -1,0 +1,122 @@
+esphome:
+  name: livingroom_terace_spots_controller
+  platform: ESP32
+  board: mhetesp32devkit
+
+wifi:
+  ssid: "ThePingInTheNorth"
+  password: "lanister"
+  power_save_mode: none
+  manual_ip:
+    # Set this to the IP of the ESP
+    static_ip: 192.168.1.97
+    # Set this to the IP address of the router. Often ends with .1
+    gateway: 192.168.1.1
+    # The subnet of the network. 255.255.255.0 works for most home networks.
+    subnet: 255.255.255.0
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Quinled_Deca_Spots_Terace"
+    password: "dubai.2020"
+
+web_server:
+  port: 80
+# Enable logging
+logger:
+ota:
+api: 
+dallas:
+  - pin: 32
+switch:
+  - platform: gpio
+    name: "terace_spot light"
+    pin: 2
+    inverted: True
+output:
+  - platform: ledc
+    pin: 25
+    frequency: 20000Hz
+    id: LED_gpio_25
+  - platform: ledc
+    pin: 26
+    frequency: 20000Hz
+    id: LED_gpio_26
+  - platform: ledc
+    pin: 27
+    frequency: 20000Hz
+    id: LED_gpio_27
+  - platform: ledc
+    pin: 14
+    frequency: 20000Hz
+    id: LED_gpio_14
+  - platform: ledc
+    pin: 12
+    frequency: 20000Hz
+    id: LED_gpio_12
+  - platform: ledc
+    pin: 16
+    frequency: 20000Hz
+    id: LED_gpio_16
+  - platform: ledc
+    pin: 17
+    frequency: 20000Hz
+    id: LED_gpio_17
+  - platform: ledc
+    pin: 18
+    frequency: 20000Hz
+    id: LED_gpio_18
+  - platform: ledc
+    pin: 19
+    frequency: 20000Hz
+    id: LED_gpio_19
+  - platform: ledc
+    pin: 21
+    frequency: 20000Hz
+    id: LED_gpio_21
+light:
+  - platform: monochromatic
+    name: "terace_spot-1"
+    default_transition_length: 2s
+    output: LED_gpio_25
+  - platform: monochromatic
+    name: "terace_spot-2"
+    default_transition_length: 2s
+    output: LED_gpio_26
+  - platform: monochromatic
+    name: "terace_spot-3"
+    default_transition_length: 2s
+    output: LED_gpio_27
+  - platform: monochromatic
+    name: "terace_spot-4"
+    default_transition_length: 2s
+    output: LED_gpio_14
+  - platform: monochromatic
+    name: "terace_spot-5"
+    default_transition_length: 2s
+    output: LED_gpio_12
+  - platform: monochromatic
+    name: "terace_spot-6"
+    default_transition_length: 2s
+    output: LED_gpio_16
+  - platform: monochromatic
+    name: "terace_spot-7"
+    default_transition_length: 2s
+    output: LED_gpio_17
+  - platform: monochromatic
+    name: "terace_spot-8"
+    default_transition_length: 2s
+    output: LED_gpio_18
+  - platform: monochromatic
+    name: "terace_spot-9"
+    default_transition_length: 2s
+    output: LED_gpio_19
+    
+  - platform: monochromatic
+    name: "terace_spot-10"
+    default_transition_length: 2s
+    output: LED_gpio_21
+    
+sensor:
+  - platform: dallas
+    index: 0
+    name: "terace_spot temp"

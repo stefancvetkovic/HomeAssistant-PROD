@@ -44,6 +44,16 @@
   payload_on: "ON"
   payload_off: "OFF"
   retain: false
+- platform: mqtt
+  name: "Office Pre-Trafo Wardrobe"
+  command_topic: "cmnd/officePreTrafoWardrobeSonoff/power"
+  state_topic: "stat/officePreTrafoWardrobeSonoff/POWER"
+  availability_topic: "tele/officePreTrafoWardrobeSonoff/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  payload_on: "ON"
+  payload_off: "OFF"
+  retain: false
 
 #TERACE
 - platform: mqtt

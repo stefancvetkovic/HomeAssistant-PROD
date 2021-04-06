@@ -5,13 +5,12 @@
       entity_id: media_player.bedroom_tv
       to: 'on'
   action:
-    - delay: "00:00:03"
-    - service: media_player.select_source
+    #- delay: "00:00:10"
+    - wait_template: "{{ is_state('media_player.bedroom_tv','on') }}"
+      timeout: '00:01:00'
+      continue_on_timeout: 'true'
+    - service: braviatv_psk.bravia_open_app
       data:
-        entity_id: media_player.bedroom_tv
-        source: 'EON'
-    - delay: "00:00:10"
-    - service: webostv.button
-      entity_id: media_player.bedroom_tv
-      data:
-        button: 'LEFT'
+        entity_id: media_player.bedroom_bravia
+        uri: >-
+          com.sony.dtv.com.ug.eon.android.tv.com.ug.eon.android.tv.TvActivity

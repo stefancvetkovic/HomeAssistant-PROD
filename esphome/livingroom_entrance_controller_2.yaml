@@ -1,0 +1,81 @@
+esphome:
+  name: livingroom_entrance_controller_2
+  platform: ESP32
+  board: wemos_d1_mini32
+
+wifi:
+  ssid: "ThePingInTheNorth"
+  password: "lanister"
+  # ...
+  power_save_mode: none
+  manual_ip:
+    # Set this to the IP of the ESP
+    static_ip: 192.168.1.202
+    # Set this to the IP address of the router. Often ends with .1
+    gateway: 192.168.1.1
+    # The subnet of the network. 255.255.255.0 works for most home networks.
+    subnet: 255.255.255.0
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Livingroom Entrance Controller 2"
+    password: "dubai.2020"
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+
+sensor:
+  - platform: rotary_encoder
+    name: "Livingroom Entrance Greywall LED Dimmer"
+    id: livingroom_entrance_greywall_led_dimmer
+    pin_a: GPIO21
+    pin_b: GPIO17
+    min_value: 0
+    max_value: 100
+    resolution: 2
+    filters:
+      - delta: 4.0
+
+binary_sensor:
+  - platform: gpio
+    name: "Livingroom Entrance Greywall LED Button"
+    id: bedroom_entrance_led_bed_switcher
+    pin:
+      number: GPIO18
+      mode: INPUT_PULLUP
+      inverted: true
+    on_multi_click:
+      - timing:
+          - ON for at most 1s
+          - OFF for at least 0.5s
+        then:
+          - homeassistant.event:
+              event: esphome.livingroom_entrance_2
+              data:
+                type: single_short_click_1
+      - timing:
+          - ON for 1s to 2s
+          - OFF for at least 0.5s
+        then:
+          - homeassistant.event:
+              event: esphome.livingroom_entrance_2
+              data:
+                type: single_long_click_1
+      - timing:
+          - ON for at most 1s
+          - OFF for at most 1s
+          - ON for at most 1s
+          - OFF for at least 0.2s
+        then:
+          - homeassistant.event:
+              event: esphome.livingroom_entrance_2
+              data:
+                type: double_click_1

@@ -1,0 +1,212 @@
+esphome:
+  name: bedroom_bed_esp_controller
+  platform: ESP32
+  board: wemos_d1_mini32
+
+wifi:
+  ssid: "ThePingInTheNorth"
+  password: "lanister"
+  # ...
+  power_save_mode: none
+  manual_ip:
+    # Set this to the IP of the ESP
+    static_ip: 192.168.1.217
+    # Set this to the IP address of the router. Often ends with .1
+    gateway: 192.168.1.1
+    # The subnet of the network. 255.255.255.0 works for most home networks.
+    subnet: 255.255.255.0
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+sensor:
+  - platform: rotary_encoder
+    name: "Bedroom LED Ceiling Left"
+    id: bedroom_bed_led_ceiling_dimmer_left
+    pin_a: GPIO26
+    pin_b: GPIO33
+    min_value: 0
+    max_value: 100
+    resolution: 2
+    filters:
+      - delta: 4.0
+  - platform: rotary_encoder
+    name: "Bedroom Audio Volume Left"
+    id: bedroom_bed_audio_volume_left
+    pin_a: GPIO19
+    pin_b: GPIO34
+    min_value: 0
+    max_value: 100
+    resolution: 2
+    filters:
+      - delta: 4.0
+  - platform: rotary_encoder
+    name: "Bedroom LED Bed Left"
+    id: bedroom_bed_led_bed_dimmer_left
+    pin_a: GPIO25
+    pin_b: GPIO27
+    min_value: 0
+    max_value: 100
+    resolution: 2
+    filters:
+      - delta: 4.0
+
+  - platform: rotary_encoder
+    name: "Bedroom Audio Volume Right"
+    id: bedroom_bed_audio_volume_right
+    pin_a: GPIO16
+    pin_b: GPIO35
+    min_value: 0
+    max_value: 100
+    resolution: 2
+    filters:
+      - delta: 4.0
+
+binary_sensor:
+  - platform: gpio
+    name: "Bedroom LED Bed Left Switch"
+    id: bedroom_bed_led_bed_switch_left
+    pin:
+      number: GPIO22
+      mode: INPUT_PULLUP
+      inverted: true
+    on_multi_click:
+      - timing:
+          - ON for at most 1s
+          - OFF for at least 0.5s
+        then:
+          - homeassistant.event:
+              event: esphome.bedroom_bed_left
+              data:
+                type: single_short_click_1
+      - timing:
+          - ON for 1s to 2s
+          - OFF for at least 0.5s
+        then:
+          - homeassistant.event:
+              event: esphome.bedroom_bed_left
+              data:
+                type: single_long_click_1
+      - timing:
+          - ON for at most 1s
+          - OFF for at most 1s
+          - ON for at most 1s
+          - OFF for at least 0.2s
+        then:
+          - homeassistant.event:
+              event: esphome.bedroom_bed_left
+              data:
+                type: double_click_1
+
+  - platform: gpio
+    name: "Bedroom LED Ceiling Left Switch"
+    id: bedroom_bed_led_ceiling_switch_left
+    pin:
+      number: GPIO23
+      mode: INPUT_PULLUP
+      inverted: true
+    on_multi_click:
+      - timing:
+          - ON for at most 1s
+          - OFF for at least 0.5s
+        then:
+          - homeassistant.event:
+              event: esphome.bedroom_bed_left
+              data:
+                type: single_short_click_2
+      - timing:
+          - ON for 1s to 2s
+          - OFF for at least 0.5s
+        then:
+          - homeassistant.event:
+              event: esphome.bedroom_bed_left
+              data:
+                type: single_long_click_2
+      - timing:
+          - ON for at most 1s
+          - OFF for at most 1s
+          - ON for at most 1s
+          - OFF for at least 0.2s
+        then:
+          - homeassistant.event:
+              event: esphome.bedroom_bed_left
+              data:
+                type: double_click_2
+
+  - platform: gpio
+    name: "Bedroom Audio Volume Left"
+    id: bedroom_bed_audio_volume_switch_left
+    pin:
+      number: GPIO18
+      mode: INPUT_PULLUP
+      inverted: true
+    on_multi_click:
+      - timing:
+          - ON for at most 1s
+          - OFF for at least 0.5s
+        then:
+          - homeassistant.event:
+              event: esphome.bedroom_bed_left
+              data:
+                type: single_short_click_3
+      - timing:
+          - ON for 1s to 2s
+          - OFF for at least 0.5s
+        then:
+          - homeassistant.event:
+              event: esphome.bedroom_bed_left
+              data:
+                type: single_long_click_3
+      - timing:
+          - ON for at most 1s
+          - OFF for at most 1s
+          - ON for at most 1s
+          - OFF for at least 0.2s
+        then:
+          - homeassistant.event:
+              event: esphome.bedroom_bed_left
+              data:
+                type: double_click_3
+
+
+  - platform: gpio
+    name: "Bedroom Audio Volume Right"
+    id: bedroom_bed_audio_switch_right
+    pin:
+      number: GPIO32
+      mode: INPUT_PULLUP
+      inverted: true
+    on_multi_click:
+      - timing:
+          - ON for at most 1s
+          - OFF for at least 0.5s
+        then:
+          - homeassistant.event:
+              event: esphome.bedroom_bed_right
+              data:
+                type: single_short_click_1
+      - timing:
+          - ON for 1s to 2s
+          - OFF for at least 0.5s
+        then:
+          - homeassistant.event:
+              event: esphome.bedroom_bed_right
+              data:
+                type: single_long_click_1
+      - timing:
+          - ON for at most 1s
+          - OFF for at most 1s
+          - ON for at most 1s
+          - OFF for at least 0.2s
+        then:
+          - homeassistant.event:
+              event: esphome.bedroom_bed_right
+              data:
+                type: double_click_1

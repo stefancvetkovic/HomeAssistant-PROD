@@ -1,0 +1,102 @@
+esphome:
+  name: livingroom_esp1_controller
+  platform: ESP32
+  board: wemos_d1_mini32
+
+wifi:
+  ssid: "ThePingInTheNorth"
+  password: "lanister"
+  # ...
+  power_save_mode: none
+  manual_ip:
+    # Set this to the IP of the ESP
+    static_ip: 192.168.1.105
+    # Set this to the IP address of the router. Often ends with .1
+    gateway: 192.168.1.1
+    # The subnet of the network. 255.255.255.0 works for most home networks.
+    subnet: 255.255.255.0
+  
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+sensor:
+  - platform: rotary_encoder
+    name: "Livingroom LED AboveTV Dimmer"
+    id: livingroom_led_abovetv_dimmer
+    pin_a: GPIO27
+    pin_b: GPIO25
+    min_value: 0
+    max_value: 100
+    resolution: 2
+    filters:
+      - delta: 4.0
+  - platform: rotary_encoder
+    name: "Livingroom LED BelowTV Dimmer"
+    id: livingroom_led_belowtv_dimmer
+    pin_a: GPIO17
+    pin_b: GPIO16
+    min_value: 0
+    max_value: 100
+    resolution: 2
+    filters:
+      - delta: 4.0
+  - platform: rotary_encoder
+    name: "Livingroom Actuator Encoder"
+    id: livingroom_actuator_encoder
+    pin_a: GPIO19
+    pin_b: GPIO34
+    min_value: 0
+    max_value: 100
+    resolution: 2
+    filters:
+      - delta: 4.0
+
+  - platform: rotary_encoder
+    name: "Livingroom Greywall LED Dimmer"
+    id: livingroom_greywall_led_dimmer
+    pin_a: GPIO26
+    pin_b: GPIO35
+    min_value: 0
+    max_value: 100
+    resolution: 2
+    filters:
+      - delta: 4.0
+
+binary_sensor:
+  - platform: gpio
+    name: "Livingroom LED AboveTV Switch"
+    id: livingroom_led_abovetv_switch
+    pin:
+      number: GPIO21
+      mode: INPUT_PULLUP
+      inverted: true
+  - platform: gpio
+    name: "Livingroom LED BelowTV Switch"
+    id: livingroom_led_belowtv_switch
+    pin:
+      number: GPIO32
+      mode: INPUT_PULLUP
+      inverted: true
+  - platform: gpio
+    name: "Livingroom Actuator Switch"
+    id: livingroom_actuator_switch
+    pin:
+      number: GPIO18
+      mode: INPUT_PULLUP
+      inverted: true
+
+  - platform: gpio
+    name: "Livingroom Greywall LED Switch"
+    id: livingroom_greywall_led_switch
+    pin:
+      number: GPIO23
+      mode: INPUT_PULLUP
+      inverted: true

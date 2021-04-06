@@ -1,4 +1,7 @@
 default_config:
+alarm_control_panel:
+  - platform: manual
+config_check:
 system_health:
 my:
 # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
@@ -26,11 +29,21 @@ scene: !include_dir_merge_list scenes
 spotcast:
   sp_dc: !secret spotcast_sp_dc
   sp_key: !secret spotcast_sp_key
+  accounts:
+    livingroom:
+      sp_dc: !secret spotcast_livingroom_sp_dc
+      sp_key: !secret spotcast_livingroom_sp_key
+    bedroom:
+      sp_dc: !secret spotcast_bedroom_sp_dc
+      sp_key: !secret spotcast_bedroom_sp_key
+    office:
+      sp_dc: !secret spotcast_office_sp_dc
+      sp_key: !secret spotcast_office_sp_key
 
 spotify:
   client_id: !secret spotify_client_id
   client_secret: !secret spotify_secret_id
-
+binary_sensor: !include_dir_merge_list binary_sensors/
 sensor: !include_dir_merge_list sensors/
 input_boolean: !include_dir_named input_boolean/
 input_number: !include_dir_named input_number/
@@ -45,9 +58,11 @@ automation: !include automations.yaml
 automation old: !include_dir_merge_list automations
 
 #Google calendar
-# google:
-#   client_id: !secret google_calendar_client_id
-#   client_secret: !secret google_calendar_client_secret
+google:
+  client_id: !secret google_calendar_client_id
+  client_secret: !secret google_calendar_client_secret
+  track_new_calendar: true
+
 
 webostv:
   host: !secret office_tv_ip

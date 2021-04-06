@@ -1,0 +1,23 @@
+- alias: Guest card scanned
+  description: >
+    Toggle input_boolean.guest_mode and gives appropriete notification 
+  trigger:
+    - platform: tag
+      tag_id: B3-CA-D1-02
+  action:
+    - service: input_boolean.toggle
+      entity_id: input_boolean.guest_mode
+    - service: script.turn_on
+      entity_id: script.play_notification
+      data:
+        variables:
+          speaker: "media_player.hallway_ceiling_speaker"
+          source: "Primary Chromecast"
+          volume: "0.4"
+          custom_message: >
+            {% if is_state('input_boolean.guest_mode', 'on') %}
+              "Gost mod aktivan."
+            {% else %}
+              "Gost mod deaktiviran."
+            {% endif %}
+          platform: "tts.cloud_say"

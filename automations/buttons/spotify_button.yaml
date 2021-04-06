@@ -28,7 +28,7 @@
       sequence:
       - service: media_player.turn_off
         entity_id: 
-          - media_player.spotify_stefan
+          #- media_player.spotify_stefan
           - media_player.bathroom_ceiling_speaker
     - conditions:
       - '{{ event == 2002 }}'
@@ -63,10 +63,8 @@
         conditions:
         - '{{ event == 3001 }}'
       sequence:
-      - service: persistent_notification.create
-        data:
-          title: 'This is a test'
-          message: "Test indeed."
+      - service: light.toggle
+        entity_id: light.bathroom_wled
     - conditions:
       - condition: and
         conditions:
@@ -80,9 +78,11 @@
         conditions:
         - '{{ event == 5001 }}'
       sequence:
+      - service: light.toggle
+        entity_id: light.bathroom_wled
       - service: persistent_notification.create
         data:
-          title: 'This is a test'
+          title: 'This is a test1'
           message: "Test indeed."
 
       # sequence:

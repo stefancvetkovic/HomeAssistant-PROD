@@ -1,0 +1,9 @@
+  - platform: braviatv_psk
+    host: 192.168.1.159
+    psk: sony
+    mac: 94:db:56:8a:40:39
+    amp: True
+    android: True
+    time_format: 24H
+    user_labels: True
+    name: bedroom_bravia

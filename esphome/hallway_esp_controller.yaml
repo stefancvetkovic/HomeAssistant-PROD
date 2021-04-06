@@ -1,0 +1,124 @@
+esphome:
+  name: hallway_esp_controller
+  platform: ESP32
+  board: wemos_d1_mini32
+
+wifi:
+  ssid: "ThePingInTheNorth"
+  password: "lanister"
+  power_save_mode: none
+  manual_ip:
+    # Set this to the IP of the ESP
+    static_ip: 192.168.1.249
+    # Set this to the IP address of the router. Often ends with .1
+    gateway: 192.168.1.1
+    # The subnet of the network. 255.255.255.0 works for most home networks.
+    subnet: 255.255.255.0
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "ESPHOME_Halwayy_ENC"
+    password: "dubai.2020"
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+sensor:
+  - platform: rotary_encoder
+    name: "Hallway Actuator Encoder"
+    id: hallway_ledstrip_dimmer_led1
+    pin_a: GPIO33
+    pin_b: GPIO26
+    min_value: 0
+    max_value: 100
+    resolution: 2
+    filters:
+      - delta: 4.0
+
+
+  - platform: rotary_encoder
+    name: "Hallway Wardrobe Ledstrip"
+    id: hallway_wardrobe_dimmer
+    pin_a: GPIO27
+    pin_b: GPIO22
+    min_value: 0
+    max_value: 100
+    resolution: 2
+    filters:
+      - delta: 4.0
+
+binary_sensor:
+  - platform: gpio
+    name: "Hallway Ledstrip Button"
+    id: hallway_ledstrip_button
+    pin:
+      number: GPIO25
+      mode: INPUT_PULLUP
+      inverted: true
+    on_multi_click:
+      - timing:
+          - ON for at most 1s
+          - OFF for at least 0.5s
+        then:
+          - homeassistant.event:
+              event: esphome.hallway
+              data:
+                type: single_short_click_1
+      - timing:
+          - ON for 1s to 2s
+          - OFF for at least 0.5s
+        then:
+          - homeassistant.event:
+              event: esphome.hallway
+              data:
+                type: single_long_click_1
+      - timing:
+          - ON for at most 1s
+          - OFF for at most 1s
+          - ON for at most 1s
+          - OFF for at least 0.2s
+        then:
+          - homeassistant.event:
+              event: esphome.hallway
+              data:
+                type: double_click_1
+  - platform: gpio
+    name: "Hallway Actuator Button"
+    id: hallway_actuator_button
+    pin:
+      number: GPIO23
+      mode: INPUT_PULLUP
+      inverted: true
+    on_multi_click:
+      - timing:
+          - ON for at most 1s
+          - OFF for at least 0.5s
+        then:
+          - homeassistant.event:
+              event: esphome.hallway
+              data:
+                type: single_short_click_2
+      - timing:
+          - ON for 1s to 2s
+          - OFF for at least 0.5s
+        then:
+          - homeassistant.event:
+              event: esphome.hallway
+              data:
+                type: single_long_click_2
+      - timing:
+          - ON for at most 1s
+          - OFF for at most 1s
+          - ON for at most 1s
+          - OFF for at least 0.2s
+        then:
+          - homeassistant.event:
+              event: esphome.hallway
+              data:
+                type: double_click_2

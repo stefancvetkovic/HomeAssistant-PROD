@@ -86,17 +86,17 @@
 
 - alias: Google Calendar check events for today
   trigger:
-  - platform: numeric_state
-    below: '500'
-    entity_id: sensor.google_ete
+  - platform: state
+    entity_id: calendar.stefan_j_cvetkovic_gmail_com
+    to: 'on'
   # condition:
   #   condition: state
   #   entity_id: 'input_boolean.reminder_calendar'
   #   state: 'on'
   action:
-    # - service: persistent_notification.create
-    #   data:
-    #     message: "In one hour, you have an event: {{state_attr('calendar.stefan_j_cvetkovic_gmail_com', 'message')}}"
+    - service: persistent_notification.create
+      data:
+        message: "In one hour, you have an event: {{state_attr('calendar.stefan_j_cvetkovic_gmail_com', 'message')}}"
 
     - service: script.turn_off
       entity_id: script.play_notification

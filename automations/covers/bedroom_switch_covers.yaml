@@ -1,0 +1,69 @@
+- alias: Open Bedroom Left Cover By Switch
+  description: 'Integration of alingconel switch through esphome to somfy integration cover'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.bedroom_cover_left_open
+      from: "off"
+      to: "on"
+  action:
+    - service: cover.open_cover
+      entity_id: cover.rs_l
+
+- alias: Close Bedroom Left Cover By Switch
+  description: 'Integration of alingconel switch through esphome to somfy integration cover'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.bedroom_cover_left_close
+      from: "off"
+      to: "on"
+  action:
+    - service: cover.close_cover
+      entity_id: cover.rs_l
+
+
+- alias: Open Bedroom Right Cover By Switch
+  description: 'Integration of alingconel switch through esphome to somfy integration cover'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.bedroom_cover_right_open
+      from: "off"
+      to: "on"
+  action:
+    - service: cover.open_cover
+      entity_id: cover.rs_d
+
+- alias: Close Bedroom Right Cover By Switch
+  description: 'Integration of alingconel switch through esphome to somfy integration cover'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.bedroom_cover_right_close
+      from: "off"
+      to: "on"
+  action:
+    - service: cover.close_cover
+      entity_id: cover.rs_d
+
+
+- alias: Stop Bedroom Cover
+  description: 'Stop the covers when switched is not pressed'
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.bedroom_cover_left_close,binary_sensor.bedroom_cover_left_open,binary_sensor.bedroom_cover_right_close,binary_sensor.bedroom_cover_right_open
+      from: "on"
+      to: "off"
+  action:
+    - choose:
+        #LEFT
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.to_state.entity_id ==  'binary_sensor.bedroom_cover_left_close' or trigger.to_state.entity_id ==  'binary_sensor.bedroom_cover_left_open' }}"
+          sequence:
+            - service: cover.stop_cover
+              entity_id: cover.rs_l
+        # RIGHT
+        - conditions:
+            - condition: template
+              value_template: "{{ trigger.to_state.entity_id ==  'binary_sensor.bedroom_cover_right_close' or trigger.to_state.entity_id ==  'binary_sensor.bedroom_cover_right_open' }}"
+          sequence:
+            - service: cover.stop_cover
+              entity_id: cover.rs_d

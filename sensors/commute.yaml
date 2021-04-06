@@ -1,7 +1,21 @@
+# - platform: here_travel_time
+#   name: Home to City center
+#   api_key: !secret here_time_travel_api_key
+#   origin_latitude: !secret latitude
+#   origin_longitude: !secret longitude
+#   destination_latitude: !secret latitude_citycenter
+#   destination_longitude: !secret longitude_citycenter
+
+
+
+    
 - platform: here_travel_time
-  name: Home to City center
+  name: "Stefan time to home based by mobile phone"
+  scan_interval: 604800
+  #app_id: !secret  here_app_id
+  #app_code: !secret here_app_code
   api_key: !secret here_time_travel_api_key
-  origin_latitude: !secret latitude
-  origin_longitude: !secret longitude
-  destination_latitude: !secret latitude_citycenter
-  destination_longitude: !secret longitude_citycenter
+  origin_entity_id: device_tracker.stefans_iphone
+  destination_entity_id: zone.home
+  mode: car
+  traffic_mode: true

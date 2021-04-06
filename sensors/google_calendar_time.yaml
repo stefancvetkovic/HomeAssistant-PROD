@@ -1,6 +1,6 @@
-# - platform: template
-#   sensors:
-#     google_ete:
-#       friendly_name: "Time till next Google Calendar event"
-#       entity_id: sensor.time
-#       value_template: "{{as_timestamp(state_attr('calendar.stefan_j_cvetkovic_gmail_com', 'start_time')) - as_timestamp(now())}}"
+- platform: template
+  sensors:
+    google_ete:
+      friendly_name: "Time till next Google Calendar event"
+      entity_id: sensor.time
+      value_template: "{{as_timestamp(state_attr('calendar.stefan_j_cvetkovic_gmail_com', 'start_time')) - as_timestamp(now())}}"

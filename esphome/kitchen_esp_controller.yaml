@@ -1,0 +1,210 @@
+esphome:
+  name: kitchen_esp_controller
+  platform: ESP32
+  board: wemos_d1_mini32
+
+wifi:
+  ssid: "ThePingInTheNorth"
+  password: "lanister"
+  power_save_mode: none
+  manual_ip:
+    # Set this to the IP of the ESP
+    static_ip: 192.168.1.93
+    # Set this to the IP address of the router. Often ends with .1
+    gateway: 192.168.1.1
+    # The subnet of the network. 255.255.255.0 works for most home networks.
+    subnet: 255.255.255.0
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "ESPHOME_Kitchen"
+    password: "dubai.2020"
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+sensor:
+  - platform: rotary_encoder
+    name: "Kitchen Terace Spots Dimmer"
+    id: kitchen_terace_spots_dimming
+    pin_a: GPIO26
+    pin_b: GPIO33
+    min_value: 0
+    max_value: 100
+    resolution: 2
+    filters:
+      - delta: 4.0
+  - platform: rotary_encoder
+    name: "Kitchen Terace Ledstrip Dimmer"
+    id: kitchen_terace_ledstrip_dimming
+    pin_a: GPIO25
+    pin_b: GPIO27
+    min_value: 0
+    max_value: 100
+    resolution: 2
+    filters:
+      - delta: 4.0
+  - platform: rotary_encoder
+    name: "Kitchen Workingdesk Dimmer"
+    id: kitchen_workingdesk_dimming
+    pin_a: GPIO17
+    pin_b: GPIO16
+    min_value: 0
+    max_value: 100
+    resolution: 2
+    filters:
+      - delta: 4.0
+  - platform: rotary_encoder
+    name: "Kitchen Actuator Encoder"
+    id: kitchen_actuator_encoder
+    pin_a: GPIO19
+    pin_b: GPIO34
+    min_value: 0
+    max_value: 100
+    resolution: 2
+    filters:
+      - delta: 4.0
+
+binary_sensor:
+  - platform: gpio
+    name: "Kitchen Terace Spots Button"
+    id: kitchen_terace_spots_button
+    pin:
+      number: GPIO23
+      mode: INPUT_PULLUP
+      inverted: true
+    on_multi_click:
+      - timing:
+          - ON for at most 1s
+          - OFF for at least 0.5s
+        then:
+          - homeassistant.event:
+              event: esphome.kitchen
+              data:
+                type: single_short_click_1
+      - timing:
+          - ON for 1s to 2s
+          - OFF for at least 0.5s
+        then:
+          - homeassistant.event:
+              event: esphome.kitchen
+              data:
+                type: single_long_click_1
+      - timing:
+          - ON for at most 1s
+          - OFF for at most 1s
+          - ON for at most 1s
+          - OFF for at least 0.2s
+        then:
+          - homeassistant.event:
+              event: esphome.kitchen
+              data:
+                type: double_click_1
+  - platform: gpio
+    name: "Kitchen Terace Ledstrip Button"
+    id: kitchen_terace_ledstrip_button
+    pin:
+      number: GPIO21
+      mode: INPUT_PULLUP
+      inverted: true
+    on_multi_click:
+      - timing:
+          - ON for at most 1s
+          - OFF for at least 0.5s
+        then:
+          - homeassistant.event:
+              event: esphome.kitchen
+              data:
+                type: single_short_click_2
+      - timing:
+          - ON for 1s to 2s
+          - OFF for at least 0.5s
+        then:
+          - homeassistant.event:
+              event: esphome.kitchen
+              data:
+                type: single_long_click_2
+      - timing:
+          - ON for at most 1s
+          - OFF for at most 1s
+          - ON for at most 1s
+          - OFF for at least 0.2s
+        then:
+          - homeassistant.event:
+              event: esphome.kitchen
+              data:
+                type: double_click_2
+  - platform: gpio
+    name: "Kitchen Workdesk Button"
+    id: kitchen_workdesk_button
+    pin:
+      number: GPIO22
+      mode: INPUT_PULLUP
+      inverted: true
+    on_multi_click:
+      - timing:
+          - ON for at most 1s
+          - OFF for at least 0.5s
+        then:
+          - homeassistant.event:
+              event: esphome.kitchen
+              data:
+                type: single_short_click_3
+      - timing:
+          - ON for 1s to 2s
+          - OFF for at least 0.5s
+        then:
+          - homeassistant.event:
+              event: esphome.kitchen
+              data:
+                type: single_long_click_3
+      - timing:
+          - ON for at most 1s
+          - OFF for at most 1s
+          - ON for at most 1s
+          - OFF for at least 0.2s
+        then:
+          - homeassistant.event:
+              event: esphome.kitchen
+              data:
+                type: double_click_3
+  - platform: gpio
+    name: "Kitchen Actuator Button"
+    id: kitchen_actuator_button
+    pin:
+      number: GPIO18
+      mode: INPUT_PULLUP
+      inverted: true
+    on_multi_click:
+      - timing:
+          - ON for at most 1s
+          - OFF for at least 0.5s
+        then:
+          - homeassistant.event:
+              event: esphome.kitchen
+              data:
+                type: single_short_click_4
+      - timing:
+          - ON for 1s to 2s
+          - OFF for at least 0.5s
+        then:
+          - homeassistant.event:
+              event: esphome.kitchen
+              data:
+                type: single_long_click_4
+      - timing:
+          - ON for at most 1s
+          - OFF for at most 1s
+          - ON for at most 1s
+          - OFF for at least 0.2s
+        then:
+          - homeassistant.event:
+              event: esphome.kitchen
+              data:
+                type: double_click_4
